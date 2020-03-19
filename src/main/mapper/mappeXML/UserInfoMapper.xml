@@ -2,11 +2,8 @@
         <!DOCTYPE mapper
                 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.UserInfoMapper">
-    <insert id="insertUser" parameterType="pojo.UserInfo">
-            INSERT INTO USERS(name,age) VALUES (#{userName},#{userAge})
-    </insert>
-    <select id="selectUserById" resultType="pojo.UserInfo" parameterType="int">
-        SELECT * FROM USERS WHERE userId=#{userId}
+<mapper namespace="mapper.IUserInfoMapper">
+    <select id="getUserInfoByLoginInfo" resultType="pojo.UserInfo" parameterType="String">
+        SELECT * FROM app_user WHERE userPhone=#{userPhone}
     </select>
 </mapper>

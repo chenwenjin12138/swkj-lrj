@@ -13,7 +13,7 @@ public class UserInfo {
     private String nickName = ""; // 用户昵称
     private String headPhoto = ""; // 头像
     private String deviceToken = ""; //手机唯一识别码
-    private Integer active; //
+    private Integer active; // 状态 1:可用，启用 0：不可用，禁用
     private String createTime = ""; // 创建时间
     private Integer ischeck;
     private String checkTime = "";
