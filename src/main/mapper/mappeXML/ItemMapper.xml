@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.ItemMapper">
+	<!--留着以后用  -->
+	<!-- 向数据库增加记录 -->
+	<insert id="addItem" parameterType="appItemEntity">
+		<![CDATA[
+			INSERT INTO app_item
+			(
+			  item_category_id,
+			  item_name,
+			  item_unit,
+			  price,
+			  commodity_explain,
+			  duration,
+			  picture,
+			  is_show,
+			  create_time,
+			  update_time,
+			  promotionOriginalCost,
+			  promotionBeginDate,
+			  promotionEndDate
+			)
+			VALUES
+			(
+			   #{item_category_id},
+			   #{item_name},
+			   #{item_unit},
+			   #{price},
+			   #{commodity_explain},
+			   #{duration},
+			   #{picture},
+			   #{is_show},
+			   #{create_time},
+			   #{update_time},
+			   #{promotionOriginalCost},
+			   #{promotionBeginDate},
+			   #{promotionEndDate}
+			)
+		]]>
+		<!-- 返回刚新增的主键值 -->
+		<selectKey resultType="java.lang.Integer" keyProperty="appItemId">
+			<![CDATA[
+				 select @@identity
+			]]>
+		</selectKey>
+	</insert>
+
+	<!-- 更新数据库记录 -->
+	<update id="updateItem" parameterType="appItemEntity">
+		<![CDATA[
+			UPDATE app_item
+				SET
+				  item_category_id =  #{item_category_id},
+				  item_name = #{item_name},
+				  item_unit = #{item_unit}',
+				  price =  #{price},
+				  commodity_explain = #{commodity_explain},
+				  duration = #{duration},
+				  picture = #{picture},
+				  is_show =  #{is_show},
+				  create_time = #{create_time},
+				  update_time = #{update_time}
+			WHERE
+		 		app_item_id = #{app_item_id}
+		]]>
+	</update>
+
+	<select id="findAllItem" parameterType="appItemEntity"
+			resultType="java.util.Map">
+		SELECT
+		app_item_id,
+		item_category_id,
+		item_name,
+		item_unit,
+		price,
+		commodity_explain,
+		duration,
+		picture,
+		app_item.is_show,
+		create_time,
+		update_time,
+		category_name
+		FROM
+		app_item
+		LEFT JOIN
+		app_item_category
+		ON
+		app_item.item_category_id=app_item_category.app_item_category_id
+		<where>
+			<if test="appItemId !=null">
+				AND app_item.app_item_id like CONCAT('%',#{appItemId}, '%')
+			</if>
+			<if test="itemName !=null">
+				AND app_item.item_name like CONCAT('%', #{itemName}, '%')
+			</if>
+			<if test="isShow !=null">
+				AND app_item.is_show=#{isShow}
+			</if>
+			<if test="itemCategoryId !=null">
+				AND app_item.item_category_id=#{itemCategoryId}
+			</if>
+		</where>
+	</select>
+</mapper>
