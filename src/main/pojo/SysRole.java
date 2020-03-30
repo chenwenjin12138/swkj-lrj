@@ -9,6 +9,7 @@ public class SysRole {
     private Integer sysRoleId; // 角色ID
     private String roleName = ""; // 角色名称
     private String roleDescride = ""; // 角色简介
+    private String sysRoleAuthoritys = ""; //角色具有的权限串
     private Integer active; // 状态 1:可用，启用 0：不可用，禁用
 
     public Integer getSysRoleId() {
@@ -33,6 +34,14 @@ public class SysRole {
 
     public void setRoleDescride(String roleDescride) {
         this.roleDescride = roleDescride;
+    }
+
+    public String getSysRoleAuthoritys() {
+        return sysRoleAuthoritys;
+    }
+
+    public void setSysRoleAuthoritys(String sysRoleAuthoritys) {
+        this.sysRoleAuthoritys = sysRoleAuthoritys;
     }
 
     public Integer getActive() {

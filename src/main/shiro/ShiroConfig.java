@@ -50,7 +50,7 @@ public class ShiroConfig {
         // 自定义缓存实现 使用redis
         //securityManager.setCacheManager();
         // 自定义session管理 使用redise
-        //securityManager.setSessionManager(sssionManager());
+        securityManager.setSessionManager(sessionManager);
         //注入记住我管理器;
         securityManager.setRememberMeManager(rememberMeManager());
         return securityManager;
@@ -65,9 +65,9 @@ public class ShiroConfig {
         // 必须设置 SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
-        /*shiroFilterFactoryBean.setLoginUrl("/login");*/
+        shiroFilterFactoryBean.setLoginUrl("/toLogin");
         // 登录成功后要跳转的链接
-        shiroFilterFactoryBean.setSuccessUrl("/hello");
+        shiroFilterFactoryBean.setSuccessUrl("/index");
         // 未授权界面;
         shiroFilterFactoryBean.setUnauthorizedUrl("/404");
 

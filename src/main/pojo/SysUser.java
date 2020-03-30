@@ -1,5 +1,7 @@
 package pojo;
 
+import java.util.Date;
+
 /**
  * @author : cwj
  * @describe :管理后台员工表
@@ -11,7 +13,8 @@ public class SysUser {
     private String adminPassword = ""; // 密码
     private Integer active; //  状态：启动，禁用
     private Integer sysAdminRoleType; // 角色类别
-    private String createTime = ""; // 创建时间
+    private String sysAdminRoles; // 用户具有的角色串
+    private Date createTime;    //创建时间
     private Integer sysType; //
     private String invitationCode ="";//商家邀请码
     private String businessName = "";//商家名称
@@ -61,11 +64,19 @@ public class SysUser {
         this.sysAdminRoleType = sysAdminRoleType;
     }
 
-    public String getCreateTime() {
+    public String getSysAdminRoles() {
+        return sysAdminRoles;
+    }
+
+    public void setSysAdminRoles(String sysAdminRoles) {
+        this.sysAdminRoles = sysAdminRoles;
+    }
+
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
