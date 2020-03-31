@@ -1,11 +1,10 @@
 package pojo;
 
-import java.util.Date;
 
 /**
  * @author : cwj
  * @describe :管理后台员工表
- * @date :  2020-3-18
+ * @String :  2020-3-18
  */
 public class SysUser {
     private Integer sysAdminId; // id
@@ -14,7 +13,7 @@ public class SysUser {
     private Integer active; //  状态：启动，禁用
     private Integer sysAdminRoleType; // 角色类别
     private String sysAdminRoles; // 用户具有的角色串
-    private Date createTime;    //创建时间
+    private String createTime;    //创建时间
     private Integer sysType; //
     private String invitationCode ="";//商家邀请码
     private String businessName = "";//商家名称
@@ -23,6 +22,28 @@ public class SysUser {
     private String businessContactPerson = ""; //商铺联系人
     private String businessInfo = ""; //商铺信息
     private Double businessDistributionRatio = 0.00; //分销比例
+
+    public SysUser(){
+
+    }
+
+    public SysUser(Integer sysAdminId, String adminName, String adminPassword, Integer active, Integer sysAdminRoleType, String sysAdminRoles, String createTime, Integer sysType, String invitationCode, String businessName, String businessAddress, String businessPhone, String businessContactPerson, String businessInfo, Double businessDistributionRatio) {
+        this.sysAdminId = sysAdminId;
+        this.adminName = adminName;
+        this.adminPassword = adminPassword;
+        this.active = active;
+        this.sysAdminRoleType = sysAdminRoleType;
+        this.sysAdminRoles = sysAdminRoles;
+        this.createTime = createTime;
+        this.sysType = sysType;
+        this.invitationCode = invitationCode;
+        this.businessName = businessName;
+        this.businessAddress = businessAddress;
+        this.businessPhone = businessPhone;
+        this.businessContactPerson = businessContactPerson;
+        this.businessInfo = businessInfo;
+        this.businessDistributionRatio = businessDistributionRatio;
+    }
 
     public Integer getSysAdminId() {
         return sysAdminId;
@@ -72,11 +93,11 @@ public class SysUser {
         this.sysAdminRoles = sysAdminRoles;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 

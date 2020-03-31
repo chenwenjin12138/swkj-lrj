@@ -30,10 +30,19 @@ public interface ISysManagementService {
      */
     SysUser findAccountByAdminName(String adminName);
 
-
     /**
      * 后台 添加系统用户
      */
-    Integer addSysUser(SysUser sysUser);
+    SysUser addSysUser(SysUser sysUser);
+    /**
+     * 通过ID查询系统用户信息
+     */
+    SysUser findSysUserById(String sysAdminId);
 
+    /**
+     * 更新系统用户
+     * @param sysUser
+     * @return
+     */
+    Integer updateSysUser(SysUser sysUser);
 }

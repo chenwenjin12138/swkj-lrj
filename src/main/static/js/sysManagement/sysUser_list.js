@@ -38,17 +38,8 @@ $(document).ready(function() {
 
 	/** 角色下拉框加载* */
 	selectValidityRole();
-	/** 初始化表单条件* */
-	/*initQueryForm($("#admin_query"));*/
 	/** 加载列表* */
 	list("admin/list", $("#admin_query"), grid);
-
-	/** 编辑按钮事件触发* */
-	$("#edit").live("click", function() {
-		var url = $(this).attr("url");
-		/** 带上条件编辑条件和查询条件* */
-		location.href = url + "&" + $('#admin_query').serialize();
-	});
 
 	/**
 	 * 启用账户按钮事件绑定执行方法

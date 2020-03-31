@@ -9,10 +9,14 @@ import pojo.SysRole;
 import pojo.SysUser;
 import service.ISysManagementService;
 import service.ISysUserInfoService;
+import util.DateUtil;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import static util.DateUtil.DEFAULT_DATE_TIME;
 
 /**
  * @author : cwj
@@ -49,14 +53,25 @@ public class SysManagementServiceImpl implements ISysManagementService {
     }
 
     @Override
-    public Integer addSysUser(SysUser sysUser) {
+    public SysUser addSysUser(SysUser sysUser) {
         //添加系统用户
         SysUser sysUserNew = new SysUser();
         sysUserNew.setAdminName(sysUser.getAdminName());
         sysUserNew.setAdminPassword(sysUser.getAdminPassword());
         sysUserNew.setActive(1);
         sysUserNew.setSysAdminRoles(sysUser.getSysAdminRoles());
-        sysUserNew.setCreateTime(new Date());
-        return sysManagementMapper.insertSysUser(sysUser);
+        sysUserNew.setCreateTime(DateUtil.toOracleTime(new Date()));
+         sysManagementMapper.insertSysUser(sysUserNew);
+         return sysUserNew;
+    }
+
+    @Override
+    public SysUser findSysUserById(String sysAdminId) {
+        return sysManagementMapper.getSysUserById(sysAdminId);
+    }
+
+    @Override
+    public Integer updateSysUser(SysUser sysUser) {
+        return sysManagementMapper.updateSysUser(sysUser);
     }
 }

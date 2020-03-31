@@ -1,6 +1,7 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@ include file="/template/template-top.jsp"%>
-<%@ include file="/template/template-left.jsp"%>
+<%@ include file="../index/index-top.jsp"%>
+<%@ include file="../index/index-left.jsp"%>
 <!-- BEGIN PAGE -->
 <div id="main-content">
 	<!-- BEGIN PAGE CONTAINER-->
@@ -94,7 +95,7 @@
 										<input type="text" class="input-block-level"
 											placeholder="请单击选择权限" name="role_right" readonly="readonly"
 											id="authority_select" />
-										<%@ include file="/template/template-menu-tree.jsp"%>
+										<%@ include file="../sysManagement/sys-menu-tree.jsp"%>
 									</div>
 								</div>
 							</div>
@@ -123,12 +124,39 @@
 								</div>
 							</div>
 						</div>
-
-
 					</form>
 					<!-- BEGIN BASIC PORTLET-->
 					<div class="widget blue" id="grid_array_parent">
-						<div id="grid_array"></div>
+						<div id="grid_array">
+							<table width="100%">
+								<caption><img src="images/sysManagement/table.png" width="15px">角色列表</caption>
+								<thead align="center" border="1px">
+								<tr>
+									<td>序号</td>
+									<td>选择</td>
+									<td>状态</td>
+									<td>角色名</td>
+									<td>角色描述</td>
+									<td>权限</td>
+									<td>操作</td>
+								</tr>
+								</thead>
+								<tbody  align="center" border="0.5px">
+								<c:forEach items="${roleList}" var="role">
+									<tr >
+										<td>1</td>
+										<td><input type='checkbox'/></td>
+										<td>${role.active}</td>
+										<td>${role.roleName}</td>
+										<td>${role.roleDescride}</td>
+										<td>${role.sysRoleAuthoritys}</td>
+										<td><button class='btn btn-small btn-info' rowIndex='ui.rowIndxPage' name='role-edit'>编辑</button></td>
+									</tr>
+								</c:forEach>
+								</tbody>
+								<tfoot></tfoot>
+							</table>
+						</div>
 					</div>
 					<!-- END BASIC PORTLET-->
 				</div>
@@ -139,6 +167,6 @@
 	<!-- END PAGE CONTAINER-->
 </div>
 <!-- END PAGE -->
-<%@ include file="/template/template-footer.jsp"%>
-<script type="text/javascript" src="<%=basePath%>business-js/base.js"></script>
-<script src="<%=basePath%>business-js/role/list.js"></script>
+<%@ include file="../index/index-footer.jsp"%>
+<script type="text/javascript" src="js/sysManagement/base.js"></script>
+<script src="js/sysManagement/sysRole_list.js"></script>

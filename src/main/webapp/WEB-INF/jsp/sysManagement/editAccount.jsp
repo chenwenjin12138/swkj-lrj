@@ -1,6 +1,7 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ include file="/template/template-top.jsp"%>
-<%@ include file="/template/template-left.jsp"%>
+<%@ include file="../index/index-top.jsp"%>
+<%@ include file="../index/index-left.jsp"%>
 
 <!-- page content -->
 <div id="main-content">
@@ -41,8 +42,8 @@
 											<label class="control-label">用户名：</label>
 											<div class="controls positionfu">
 												<input class="input-block-level" id="adminName"
-													readonly="readonly" name="adminName"> <input
-													type="hidden" name="sysAdminId" id="sysAdminId">
+													readonly="readonly" name="adminName" value="${sysUser.adminName}"> <input
+													type="hidden" name="sysAdminId" id="sysAdminId" value="${sysUser.sysAdminId}">
 											</div>
 										</div>
 										<div class="span6">
@@ -50,9 +51,13 @@
 											<div class="controls">
 												<select id="active" name="active" class="input-block-level"
 													tabindex="1">
+													<c:if test="${sysUser.active=='1'}">
+														<option value="1" selected="selected">启用</option>
+													</c:if>
+													<c:if test="${sysUser.active=='0'}">
+														<option value="1" selected="selected">禁用</option>
+													</c:if>
 													<option value="">请选择用户状态</option>
-													<option value="1">启用</option>
-													<option value="0">禁用</option>
 												</select>
 											</div>
 										</div>
@@ -92,7 +97,7 @@
 							<i class="icon-check"></i> 保 存
 						</button>
 						<button
-							onclick="javascript:window.location.href='<%=basePath%>admin/init-list?unfolder=admin-init-list'+getReturnURLparam()"
+							onclick="javascript:window.location.href='toAccountManangemet'"
 							class="btn " type="button">
 							<i class=" icon-share"></i> 返 回
 						</button>
@@ -104,7 +109,7 @@
 		<!-- form ends -->
 	</div>
 </div>
-<%@ include file="/template/template-footer.jsp"%>
-<script type="text/javascript" src="<%=basePath%>business-js/admin/common.js"></script>
-<script type="text/javascript" src="<%=basePath%>business-js/base.js"></script>
-<script type="text/javascript" src="<%=basePath%>business-js/admin/edit.js"></script>
+<%@ include file="../index/index-footer.jsp"%>
+<script type="text/javascript" src="js/sysManagement/common.js"></script>
+<script type="text/javascript" src="js/sysManagement/base.js"></script>
+<script type="text/javascript" src="js/sysManagement/edit.js"></script>

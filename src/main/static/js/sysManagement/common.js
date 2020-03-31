@@ -19,18 +19,43 @@ function selectValidityRole() { // 待抽象公用
 	)
 }
 
-function submit(url, form, returnUrl) {
+function add(url, form, returnUrl) {
 	$.getJSON(
 		""+url,
         form.serialize(),
 		function (date) {
 			if(date.errorMsg == "success"){
-				window.location.href = returnUrl;
+					alert("添加成功！");
+                    window.location.href = returnUrl;
 			}else {
-				alert("提交失败");
+				alert("添加失败");
 			}
         }
 	)
-	
+}
+
+/**
+ * 通用数据更新保存AJAX方法(POST)
+ *
+ * @param uri
+ *            表单提交的地址
+ * @param form
+ *            表单jquery对象
+ * @param returnUri
+ *            返回列表页面地址
+ */
+function edit(url, form, returnUrl) {
+    $.getJSON(
+        ""+url,
+        form.serialize(),
+        function (date) {
+            if(date.errorMsg == "success"){
+                alert("更新成功！");
+                window.location.href = returnUrl;
+            }else {
+                alert("更新失败");
+            }
+        }
+    )
 }
 
