@@ -34,31 +34,7 @@ function delImg(filePath) {
 	return bool;
 }
 
-/**
- * 通用数据更新保存AJAX方法(POST)
- *
- * @param uri
- *            表单提交的地址
- * @param form
- *            表单jquery对象
- * @param returnUri
- *            返回列表页面地址
- */
-function edit(uri, form, returnUri) {
-	$.post(basePath + uri, form.serialize(), function(data, status) {
-		if (status == Constant.AJAXSTATUSSUCCESS) {
-			if (data.flag == Constant.SUCCESS) {
-				msg(data.message, 2, 1, function() {
-					location.href = basePath + returnUri
-				});
-			} else {
-				msg(data.message, 2, 2);
-			}
-		} else {
-			msg("系统异常!", 2, 2);
-		}
-	}, "json");
-}
+
 
 /**
  * 批量删除

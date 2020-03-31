@@ -34,4 +34,17 @@ public interface ISysManagementMapper {
      */
     Integer insertSysUser(SysUser sysUser);
 
+    /**
+     * 通过Id查询系统 用户
+     * @param sysAdminId
+     * @return
+     */
+    SysUser getSysUserById(String sysAdminId);
+
+    /**
+     * 更新系统用户信息
+     * @param sysUser
+     * @return
+     */
+    Integer updateSysUser(SysUser sysUser);
 }

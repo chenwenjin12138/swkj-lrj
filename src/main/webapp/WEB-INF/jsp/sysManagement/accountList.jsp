@@ -123,7 +123,7 @@
 								<td>${account.adminName}</td>
 								<td>${account.sysAdminRoles}</td>
 								<td>${account.createTime}</td>
-								<td><button id="editAccountById" class="btn btn-small btn-info" onclick="">编辑</button></td>
+								<td><a href="toEditSysUser?sysAdminId=${account.sysAdminId}"><button id="btn_toEditAccount" class="btn btn-small btn-info">编辑</button></a></td>
 							</tr>
 						</c:forEach>
 						</tbody>
@@ -137,4 +137,4 @@
 <%@ include file="../index/index-footer.jsp"%>
 <script type="text/javascript" src="js/sysManagement/common.js"></script>
 <script type="text/javascript" src="js/sysManagement/base.js"></script>
-<script type="text/javascript" src="js/sysManagement/list.js"></script>
+<script type="text/javascript" src="js/sysManagement/sysUser_list.js"></script>

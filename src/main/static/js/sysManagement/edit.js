@@ -7,26 +7,6 @@ $.ajaxSetup({
 /** ***********************************全局对象设置****************************************************************** */
 
 /** ***********************************js方法声明****************************************************************** */
-
-/** 初始化化数据到页面* */
-function initAdmin() {
-	var sysAdminId = getURLParamsByKey("sysAdminId");// 获取URL参数
-	$.get(basePath + "admin/find", {
-		sysAdminId : sysAdminId
-	}, function(data, status) {
-		if (status == Constant.AJAXSTATUSSUCCESS) {
-			/** 编辑数据回写表单* */
-			$("#sysAdminId").val(data.sysAdminId);
-			$("#adminName").val(data.adminName);
-			$("#active").val(data.active);
-			$("#sysAdminRoleType").find("option[value='" + data.sysAdminRoleType + "']").attr("selected", true);
-		} else {
-			msg("数据获取失败!", 2, 2);
-		}
-	}, "json");
-
-}
-
 /** 校验* */
 $("#frm-edit-admin").validate({
 	rules : {
@@ -61,8 +41,6 @@ $("#frm-edit-admin").validate({
 $(document).ready(function() {
 	/** 角色加载下拉选项* */
 	selectValidityRole();
-	/** 初始化编辑表单数据* */
-	initAdmin();
 	/**
 	 * 保存按钮事件绑定
 	 */
@@ -76,7 +54,7 @@ $(document).ready(function() {
 			}
 
 			/** 调用通用的编辑方法* */
-			edit("admin/edit", $("#frm-edit-admin"), "admin/init-list?unfolder=admin-init-list" + getReturnURLparam());
+			edit("editSysUser", $("#frm-edit-admin"), "toAccountManangemet");
 		}
 
 	});

@@ -42,7 +42,7 @@ public class SysManagementController {
      * 系统角色页面
      * @return
      */
-    @RequestMapping(value = "toRoleManagement",method = {RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value = "/toRoleManagement",method = {RequestMethod.GET,RequestMethod.POST})
     public String RoleManagement(HttpServletRequest request){
         List<SysRole> roleList = sysManagementService.findRoleList();
         request.setAttribute("roleList",roleList);
@@ -61,7 +61,20 @@ public class SysManagementController {
     }
 
     /**
-     * 账号添加页面
+     *  查询系统角色(所有)
+     */
+    @RequestMapping(value = "/selectRoleList",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public Map<String,Object> findSysRoleList(HttpServletRequest request){
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("errorMsg", "success");
+        List<SysRole> roleList = sysManagementService.findRoleList();
+        resultMap.put("resultDate", roleList);
+        return resultMap;
+    }
+
+    /**
+     * 账号(系统用户)添加页面
      */
     @RequestMapping(value = "/toAddAccount",method = {RequestMethod.GET,RequestMethod.POST})
     public String toAddAccount(){
@@ -71,7 +84,7 @@ public class SysManagementController {
     /**
      * 检查 用户是否存在
      */
-    @RequestMapping(value = "checkAccountIsExist",method = {RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value = "/checkAccountIsExist",method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
     public Map<String,Object> checkAccountIsExist(String adminName){
         Map<String, Object> resultMap = new HashMap<String,Object>();
@@ -91,7 +104,9 @@ public class SysManagementController {
     @ResponseBody
     public Map<String,Object> addSysUser(SysUser sysUser){
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        Integer sysAdminId = sysManagementService.addSysUser(sysUser);
+        SysUser sysUserNew = sysManagementService.addSysUser(sysUser);
+        //调用了插入数据传回自增的Id  被注入到插入对象中了
+        Integer sysAdminId = sysUserNew.getSysAdminId();
         if(sysAdminId !=null || sysAdminId!=0){
             resultMap.put("errorMsg","success");
         }else {
@@ -101,16 +116,29 @@ public class SysManagementController {
     }
 
     /**
-     *  查询系统角色(所有)
+     * 系统用户编辑页面
      */
-    @RequestMapping(value = "selectRoleList",method = {RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value = "/toEditSysUser",method = {RequestMethod.GET,RequestMethod.POST})
+    public String toEditSysUser(String sysAdminId,HttpServletRequest request){
+        SysUser sysUser = sysManagementService.findSysUserById(sysAdminId);
+        request.setAttribute("sysUser",sysUser);
+        return "sysManagement/editAccount";
+    }
+    /**
+     * 更新系统用户信息
+     */
+    @RequestMapping(value = "/editSysUser",method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
-    public Map<String,Object> findSysRoleList(HttpServletRequest request){
+    public Map<String,Object> editSysUser(SysUser sysUser){
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        resultMap.put("errorMsg", "success");
-        List<SysRole> roleList = sysManagementService.findRoleList();
-        resultMap.put("resultDate", roleList);
+
+        //更新数据后返回 受影响的行数
+        Integer updateNum = sysManagementService.updateSysUser(sysUser);
+        if(updateNum == 1){
+            resultMap.put("errorMsg","success");
+        }else {
+            resultMap.put("errorMsg", "更新用户失败");
+        }
         return resultMap;
     }
-
 }

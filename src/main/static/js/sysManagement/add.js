@@ -77,7 +77,7 @@ $(document).ready(function() {
 			/** 密码加密* */
 			$("input[name='adminPassword']").val($.md5($("input[name='adminPassword']").val()));
 			/** 调用通用保存方法* */
-			submit("addSysUser", $("#frm-add-admin"), "toAccountManangemet");
+			add("addSysUser", $("#frm-add-admin"), "toAccountManangemet");
 		}
 
 	});
