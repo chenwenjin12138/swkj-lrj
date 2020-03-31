@@ -19,7 +19,7 @@ import java.util.List;
  * @date 2020/3/20 14:28
  */
 @Controller
-@RequestMapping("/item")
+/*@RequestMapping("/item")*/
 public class ItemController {
     @Resource
     private IItemService itemService;
@@ -34,9 +34,9 @@ public class ItemController {
      */
     @RequestMapping(value = "/init-add", method = RequestMethod.GET)
     public String initAdd() {
-        System.out.println("进入请求:item/init-add");
+        System.out.println("进入请求:item/initN-add");
 
-        return "item/add";
+        return "/item/add";
     }
 
     /**

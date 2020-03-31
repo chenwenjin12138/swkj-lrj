@@ -1,47 +1,52 @@
 package controller.file;
 
-import com.alibaba.fastjson.JSON;
-import com.mysql.jdbc.Messages;
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGEncodeParam;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
-import common.Constant;
-import common.Result;
-import net.coobird.thumbnailator.Thumbnails;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-
-import util.RandomUtil;
-import util.ZipUtils;
-
-
-import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
-
 import java.util.Iterator;
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import com.mysql.jdbc.Messages;
+import common.Constant;
+import common.Result;
+import net.coobird.thumbnailator.Thumbnails;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import com.alibaba.fastjson.JSON;
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGEncodeParam;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
+import util.RandomUtil;
+import util.ZipUtils;
 
 /**
- * @author Lxh
- * @date 2020/3/26 9:35
+ *
+ * <b>项目名称</b>：lanrenxiyi<br>
+ * <b>类名称</b>：FileUploadController<br>
+ * <b>类描述</b>：此类为文件上传处理controller类<br>
+ * <b>创建人</b>：SAM QZL<br>
+ * <b>创建时间</b>：2015-10-26 下午3:39:56<br>
+ * <b>修改人</b>：SAM QZL<br>
+ * <b>修改时间</b>：2015-10-26 下午3:39:56<br>
+ * <b>修改备注</b>：<br>
+ * @author SAM QZL<br>
+ * @version 1.0
+ *
  */
 @Controller
 @RequestMapping("/file-upload")
 public class FileUploadController {
+
     /**
      * <b>apkUpload</b>：(apk包上传)<br>
      * <b>TODO</b>：(需通过ajaxGET请求该接口)<br>
@@ -50,7 +55,9 @@ public class FileUploadController {
      *
      * @param request
      *            请求对象<br>
+     *            上传类型:ABOUTUS,HELP,LAW<br>
      * @return Result<br>
+     * @Exception<br>
      * @author SAM QZL
      * @throws Exception
      */
@@ -433,7 +440,7 @@ class ImgCompress {
      */
     public void resizeByHeight(int h) throws IOException {
 
-        int w = width * h / height;
+        int w = (int) (width * h / height);
         resize(w, h);
     }
 

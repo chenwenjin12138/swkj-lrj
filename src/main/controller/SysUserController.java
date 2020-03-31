@@ -88,13 +88,12 @@ public class SysUserController{
             System.out.println("认证成功了！。。。。。。。");
             resultMap.put("errorCode", 0);
             resultMap.put("errorTip","main");
-            return resultMap;
         } else {
             token.clear();
             resultMap.put("errorCode", 6);
             resultMap.put("errorTip","登录失败,请联系客服人员！");
-            return  resultMap;
         }
+        return resultMap;
     }
 
 }

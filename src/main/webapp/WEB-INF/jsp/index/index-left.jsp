@@ -70,11 +70,11 @@
 						<span class="arrow"></span> </a>
 					<ul class="sub">
 						<li id="item-category-init-list"><a class=""
-							href="item-category/init-list?unfolder=item-category-init-list">商品分类管理</a>
+							href="init-cat-list">商品分类管理</a>
 						</li>
-						<li id="item-init-list"><a class="" href="item/init-list?unfolder=item-init-list">商品信息管理</a>
+						<li id="item-init-list"><a class="" href="init-list">商品信息管理</a>
 						</li>
-						<li id="item-message-list"><a class="" href="item-message/init-list?unfolder=item-message-list">商品公告管理</a>
+						<li id="item-message-list"><a class="" href="initlist">商品公告管理</a>
 						</li>
 					</ul></li>
 

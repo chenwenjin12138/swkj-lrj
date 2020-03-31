@@ -16,7 +16,7 @@ import java.util.List;
  * @date 2020/3/24 10:03
  */
 @Controller
-@RequestMapping("/item-category")
+//@RequestMapping("/item-category")
 public class ItemCatController {
     @Resource
     private IItemCatService itemCatService;
@@ -29,7 +29,7 @@ public class ItemCatController {
      * @Exception<br>
      * @author SAM QZL
      */
-    @RequestMapping(value = "/init-list")
+    @RequestMapping(value = "/init-cat-list")
     public String initList() {
 
         return "/item-category/list";
@@ -42,7 +42,7 @@ public class ItemCatController {
      * @Exception<br>
      * @author lxh
      */
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/cat-list", method = RequestMethod.GET)
     @ResponseBody
     public List<AppItemCategoryEntity> findAll() {
         return itemCatService.findAll();
@@ -57,7 +57,7 @@ public class ItemCatController {
      * @Exception<br>
      * @author lxh
      */
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/cat-add", method = RequestMethod.POST)
     @ResponseBody
     public Result addItemCat(AppItemCategoryEntity appItemCategoryEntity){
         return itemCatService.addItemCat(appItemCategoryEntity);
@@ -72,7 +72,7 @@ public class ItemCatController {
      * @Exception<br>
      * @author lxh
      */
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @RequestMapping(value = "/cat-edit", method = RequestMethod.POST)
     @ResponseBody
     public Result updateItemCat(AppItemCategoryEntity appItemCategoryEntity){
         return itemCatService.updateItemCat(appItemCategoryEntity);

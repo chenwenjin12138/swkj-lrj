@@ -20,7 +20,7 @@ import java.util.Map;
  * @date 2020/3/24 11:21
  */
 @Controller
-@RequestMapping("/item-message")
+//@RequestMapping("/item-message")
 public class ItemMessageController {
     @Resource
     private IItemMessageService itemMessageService;
@@ -32,7 +32,7 @@ public class ItemMessageController {
      * @Exception<br>
      * @author WR
      */
-    @RequestMapping(value = "/init-list", method = RequestMethod.GET)
+    @RequestMapping(value = "/initlist", method = RequestMethod.GET)
     public String initList() {
 
         return "/item-message/list";
@@ -46,7 +46,7 @@ public class ItemMessageController {
      * @author WR
      */
 
-    @RequestMapping(value = "/init-add", method = RequestMethod.GET)
+    @RequestMapping(value = "/initadd", method = RequestMethod.GET)
     public String initAdd() {
 
         return "/item-message/add";
@@ -59,7 +59,7 @@ public class ItemMessageController {
      * @Exception<br>
      * @author SAM QZL
      */
-    @RequestMapping(value = "/init-edit", method = RequestMethod.GET)
+    @RequestMapping(value = "/initedit", method = RequestMethod.GET)
     public String initEdit() {
 
         return "/item-message/edit";
@@ -73,7 +73,7 @@ public class ItemMessageController {
      * @throws Exception
      * @author WR
      */
-    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @RequestMapping(value = "/meslist", method = RequestMethod.POST)
     @ResponseBody
     public List<ItemMessage> findAll(){
         return itemMessageService.findAll();
