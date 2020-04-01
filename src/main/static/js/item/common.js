@@ -231,6 +231,47 @@ $(document).ready(
 				});
 			});
 
+
+			function getReturnURLparam() {
+
+				/** 获取?后的参数字符串* */
+				var search = (location.search.split("?"))[1];
+				/** 如果存在继续处理* */
+				if (search) {
+					/** 获取每组参数* */
+					var entrys = search.split("&");
+					/** 过滤后的参数* */
+					var param = "&";
+					if (entrys && entrys.length > 0) {
+
+						var index = 0;
+
+						/** 迭代获取每组参数* */
+						for ( var k in entrys) {
+
+							/** 参数名* */
+							var key = (entrys[k].split("="))[0];
+							/** 参数值* */
+							var value = (entrys[k].split("="))[1];
+							/** 过滤unfolder* */
+							if (key != "unfolder") {
+								if (index != 0) {
+									param += "&";
+								}
+								param += key + "=" + value;
+								index++;
+							}
+
+						}
+
+					}
+					return param;
+
+				} else {
+					return "";
+				}
+
+			}
 			$("#itemCategoryName").click(function() {
 				$("#itemCateGory_Tree_div").show();
 			});

@@ -172,7 +172,7 @@
 						<button id="btn-cancel" class="btn btn-warning" type="reset">
 							<i class="icon-reply-all"> </i> 重 置
 						</button>
-						<button onclick="javascript:window.location.href='item/init-list?unfolder=item-init-list'+getReturnURLparam()"
+						<button onclick="javascript:window.location.href='init-list'"
 							class="btn " type="button">
 							<i class=" icon-share"> </i> 返 回
 						</button>
@@ -191,6 +191,6 @@
 <!--file upload-->
 <script type="text/javascript" src="js/item/jquery.uploadify.min.js"></script>
 <script type="text/javascript" src="js/item/common.js"></script>
-<script type="text/javascript" src="js/item/base.js"></script>
+<script type="text/javascript" src="js/sysManagement/base.js"></script>
 <script type="text/javascript" src="js/item/addHot.js"></script>
 <script src="js/item/WdatePicker.js"></script>

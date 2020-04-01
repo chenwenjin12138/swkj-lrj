@@ -21,7 +21,7 @@ var operate = Constant.EDIT;// 操作对象 1代表编辑,0 代表 新增
  * @return null
  */
 function list() {
-	$.get(basePath + "item-category/list", {}, function(data, status) {
+	$.get(basePath + "cat-list", {}, function(data, status) {
 		if (status == Constant.AJAXSTATUSSUCCESS) {
 			initTree(data);
 		} else {
@@ -101,7 +101,7 @@ function initAdd() {
  * 特殊新增方法
  */
 function add() {
-	$.post(basePath + "item-category/add", $("#item-category-form").serialize(), function(data, status) {
+	$.post(basePath + "cat-add", $("#item-category-form").serialize(), function(data, status) {
 		if (status == Constant.AJAXSTATUSSUCCESS) {
 			if (data.flag == Constant.SUCCESS) {
 				msg(data.message, 2, 1);
@@ -119,7 +119,7 @@ function add() {
  * 特殊编辑方法
  */
 function edit() {
-	$.post(basePath + "item-category/edit", $("#item-category-form").serialize(), function(data, status) {
+	$.post(basePath + "cat-edit", $("#item-category-form").serialize(), function(data, status) {
 		if (status == Constant.AJAXSTATUSSUCCESS) {
 			if (data.flag == Constant.SUCCESS) {
 				msg(data.message, 2, 1);

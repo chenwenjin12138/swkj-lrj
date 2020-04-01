@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ include file="../index/index-top.jsp"%>
 <%@ include file="../index/index-left.jsp"%>
@@ -114,7 +115,51 @@
 		<div class="row-fluid">
 			<div class="span12">
 				<div class="widget blue" id="grid_array_parent">
-					<div id="grid_array"></div>
+					<div id="grid_array">
+						<table width="100%">
+							<caption><img src="images/sysManagement/table.png" width="15px">角色列表</caption>
+							<thead align="center" border="1px">
+								<tr>
+									<td>序号</td>
+									<td>选择</td>
+									<td>状态</td>
+									<td>名称</td>
+									<td>类别</td>
+									<td>单位</td>
+									<td>价格(元)</td>
+									<td>洗衣时长</td>
+									<td>图片</td>
+									<td>商品说明</td>
+									<td>创建时间</td>
+									<td>更新时间</td>
+									<td>操作</td>
+
+								</tr>
+							</thead>
+							<tbody  align="center" border="0.5px">
+							<c:forEach items="${appItemList}" var="appItem">
+								<tr>
+									<td>1</td>
+									<td><input type="checkbox"/></td>
+									<td>${appItem.isShow}</td>
+									<td>${appItem.itemName}</td>
+									<td>${appItem.categoryName}</td>
+									<td>${appItem.itemUnit}</td>
+									<td>${appItem.price}</td>
+									<td>${appItem.duration}</td>
+									<td>${appItem.picture}</td>
+									<td>${appItem.commodityExplain}</td>
+									<td>${appItem.createTime}</td>
+									<td>${appItem.updateTime}</td>
+									<td>
+										<a href="init-edit"><button>编辑</button></a>
+										<a href="init-addHot" ><button>设置为爆品</button></a>
+									</td>
+								</tr>
+							</c:forEach>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -208,7 +253,7 @@
 </link>
 <!--autocomplete-->
 <script type="text/javascript" src="js/item/common.js"></script>
-<script type="text/javascript" src="js/base.js"></script>
+<script type="text/javascript" src="js/sysManagement/base.js"></script>
 <script src="js/item/WdatePicker.js"></script>
 <script type="text/javascript" src="js/item/list.js"></script>
 <script type="text/javascript">

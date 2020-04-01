@@ -12,6 +12,8 @@ import service.item.IItemService;
 import service.item.vo.AppItem;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,11 +61,6 @@ public class ItemController {
      * @Exception<br>
      * @author SAM QZL
      */
-    @RequestMapping(value = "/init-list", method = RequestMethod.GET)
-    public String initList() {
-
-        return "/item/list";
-    }
     /**
      *
      * @功能说明:跳转新增爆品页面
@@ -120,7 +117,7 @@ public class ItemController {
      * @Exception<br>
      * @author lxh
      */
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @RequestMapping(value = "/edit", method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
     public Result updateItem(AppItemEntity appItemEntity){
 
@@ -137,16 +134,17 @@ public class ItemController {
      * @author lxh
      * @throws Exception
      */
-    @RequestMapping(value = "/list", method = RequestMethod.POST)
-    @ResponseBody
-    public List<AppItem> findAllItem(AppItemEntity appItemEntity){
-        return itemService.findAllItem(appItemEntity);
+    @RequestMapping(value = "/init-list", method = RequestMethod.GET)
+    //@ResponseBody
+    public String findAllItem(AppItemEntity appItemEntity, HttpServletRequest request){
+        List<AppItem> appItemList = itemService.findAllItem(appItemEntity);
+        request.setAttribute("appItemList",appItemList);
+        return "/item/list";
     }
     /**
      * <b>changeState</b>：(见父类方法)<br>
      * <b>TODO</b>：(需通过ajaxGET请求该接口)<br>
      * <b>url</b>：(basePath../item/changeState)<br>
-     * @param IDS 编号集合<br>
      * @param state 状态码<br>
      * @return Result<br>
      * @Exception<br>
@@ -180,7 +178,6 @@ public class ItemController {
     /**
      *
      * @功能说明:根据id删除记录
-     * @param appItemId
      * @return
      * @返回类型:Result
      * @方法名称:delById

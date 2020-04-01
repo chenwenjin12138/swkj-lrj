@@ -222,7 +222,7 @@
 	src="js/item/jquery.uploadify.min.js"></script>
 <script type="text/javascript"
 	src="js/item/common.js"></script>
-<script type="text/javascript" src="js/base.js"></script>
+<script type="text/javascript" src="js/sysManagement/base.js"></script>
 <script type="text/javascript"
 	src="js/item/edit.js"></script>
 <script src="js/item/WdatePicker.js"></script>

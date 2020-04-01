@@ -51,7 +51,7 @@ $("#frm-itemHot").validate({
 
 /**
  * 绘制表格
- * 
+ *
  * @param data
  */
 function grid(data) {
@@ -274,7 +274,7 @@ $(document).ready(function() {
 	 */
 	$("#invoke").click(function() {
 		if (validateRowSelection($grid)) {
-			changeState(Constant.SHOW, "appItemId", "item/changeState", $grid);
+			changeState(Constant.SHOW, "appItemId", "changeState", $grid);
 			list("list", $("#item_query"), grid);// 重新加载数据
 		}
 	});
@@ -283,7 +283,7 @@ $(document).ready(function() {
 	 */
 	$("#forbidden").click(function() {
 		if (validateRowSelection($grid)) {
-			changeState(Constant.HIDDEN, "appItemId", "item/changeState", $grid);
+			changeState(Constant.HIDDEN, "appItemId", "changeState", $grid);
 			list("list", $("#item_query"), grid);// 重新加载数据
 		}
 	});
@@ -345,7 +345,7 @@ $(document).ready(function() {
 						alert(data.message);
 						/** 页面初始化加载列表* */
 						$("#hot_model").modal("hide");
-						list("item/list", $("#item_query"), grid);
+						list("list", $("#item_query"), grid);
 					}else{
 						alert("程序异常!");
 					}
@@ -362,7 +362,7 @@ $(document).ready(function() {
 		if(a){
 			//alert($(this).attr("appItemId"));
 			$.ajax({
-				url:basePath+'item/delById',
+				url:basePath+'delById',
 				data:{
 					appItemId:$(this).attr("appItemId")
 				},
@@ -375,7 +375,7 @@ $(document).ready(function() {
 					if(data.flag==0){
 						alert(data.message);
 						/** 页面初始化加载列表* */
-						list("item/list", $("#item_query"), grid);
+						list("list", $("#item_query"), grid);
 					}else{
 						alert("程序异常!");
 					}
