@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
+import dto.ReturnData;
 import mapper.IAppUserMapper;
 import org.springframework.stereotype.Service;
 import pojo.user.AppUser;
@@ -40,9 +41,9 @@ public class AppUserServiceImpl implements IAppUserService {
 
 
     @Override
-    public boolean updateAppUser(AppUser appUser) {
+    public ReturnData<Boolean> updateAppUser(AppUser appUser) {
         UpdateWrapper<AppUser> updateWrapper = new UpdateWrapper<AppUser>();
         updateWrapper.eq(COLUMN_APP_USER_ID, appUser.getAppUserId());
-        return iAppUserMapper.update(appUser, updateWrapper) > 0 ? true : false;
+        return new ReturnData<Boolean>(ReturnData.SUCCESS_CODE,"操作成功",iAppUserMapper.update(appUser, updateWrapper) > 0 ? true : false);
     }
 }

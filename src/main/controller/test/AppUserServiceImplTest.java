@@ -39,7 +39,7 @@ public class AppUserServiceImplTest {
         appUser.setAppUserId(1);
         appUser.setCreateTime("2020-04-21 10:18:37");
         appUser.setActive(1);
-        boolean r = iAppUserService.updateAppUser(appUser);
+        boolean r = iAppUserService.updateAppUser(appUser).getObject();
         assertTrue(r);
 
     }

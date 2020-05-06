@@ -1,18 +1,9 @@
 package service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageInfo;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import dto.RequestDTO;
-import org.springframework.web.bind.annotation.RequestBody;
-import pojo.SysAuthority;
-import pojo.SysRole;
-import pojo.SysUser;
+import dto.ReturnData;
 import pojo.user.AppUser;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author : fl
@@ -33,5 +24,5 @@ public interface IAppUserService {
      * @param appUser
      * @return
      */
-    boolean updateAppUser(AppUser appUser);
+    ReturnData<Boolean> updateAppUser(AppUser appUser);
 }

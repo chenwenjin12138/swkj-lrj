@@ -2,6 +2,7 @@ package controller;
 
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
+import dto.ReturnData;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +34,7 @@ public class AppUserController {
      * @return
      */
     @PostMapping("/updateAppUser")
-    public boolean updateAppUser(@RequestBody AppUser appUser){
+    public ReturnData<Boolean> updateAppUser(@RequestBody AppUser appUser){
         return iAppUserService.updateAppUser(appUser);
     }
 

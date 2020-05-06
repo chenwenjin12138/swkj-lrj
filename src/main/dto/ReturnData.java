@@ -1,0 +1,32 @@
+package dto;
+
+import com.sun.corba.se.spi.presentation.rmi.IDLNameTranslator;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+/**
+ * @author fl
+ * @Description: 返回数据结构
+ * @date 2020/5/6 0006上午 10:10
+ */
+@Data
+@AllArgsConstructor
+public class ReturnData<T>{
+    /**
+     * 返回状态码
+     */
+    private Integer code;
+
+    public static final int SUCCESS_CODE = 200;
+    public static final int Fail_CODE = 500;
+    /**
+     * 返回消息
+     */
+    private String message;
+
+    /**
+     * 返回实体
+     */
+    private T  Object;
+
+}
