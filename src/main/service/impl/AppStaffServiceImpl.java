@@ -33,11 +33,15 @@ public class AppStaffServiceImpl implements IAppStaffService {
         QueryWrapper<AppStaff> queryWrapper = new QueryWrapper();
         AppStaff staff = objectMapper.convertValue(requestDTO.getObject(), AppStaff.class);
         queryWrapper.eq(COLUMN_IS_DELETED, NOT_DELETED);
+        queryWrapper.eq(COLUMN_STAFF_USER,staff.getStaffUser());
         if (staff != null && StringUtils.isNotEmpty(staff.getTelephone())) {
             queryWrapper.like(COLUMN_TELEPHONE, staff.getTelephone());
         }
         if (staff != null && StringUtils.isNotEmpty(staff.getTelephone())) {
             queryWrapper.like(COLUMN_REAL_NAME, staff.getRealName());
+        }
+        if (staff != null && StringUtils.isNotEmpty(staff.getStaffUser())) {
+            queryWrapper.like(COLUMN_STAFF_USER, staff.getStaffUser());
         }
         PageHelper.startPage(requestDTO.getPage(),requestDTO.getSize());
         List<AppStaff> list = iAppStaffMapper.selectList(queryWrapper);

@@ -2,6 +2,7 @@ package controller;
 
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
+import dto.ReturnData;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pojo.Balance;
@@ -14,7 +15,7 @@ import service.IBalanceService;
  * @describe : app用户管理控制类
  * @date : 2020-4-27
  */
-@RestController
+@RestController("/balance")
 @AllArgsConstructor
 public class BalanceController {
     private IBalanceService iBalanceService;
@@ -28,5 +29,6 @@ public class BalanceController {
     public Balance findByUserId(@RequestParam String userId) {
         return iBalanceService.findByUserId(userId);
     }
+
 
 }

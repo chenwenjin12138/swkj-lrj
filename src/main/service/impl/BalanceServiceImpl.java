@@ -1,25 +1,16 @@
 package service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import dto.RequestDTO;
-import lombok.AllArgsConstructor;
-import mapper.IAppUserMapper;
+import dto.ReturnData;
 import mapper.IBalanceMapper;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pojo.Balance;
-import pojo.user.AppUser;
-import service.IAppUserService;
 import service.IBalanceService;
 
-import java.util.List;
-
-import static pojo.user.AppUser.COLUMN_APP_USER_ID;
-import static pojo.user.AppUser.COLUMN_USER_PHONE;
+import static dto.ReturnData.Fail_CODE;
+import static dto.ReturnData.SUCCESS_CODE;
 
 
 @Service
@@ -33,5 +24,29 @@ public class BalanceServiceImpl implements IBalanceService {
     @Override
     public Balance findByUserId(String userId) {
        return iBalanceMapper.selectById(userId);
+    }
+
+    @Transactional( rollbackFor = Exception.class)
+    @Override
+    public ReturnData<Boolean> updateBalance(Balance balance) {
+        UpdateWrapper<Balance> updateWrapper = new UpdateWrapper<Balance>();
+        if (StringUtils.isEmpty(balance.getUserId().toString())) {
+            return new ReturnData<Boolean>(Fail_CODE,"操作失败,用户id不能为空",false);
+        }
+        Balance balanceOld = this.findByUserId(balance.getUserId().toString());
+        if (balanceOld == null) {
+            balance.setCreateTime(com.lanrenxiyi.util.DateUtils.getNowDateTime());
+            balance.setLastModifyTime(com.lanrenxiyi.util.DateUtils.getNowDateTime());
+            try {
+                iBalanceMapper.insert(balance);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new ReturnData(Fail_CODE,"操作失败",iBalanceMapper.update(balance, updateWrapper) > 0 ? true : false);
+
+            }
+            return new ReturnData(SUCCESS_CODE,"操作成功",iBalanceMapper.update(balance, updateWrapper) > 0 ? true : false);
+        }
+        updateWrapper.eq(Balance.COLUMN_USER_ID, balance.getUserId());
+        return new ReturnData(SUCCESS_CODE,"操作成功",iBalanceMapper.update(balance, updateWrapper) > 0 ? true : false);
     }
 }

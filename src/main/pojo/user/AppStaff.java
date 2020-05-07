@@ -56,6 +56,7 @@ public class AppStaff {
      */
     public static final String COLUMN_TELEPHONE = "telephone";
     public static final String COLUMN_REAL_NAME = "real_name";
+    public static final String COLUMN_STAFF_USER = "staff_user";
     public static final String COLUMN_APP_STAFF_ID = "app_staff_id";
     public static final String COLUMN_IS_DELETED = "is_deleted";
 
