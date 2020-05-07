@@ -26,80 +26,31 @@
 
   <dependencies>
     <dependency>
-      <groupId>net.coobird</groupId>
-      <artifactId>thumbnailator</artifactId>
-      <version>0.4.8</version>
-    </dependency>
-
-    <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
-    <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>fastjson</artifactId>
-      <version>1.2.62</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-configuration-processor</artifactId>
-      <optional>true</optional>
-    </dependency>
-
-    <dependency>
-      <groupId>tk.mybatis</groupId>
-      <artifactId>mapper-spring-boot-starter</artifactId>
-      <version>2.1.2</version>
-    </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>1.18.12</version>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
+      <version>4.12</version>
+
     </dependency>
     <!--添加springBoot的启动器（坐标）jar包的集合，44个启动器
     springBoot-start-web:支持全栈式的web开发，包括Tomcat和springMVC等jar
     springBoot-start—jdbc：支持spring以jdbc的方式操作数据库
     springBoot-start-redis:支持Redis键值存储的操作-->
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
-      <version>2.2.5.RELEASE</version>
     </dependency>
-
-    <dependency>
-      <groupId>com.dangdang</groupId>
-      <artifactId>config-toolkit</artifactId>
-      <version>3.3.0-RELEASE</version>
-    </dependency>
-
-    <!--添加springBoot的启动器（坐标）-->
-
 
     <!--Mybaits 启动器坐标-->
     <dependency>
-      <groupId>org.mybatis.spring.boot</groupId>
-      <artifactId>mybatis-spring-boot-starter</artifactId>
-      <version>1.1.1</version>
-    </dependency>
-    <!--添加jsp视图层技术的依赖坐标（两个）-->
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>jstl</artifactId>
-      <version>1.2</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.tomcat.embed</groupId>
-      <artifactId>tomcat-embed-jasper</artifactId>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-boot-starter</artifactId>
+      <version>3.0.3</version>
     </dependency>
     <!--mysql 数据库驱动-->
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.41</version>
     </dependency>
     <!--druid 数据库连接池-->
     <dependency>
@@ -137,7 +88,37 @@
       <version>2.2.1</version>
       <classifier>jdk15</classifier>
     </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.16.18</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.pagehelper</groupId>
+     <artifactId>pagehelper-spring-boot-starter</artifactId>
+     <version>1.2.3</version>
+     </dependency>
+
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>1.9.3</version>
+    </dependency>
+
   </dependencies>
+
 
   <build>
     <finalName>lrj</finalName>
@@ -174,15 +155,5 @@
         </plugin>
       </plugins>
     </pluginManagement>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>7</source>
-          <target>7</target>
-        </configuration>
-      </plugin>
-    </plugins>
   </build>
 </project>
