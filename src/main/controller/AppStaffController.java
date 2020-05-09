@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import pojo.user.AppStaff;
-import pojo.user.AppUser;
 import service.IAppStaffService;
-import service.IAppUserService;
+
 
 /**
  * @author : fl
@@ -20,6 +19,7 @@ import service.IAppUserService;
 @RestController
 @AllArgsConstructor
 public class AppStaffController {
+
     private IAppStaffService iAppStaffService;
 
     /**
@@ -28,7 +28,7 @@ public class AppStaffController {
      */
     @PostMapping("/appStaffPageByParam")
     public PageInfo<AppStaff> getAppUser(@RequestBody RequestDTO requestDTO){
-       return iAppStaffService.getAppUserPageByParam(requestDTO);
+        return iAppStaffService.getAppUserPageByParam(requestDTO);
     }
 
     /**

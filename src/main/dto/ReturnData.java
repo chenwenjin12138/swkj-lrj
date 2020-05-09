@@ -3,6 +3,8 @@ package dto;
 import com.sun.corba.se.spi.presentation.rmi.IDLNameTranslator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * @author fl
@@ -10,7 +12,9 @@ import lombok.Data;
  * @date 2020/5/6 0006上午 10:10
  */
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
+@Accessors(chain = true)
 public class ReturnData<T>{
     /**
      * 返回状态码
@@ -28,5 +32,6 @@ public class ReturnData<T>{
      * 返回实体
      */
     private T  Object;
+
 
 }
