@@ -121,7 +121,7 @@ public class RandomUtil {
      */
     public static long generateOrderId() {
 
-        String sorderId = com.lanrenxiyi.util.DateUtils.getCurrentDateToNum() + RandomUtil.generateRandomNumber(8);
+        String sorderId = DateUtils.getCurrentDateToNum() + RandomUtil.generateRandomNumber(8);
         return Long.parseLong(sorderId);
     }
 

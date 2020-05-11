@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pojo.Balance;
 import service.IBalanceService;
+import util.DateUtils;
 
 import static dto.ReturnData.Fail_CODE;
 import static dto.ReturnData.SUCCESS_CODE;
@@ -35,8 +36,8 @@ public class BalanceServiceImpl implements IBalanceService {
         }
         Balance balanceOld = this.findByUserId(balance.getUserId().toString());
         if (balanceOld == null) {
-            balance.setCreateTime(com.lanrenxiyi.util.DateUtils.getNowDateTime());
-            balance.setLastModifyTime(com.lanrenxiyi.util.DateUtils.getNowDateTime());
+            balance.setCreateTime(DateUtils.getNowDateTime());
+            balance.setLastModifyTime(DateUtils.getNowDateTime());
             try {
                 iBalanceMapper.insert(balance);
             } catch (Exception e) {
