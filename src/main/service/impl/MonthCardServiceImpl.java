@@ -53,6 +53,7 @@ public class MonthCardServiceImpl implements IMonthCardService {
      */
     @Override
     public ReturnData<Boolean> addMonthCard(MonthCard monthCard) {
+        monthCard.setCreateTime(DateUtils.formatDate(new Date()));
         if (monthCardMapper.insertSelective(monthCard) > 0) {
             return returnData.setCode(SUCCESS_CODE).setMessage("月卡添加成功").setObject(true);
         }

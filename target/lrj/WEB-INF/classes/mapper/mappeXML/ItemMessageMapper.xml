@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.ItemMessageMapper">
+	<!--留着以后用  -->
+	<!-- 查询全部 -->
+	<select id="findAll" resultType="java.util.Map">
+	SELECT
+	a.item_message_Id AS
+	itemMessageId,
+	a.item_message AS itemMessage,
+	a.active,
+	b.category_name AS
+	itemCategoryName,
+	create_time AS createTime,
+	a.item_category_id AS itemCategoryId
+	FROM
+	app_item_message a
+	LEFT JOIN app_item_category b
+	ON a.item_category_id = b.app_item_category_id
+	</select>
+	<!-- 查询商品种类的id -->
+	<select id="getCategoryName" resultType="java.util.Map">
+		SELECT
+		     app_item_category_id AS itemCategoryId,
+			 category_name AS itemCategoryName
+		FROM
+		     app_item_category
+	</select>
+
+
+</mapper>
