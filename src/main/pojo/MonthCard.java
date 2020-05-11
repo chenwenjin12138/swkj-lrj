@@ -38,4 +38,6 @@ public class MonthCard extends Base {
     private Byte timeType;
     private String detail;
     private Float shareDicount;
+    private Integer appItemCategoryId;
+    private Integer categoryNum;
 }
