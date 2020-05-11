@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Data
 public class Balance {
 
-    @TableId("user_Id")
+    @TableId("user_id")
     private Integer userId;
     /**
      * 用户余额
@@ -35,4 +35,6 @@ public class Balance {
      * 创建时间
      */
     private String createTime = "";
+
+    public static final String COLUMN_USER_ID = "user_id";
 }

@@ -2,8 +2,10 @@ package service;
 
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
+import dto.ReturnData;
 import pojo.Balance;
 import pojo.user.AppUser;
+import pojo.user.SysAdmin;
 
 /**
  * @author : fl
@@ -18,5 +20,12 @@ public interface IBalanceService {
      * @return
      */
     Balance findByUserId(String userId);
+
+    /**
+     * 修改余额信息
+     * @param balance
+     * @return
+     */
+    ReturnData<Boolean> updateBalance(Balance balance);
 
 }

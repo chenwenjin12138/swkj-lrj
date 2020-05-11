@@ -1,4 +1,4 @@
-package util;
+package com.lanrenxiyi.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -6,10 +6,21 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * @author Lxh
- * @date 2020/3/23 9:49
+ * <b>项目名称</b>：lanrenxiyi<br>
+ * <b>类名称</b>：DateUtils<br>
+ * <b>类描述</b>：日期时间工具类。<br>
+ * <b>创建人</b>：SAM QZL<br>
+ * <b>创建时间</b>：2017-1-24 下午6:08:23<br>
+ * <b>修改人</b>：SAM QZL<br>
+ * <b>修改时间</b>：2017-1-24 下午6:08:23<br>
+ * <b>修改备注</b>：<br>
+ * @author SAM QZL<br>
+ * @version
+ * 
  */
 public class DateUtils {
+
+
     /**
      * 获得某一天之前的n天的年月日
      *
@@ -55,7 +66,7 @@ public class DateUtils {
      * <br>
      * <b>date_time:<br>
      * 2014-12-15 上午10:41:54</b>
-     *
+     * 
      * @author Sam
      * @param date
      * @return String
@@ -83,7 +94,7 @@ public class DateUtils {
      * <br>
      * <b>date_time:<br>
      * 2014-12-15 上午10:43:08</b>
-     *
+     * 
      * @author Sam
      * @param date
      * @return String
@@ -387,15 +398,14 @@ public class DateUtils {
         Date begin = formatStringToDate("2017-03-01", "yyyy-MM-dd");
         Date end = formatStringToDate("2017-03-26", "yyyy-MM-dd");
         Date now = formatStringToDate(formateDateWithoutTime(new Date()), "yyyy-MM-dd");
-
-
+        
+        
         System.out.println(now.compareTo(begin));
-
-
+        
+        
         System.out.println(getParamDateAfterNMonthDate("2017-8-1 00:00:00", -3));
         // System.out.println(getOneOfCurrentDateTime(Calendar.DAY_OF_MONTH));
         // System.out.println(daysBetween(formatStringToDate("2017-02-07 10:08:00"),formatStringToDate(getParamDateAfterNDays(getNowDateTime(),
         // 2*29))));
     }
-
 }

@@ -15,11 +15,10 @@ import service.IAppUserService;
  * @describe : app用户管理控制类
  * @date : 2020-4-27
  */
-@RestController
+@RestController("/appUser")
 @AllArgsConstructor
 public class AppUserController {
     private IAppUserService iAppUserService;
-
     /**
      * 分页查询所有app用户
      * @return

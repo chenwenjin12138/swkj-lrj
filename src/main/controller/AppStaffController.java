@@ -16,7 +16,7 @@ import service.IAppStaffService;
  * @describe : app用户管理控制类
  * @date : 2020-4-27
  */
-@RestController
+@RestController("/appStaff")
 @AllArgsConstructor
 public class AppStaffController {
 
