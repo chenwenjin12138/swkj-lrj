@@ -52,6 +52,7 @@ public class BusinessAdminServiceImpl implements IBusinessAdminService {
         if (businessAdmin != null && StringUtils.isNotEmpty(businessAdmin.getBusinessContactPerson())) {
             queryWrapper.like(COLUMN_BUSINESS_CONTACT_PERSON, businessAdmin.getBusinessContactPerson());
         }
+        queryWrapper.orderByDesc(COLUMN_CREATE_TIME);
         PageHelper.startPage(requestDTO.getPage(),requestDTO.getSize());
         List<SysAdmin> list = iBusinessAdminMapper.selectList(queryWrapper);
         return new PageInfo<SysAdmin>(list);

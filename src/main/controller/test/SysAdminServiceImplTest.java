@@ -1,5 +1,6 @@
 package controller.test;
 
+import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
 import dto.ReturnData;
 import org.junit.Test;
@@ -30,12 +31,15 @@ public class SysAdminServiceImplTest {
     public void getSysAdminPageByParam() {
         RequestDTO requestDTO = new RequestDTO();
         requestDTO.setPage(1);
-        requestDTO.setSize(2);
-        SysAdmin SysAdmin = new SysAdmin();
+        requestDTO.setSize(20);
+     /*   SysAdmin SysAdmin = new SysAdmin();
         SysAdmin.setBusinessPhone("18388204538");
         SysAdmin.setBusinessName("张三");
-        requestDTO.setObject(SysAdmin);
-        System.out.println(iBusinessAdminService.getBusinessAdminPageByParam(requestDTO));
+        requestDTO.setObject(SysAdmin);*/
+        PageInfo pageInfo = iBusinessAdminService.getBusinessAdminPageByParam(requestDTO);
+        for (Object or:pageInfo.getList()) {
+            System.out.println("数据:"+or.toString());
+        }
     }
 
     @Test
@@ -46,7 +50,7 @@ public class SysAdminServiceImplTest {
     public void addSysAdmin() {
         SysAdmin sysAdmin = new SysAdmin();
         sysAdmin.setBusinessPhone("18388202475");
-        sysAdmin.setBusinessName("开发第一家店");
+        sysAdmin.setBusinessName("开发第二家店");
         sysAdmin.setActive(0);
         sysAdmin.setAdminName("涪陵");
         sysAdmin.setAdminPassword("123456");

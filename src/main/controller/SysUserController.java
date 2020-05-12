@@ -86,6 +86,8 @@ public class SysUserController{
         }
         if (subject.isAuthenticated()) {
             System.out.println("认证成功了！。。。。。。。");
+            boolean b2 = subject.isPermitted( "系统后台管理" );   // 这个用户是否有某权限
+            System.out.println( b2 );
             resultMap.put("errorCode", 0);
             resultMap.put("errorTip","main");
         } else {

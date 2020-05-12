@@ -1,5 +1,8 @@
 package mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import pojo.SysAuthority;
@@ -15,19 +18,16 @@ import java.util.List;
  * @date : 2020-3-18
  */
 @Repository
-public interface ISysUserInfoMapper {
-    SysUser getUserInfoByLoginInfo(String userName);
+public interface ISysUserInfoMapper  {
 
     /**
-     *通过Id 查询角色
-     * @param roleId
+     * 查询用户
+     * @param userName
      * @return
      */
-    SysRole getRoleById(Integer roleId);
+    @Select("select * from sys_admin where admin_name=#{userName}")
+    SysUser getUserInfoByLoginInfo(@Param("userName") String userName);
 
-    /**
-     * 通过Id 查询权限
-     */
-    SysAuthority getAuthoritById(Integer sysAuthorityId);
+
 
 }

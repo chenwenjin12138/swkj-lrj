@@ -48,8 +48,7 @@ public class AppStaff {
      * 删除状态 1已删除 0 未删除
      */
     private int isDeleted = 0;
-    public static final int DELETED = 1;
-    public static final  int NOT_DELETED = 0;
+
 
     /**
      * 数据库字段名

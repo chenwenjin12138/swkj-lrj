@@ -30,11 +30,23 @@ public interface ISysUserInfoService {
     /**
      * 根据用户ID 查询用户角色
      */
-    SysRole getSysRoleByAdminId(Integer adminId);
+    SysRole getSysRoleByAdminId(int id);
+
 
     /**
-     * 根据角色ID 查询角色权限
+     * 根据角色ID查询角色权限
      */
     SysAuthority getAuthorityByRoleId(Integer roleId);
+
+
+    /**
+     * 获取所有用户角色
+     */
+    List<SysRole> getSysRole();
+
+    /**
+     * 获取所有菜单
+     */
+    List<SysAuthority> getAllSysAuthority();
 
 }

@@ -33,7 +33,6 @@ public class UserRealm extends AuthorizingRealm{
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-
         //获取用户真实对象
         SysUser sysUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
         //为权限控制提供真实数据
@@ -57,7 +56,7 @@ public class UserRealm extends AuthorizingRealm{
         String passWord = String.valueOf(token.getPassword());
 
         SysUser sysUser = sysUserInfoService.getUserInfoByLoginInfo(userName);
-        if(sysUser.getAdminName().equals(userName)){
+        if(sysUser != null && sysUser.getAdminName().equals(userName)){
             if(sysUser.getAdminPassword().equals(passWord)){
                 return new SimpleAuthenticationInfo(sysUser, sysUser.getAdminPassword(), this.getName());
             }else {

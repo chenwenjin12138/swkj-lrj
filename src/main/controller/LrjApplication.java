@@ -10,7 +10,9 @@ import tk.mybatis.spring.annotation.MapperScan;
 
 /**
  * @author : cwj
- * @describe : 懒人家项目启动类
+ * 74
+ * +-4
+ * @describe : 懒人家项目启动类1
  * @date : 2020-3-17
  */
 @SpringBootApplication

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @author fl
@@ -38,5 +39,6 @@ public class SysAdmin {
     public static final String COLUMN_BUSINESS_PHONE = "business_phone";
     public static final String COLUMN_BUSINESS_NAME = "admin_name";
     public static final String COLUMN_BUSINESS_CONTACT_PERSON = "business_distribution_ratio";
+    public static final String COLUMN_CREATE_TIME = "create_time";
 
 }
