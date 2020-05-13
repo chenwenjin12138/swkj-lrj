@@ -2,6 +2,8 @@ package pojo;
 
 import lombok.Data;
 
+import javax.persistence.Id;
+
 /**
  * @author fl
  * @descrip: 消息推送
@@ -30,4 +32,5 @@ public class AppPush {
 
 
     public static final String CREATE_TIME_COLUMN = "create_time";
+    public static final String APP_PUSH_ID_COLUMN = "app_push_id";
 }

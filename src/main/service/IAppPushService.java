@@ -14,7 +14,7 @@ import pojo.Order;
 public interface IAppPushService {
 
     /**
-     * 根据条件订单信息
+     * 获取推送消息
      * @param requestDTO 查询条件
      * @return
      */
@@ -22,10 +22,18 @@ public interface IAppPushService {
 
 
     /**
-     * 添加订单信息
+     * 添加推送信息
      * @param push
      * @return
      */
     ReturnData<Boolean> addPush(AppPush push) throws Exception;
+
+    /**
+     * 删除推送信息
+     * @param push
+     * @return
+     */
+    ReturnData<Boolean> deletePush(AppPush push) throws Exception;
+
 
 }
