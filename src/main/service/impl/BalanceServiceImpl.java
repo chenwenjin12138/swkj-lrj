@@ -39,15 +39,19 @@ public class BalanceServiceImpl implements IBalanceService {
             balance.setCreateTime(DateUtils.getNowDateTime());
             balance.setLastModifyTime(DateUtils.getNowDateTime());
             try {
-                iBalanceMapper.insert(balance);
+                if(iBalanceMapper.insert(balance)>0){
+                    return new ReturnData(SUCCESS_CODE,"操作成功",true);
+                }
+                return new ReturnData(Fail_CODE,"操作失败", false);
             } catch (Exception e) {
                 e.printStackTrace();
-                return new ReturnData(Fail_CODE,"操作失败",iBalanceMapper.update(balance, updateWrapper) > 0 ? true : false);
-
+                return new ReturnData(Fail_CODE,"操作失败服务异常", false);
             }
-            return new ReturnData(SUCCESS_CODE,"操作成功",iBalanceMapper.update(balance, updateWrapper) > 0 ? true : false);
         }
         updateWrapper.eq(Balance.COLUMN_USER_ID, balance.getUserId());
-        return new ReturnData(SUCCESS_CODE,"操作成功",iBalanceMapper.update(balance, updateWrapper) > 0 ? true : false);
+        if (iBalanceMapper.update(balance, updateWrapper) > 0) {
+            return new ReturnData(SUCCESS_CODE,"操作成功",true);
+        }
+        return new ReturnData(Fail_CODE,"操作失败", false);
     }
 }

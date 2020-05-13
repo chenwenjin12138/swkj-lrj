@@ -17,6 +17,7 @@ import util.RandomUtil;
 
 import java.util.List;
 
+import static dto.ReturnData.Fail_CODE;
 import static dto.ReturnData.SUCCESS_CODE;
 import static pojo.user.AppStaff.COLUMN_APP_STAFF_ID;
 import static pojo.user.SysAdmin.*;
@@ -62,14 +63,20 @@ public class BusinessAdminServiceImpl implements IBusinessAdminService {
     public ReturnData<Boolean> updateBusinessAdmin(SysAdmin businessAdmin) {
         UpdateWrapper<SysAdmin> updateWrapper = new UpdateWrapper<SysAdmin>();
         updateWrapper.eq(COLUMN_APP_STAFF_ID, businessAdmin.getSysAdminId());
-        return new ReturnData(SUCCESS_CODE,"操作成功",iBusinessAdminMapper.update(businessAdmin, updateWrapper) > 0 ? true : false);
+        if (iBusinessAdminMapper.update(businessAdmin, updateWrapper) > 0) {
+            return new ReturnData(SUCCESS_CODE,"操作成功", true);
+        }
+        return new ReturnData(Fail_CODE,"操作失败",false);
     }
 
     @Override
     public ReturnData<Boolean> addBusinessAdmin(SysAdmin businessAdmin) {
         businessAdmin.setCreateTime(DateUtils.getNowDateTime());
         businessAdmin.setInvitationCode("b" + RandomUtil.generateRandomString(10).toLowerCase());
-        return new ReturnData(SUCCESS_CODE,"操作成功",iBusinessAdminMapper.insert(businessAdmin) > 0 ? true : false);
+        if (iBusinessAdminMapper.insert(businessAdmin) > 0) {
+            return new ReturnData(SUCCESS_CODE,"操作成功", true);
+        }
+        return new ReturnData(Fail_CODE,"操作失败",false);
     }
 
 }

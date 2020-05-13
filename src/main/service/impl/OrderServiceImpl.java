@@ -16,6 +16,8 @@ import service.IOrderService;
 import java.util.List;
 
 import static common.Constant.NOT_DELETED;
+import static dto.ReturnData.Fail_CODE;
+import static dto.ReturnData.SUCCESS_CODE;
 import static pojo.Order.*;
 import static pojo.user.AppUser.COLUMN_APP_USER_ID;
 
@@ -58,7 +60,10 @@ public class OrderServiceImpl implements IOrderService {
     public ReturnData<Boolean> updateOrder(Order order) {
         UpdateWrapper<Order> updateWrapper = new UpdateWrapper<Order>();
         updateWrapper.eq(COLUMN_APP_USER_ID, order.getId());
-        return new ReturnData<Boolean>(ReturnData.SUCCESS_CODE,"操作成功",iOrderMapper.update(order, updateWrapper) > 0 ? true : false);
+        if (iOrderMapper.update(order, updateWrapper) > 0 ) {
+            return new ReturnData(SUCCESS_CODE,"操作成功", true);
+        }
+        return new ReturnData(Fail_CODE,"操作失败",false);
     }
 
 

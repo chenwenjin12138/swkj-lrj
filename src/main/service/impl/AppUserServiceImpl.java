@@ -44,6 +44,10 @@ public class AppUserServiceImpl implements IAppUserService {
     public ReturnData<Boolean> updateAppUser(AppUser appUser) {
         UpdateWrapper<AppUser> updateWrapper = new UpdateWrapper<AppUser>();
         updateWrapper.eq(COLUMN_APP_USER_ID, appUser.getAppUserId());
-        return new ReturnData<Boolean>(ReturnData.SUCCESS_CODE,"操作成功",iAppUserMapper.update(appUser, updateWrapper) > 0 ? true : false);
+        if (iAppUserMapper.update(appUser, updateWrapper) > 0 ) {
+            return new ReturnData<Boolean>(ReturnData.SUCCESS_CODE,"操作成功", true );
+        }
+        return new ReturnData<Boolean>(ReturnData.Fail_CODE,"操作失败", false);
+
     }
 }
