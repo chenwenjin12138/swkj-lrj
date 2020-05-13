@@ -16,7 +16,7 @@ import java.util.List;
 public interface IValueAddServicesService {
 
     /**
-     * 获取推送消息
+     * 查询
      * @param requestDTO 查询条件
      * @return
      */
@@ -40,10 +40,10 @@ public interface IValueAddServicesService {
 
     /**
      * 删除
-     * @param valueAddedServices
+     * @param id
      * @return
      */
-    ReturnData<Boolean> delete(ValueAddedServices valueAddedServices);
+    ReturnData<Boolean> delete(int id);
 
 
 }

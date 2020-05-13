@@ -65,9 +65,9 @@ public class ValueAddServicesServiceImpl  implements IValueAddServicesService {
     }
 
     @Override
-    public ReturnData<Boolean> delete(ValueAddedServices valueAddedServices) {
+    public ReturnData<Boolean> delete(int id) {
         QueryWrapper<ValueAddedServices> queryWrapper = new QueryWrapper();
-        queryWrapper.eq(VALUE_ADDED_SERVICES_ID_COLUMN,valueAddedServices.getValueAddedServicesId());
+        queryWrapper.eq(VALUE_ADDED_SERVICES_ID_COLUMN,id);
         try {
             if (valueAddServicesMapper.delete(queryWrapper) > 0) {
                 return new ReturnData(SUCCESS_CODE,"操作成功",true );

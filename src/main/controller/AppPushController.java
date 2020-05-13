@@ -6,6 +6,7 @@ import dto.ReturnData;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pojo.AppPush;
 import service.IAppPushService;
@@ -15,7 +16,8 @@ import service.IAppPushService;
  * @describe : 消息推送管理控制类
  * @date : 2020-5-13
  */
-@RestController("/appPush")
+@RestController
+@RequestMapping("/appPush")
 @AllArgsConstructor
 public class AppPushController {
     private IAppPushService appPushService;

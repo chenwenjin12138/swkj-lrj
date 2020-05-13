@@ -64,8 +64,6 @@ public class ValueAddServicesServiceImplTest {
 
     @Test
     public void delete() {
-        ValueAddedServices valueAddedServices = new ValueAddedServices();
-        valueAddedServices.setValueAddedServicesId(4);
-        assertTrue(valueAddServicesService.delete(valueAddedServices).getObject());
+        assertTrue(valueAddServicesService.delete(5).getObject());
     }
 }

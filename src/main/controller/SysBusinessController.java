@@ -6,6 +6,7 @@ import dto.ReturnData;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pojo.user.AppStaff;
 import pojo.user.SysAdmin;
@@ -17,7 +18,8 @@ import service.IBusinessAdminService;
  * @describe : app商家管理理控制类
  * @date : 2020-5-7
  */
-@RestController("/sysBusiness")
+@RestController
+@RequestMapping("/sysBusiness")
 @AllArgsConstructor
 public class SysBusinessController {
     private IBusinessAdminService iBusinessAdminService;
