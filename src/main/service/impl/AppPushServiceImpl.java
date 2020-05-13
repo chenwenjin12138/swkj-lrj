@@ -55,18 +55,26 @@ public class AppPushServiceImpl implements IAppPushService {
             return new ReturnData(SUCCESS_CODE,"推送失败",false);
         }*/
         push.setCreateTime(DateUtils.getNowDateTime());
-        if (appPushMapper.insert(push) > 0) {
-            return new ReturnData(SUCCESS_CODE,"操作成功",true );
+        try {
+            if (appPushMapper.insert(push) > 0) {
+                return new ReturnData(SUCCESS_CODE,"操作成功",true );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return new ReturnData(Fail_CODE,"操作失败",false );
     }
 
     @Override
-    public ReturnData<Boolean> deletePush(AppPush push) throws Exception {
+    public ReturnData<Boolean> deletePush(AppPush push){
         QueryWrapper<AppPush> queryWrapper = new QueryWrapper();
         queryWrapper.eq(APP_PUSH_ID_COLUMN,push.getAppPushId());
-        if (appPushMapper.delete(queryWrapper) > 0) {
-            return new ReturnData(SUCCESS_CODE,"操作成功",true );
+        try {
+            if (appPushMapper.delete(queryWrapper) > 0) {
+                return new ReturnData(SUCCESS_CODE,"操作成功",true );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return new ReturnData(Fail_CODE,"操作失败",false );
     }

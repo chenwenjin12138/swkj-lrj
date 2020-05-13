@@ -15,9 +15,9 @@ import service.IOrderCommentService;
 
 import java.util.List;
 
-import static pojo.Order.CREATE_TIME_COLUMN;
+import static dto.ReturnData.Fail_CODE;
+import static dto.ReturnData.SUCCESS_CODE;
 import static pojo.OrderComment.ID_COLUMN;
-import static pojo.user.AppUser.*;
 
 /**
  * @author fl
@@ -50,6 +50,9 @@ public class OrderCommentServiceImpl implements IOrderCommentService {
     public ReturnData<Boolean> updateOrder(OrderComment order) {
         UpdateWrapper<OrderComment> updateWrapper = new UpdateWrapper<OrderComment>();
         updateWrapper.eq(ID_COLUMN, order.getOrderCommentId());
-        return new ReturnData<Boolean>(ReturnData.SUCCESS_CODE,"操作成功",commentMapper.update(order, updateWrapper) > 0 ? true : false);
+        if (commentMapper.update(order, updateWrapper) > 0 ) {
+            return new ReturnData(SUCCESS_CODE,"操作成功", true);
+        }
+        return new ReturnData(Fail_CODE,"操作失败",false);
     }
 }

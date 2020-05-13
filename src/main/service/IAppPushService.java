@@ -26,14 +26,14 @@ public interface IAppPushService {
      * @param push
      * @return
      */
-    ReturnData<Boolean> addPush(AppPush push) throws Exception;
+    ReturnData<Boolean> addPush(AppPush push) ;
 
     /**
      * 删除推送信息
      * @param push
      * @return
      */
-    ReturnData<Boolean> deletePush(AppPush push) throws Exception;
+    ReturnData<Boolean> deletePush(AppPush push);
 
 
 }
