@@ -33,5 +33,5 @@ public interface IAppItemCatService {
      * @Author: LxH
      * @Date: 2020/5/8 17:53
      */
-    ReturnData<Balance> addAppItemCat(AppItemCat appItemCat);
+    ReturnData<Boolean> addAppItemCat(AppItemCat appItemCat);
 }

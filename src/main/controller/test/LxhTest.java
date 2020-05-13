@@ -1,16 +1,13 @@
 package controller.test;
 
-import mapper.IItemCatMapper;
-import mapper.IItemMapper;
-import mapper.IMonthCardMapper;
+import mapper.*;
 import org.apache.ibatis.session.RowBounds;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import pojo.AppItem;
-import pojo.AppItemCat;
-import pojo.MonthCard;
+import org.springframework.web.bind.annotation.RestController;
+import pojo.*;
 import tk.mybatis.mapper.entity.Example;
 import javax.annotation.Resource;
 import java.util.List;
@@ -32,14 +29,24 @@ public class LxhTest {
     @Resource
     private IMonthCardMapper monthCardMapper;
 
+    @Resource
+    private ISysUserInfoMapper sysUserInfoMapper;
+    @Resource
+    private ICardAndItemCatMapper cardAndItemCatMapper;
+
     @Test
     public void test(){
-        Example example = new Example(MonthCard.class);
+        AppItem appItem = new AppItem();
+        appItem.setItemName("test3");
+        int insert = itemMapper.insert(appItem);
+        System.out.println("加入"+insert);
+        System.out.println(appItem.getAppItemId());
+       /* Example example = new Example(MonthCard.class);
         Example.Criteria criteria = example.createCriteria().andEqualTo("name","家庭升级");
         List<MonthCard> monthCards = monthCardMapper.selectByExample(example);
         for (MonthCard monthCard : monthCards) {
             System.out.println(monthCard.toString());
-        }
+        }*/
         /*Example example = new Example(AppItem.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("appItemId",1).andEqualTo("itemCategoryId",6);

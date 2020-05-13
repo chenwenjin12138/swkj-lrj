@@ -2,6 +2,7 @@ package service;
 
 import dto.RequestDTO;
 import dto.ReturnData;
+import pojo.CardAndItemCat;
 import pojo.MonthCard;
 
 import java.util.List;
@@ -25,14 +26,14 @@ public interface IMonthCardService {
      * @Author: LxH
      * @Date: 2020/5/8 20:23
      */
-    ReturnData<Boolean> addMonthCard(MonthCard monthCard);
+    ReturnData<Boolean> addMonthCard(MonthCard monthCard,Integer[] appItemCategoryIds,Integer[] categoryNum);
 
     /**
      * @Description: 月卡更新
      * @Author: LxH
      * @Date: 2020/5/9 9:40
      */
-    ReturnData<Boolean> updateMonthCard(MonthCard monthCard);
+    ReturnData<Boolean> updateMonthCard(MonthCard monthCard,List<CardAndItemCat> cardAndItemCatList);
 
     /**
      * @Description: 设置月卡启用或禁用

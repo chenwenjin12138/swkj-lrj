@@ -1,11 +1,11 @@
 package controller.item;
 
-import com.sun.org.apache.regexp.internal.RE;
 import dto.RequestDTO;
 import dto.ReturnData;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import pojo.CardAndItemCat;
 import pojo.MonthCard;
 import service.IMonthCardService;
 
@@ -39,8 +39,8 @@ public class MonthCardController {
      * @Date: 2020/5/8 20:21
      */
     @RequestMapping("/addMonthCard")
-    public ReturnData<Boolean> addMonthCard(MonthCard monthCard){
-        return monthCardService.addMonthCard(monthCard);
+    public ReturnData<Boolean> addMonthCard(MonthCard monthCard,Integer[] appItemCategoryIds,Integer[] categoryNum){
+        return monthCardService.addMonthCard(monthCard,appItemCategoryIds,categoryNum);
     }
 
     /**
@@ -49,8 +49,8 @@ public class MonthCardController {
      * @Date: 2020/5/9 9:38
      */
     @RequestMapping("/updateMonthCard")
-    public ReturnData<Boolean> updateMonthCard(MonthCard monthCard){
-        return monthCardService.updateMonthCard(monthCard);
+    public ReturnData<Boolean> updateMonthCard(MonthCard monthCard, @RequestParam("cardAndItemCatList")List<CardAndItemCat> cardAndItemCatList){
+        return monthCardService.updateMonthCard(monthCard,cardAndItemCatList);
     }
 
     /**

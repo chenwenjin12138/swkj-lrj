@@ -1,5 +1,6 @@
 package mapper;
 
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import pojo.SysAuthority;
@@ -16,6 +17,7 @@ import java.util.List;
  */
 @Repository
 public interface ISysUserInfoMapper {
+    @Select("SELECT * FROM sys_admin WHERE adminName=#{userName}")
     SysUser getUserInfoByLoginInfo(String userName);
 
     /**

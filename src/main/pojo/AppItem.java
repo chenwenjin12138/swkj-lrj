@@ -5,9 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.annotation.Generated;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -23,6 +22,7 @@ import java.math.BigDecimal;
 public class AppItem extends Base{
     private static final long serialVersionUID = 7305778520915848839L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer appItemId;
     private Integer itemCategoryId;
     @Transient

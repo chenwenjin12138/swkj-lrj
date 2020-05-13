@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * @Description:
+ * @Description: 后台管理系统商品种类模块
  * @Author Lxh
  * @Date 2020/5/8 16:07
  */
@@ -48,7 +48,7 @@ public class AppItemCatController {
      * @Date: 2020/5/8 17:52
      */
     @RequestMapping("/addAppItemCat")
-    public ReturnData<Balance> addAppItemCat(AppItemCat appItemCat){
+    public ReturnData<Boolean> addAppItemCat(AppItemCat appItemCat){
         return appItemCatService.addAppItemCat(appItemCat);
     }
 }

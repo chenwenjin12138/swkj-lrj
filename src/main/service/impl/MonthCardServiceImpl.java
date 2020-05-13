@@ -1,12 +1,12 @@
 package service.impl;
 
-import com.sun.tools.javadoc.Start;
 import dto.RequestDTO;
 import dto.ReturnData;
+import mapper.ICardAndItemCatMapper;
 import mapper.IMonthCardMapper;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
-import pojo.Base;
+import pojo.CardAndItemCat;
 import pojo.MonthCard;
 import service.IMonthCardService;
 import tk.mybatis.mapper.entity.Example;
@@ -29,6 +29,9 @@ public class MonthCardServiceImpl implements IMonthCardService {
     @Resource
     private IMonthCardMapper monthCardMapper;
 
+    @Resource
+    private ICardAndItemCatMapper cardAndItemCatMapper;
+
     private ReturnData returnData = new ReturnData();
 
     /**
@@ -40,6 +43,8 @@ public class MonthCardServiceImpl implements IMonthCardService {
     @Override
     public List<MonthCard> getMcPageByParam(RequestDTO requestDTO) {
         Example example = new Example(MonthCard.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("status",1);
         int start = requestDTO.getPage()*requestDTO.getSize();
         RowBounds rowBounds = new RowBounds(start,requestDTO.getSize());
         return monthCardMapper.selectByExampleAndRowBounds(example,rowBounds);
@@ -52,9 +57,17 @@ public class MonthCardServiceImpl implements IMonthCardService {
      * @Date: 2020/5/8 20:23
      */
     @Override
-    public ReturnData<Boolean> addMonthCard(MonthCard monthCard) {
+    public ReturnData<Boolean> addMonthCard(MonthCard monthCard,Integer[] appItemCategoryIds,Integer[] categoryNum ) {
         monthCard.setCreateTime(DateUtils.formatDate(new Date()));
+        if (appItemCategoryIds.length!=categoryNum.length) {
+            return returnData.setCode(Fail_CODE).setMessage("月卡添加失败,参数不匹配").setObject(false);
+        }
         if (monthCardMapper.insertSelective(monthCard) > 0) {
+            for (int i = 0; i < appItemCategoryIds.length; i++) {
+                CardAndItemCat cardAndItemCat = new CardAndItemCat();
+                cardAndItemCat.setCardId(monthCard.getCardId()).setAppItemCategoryId(appItemCategoryIds[i]).setCategoryNum(categoryNum[i]);
+                cardAndItemCatMapper.insertSelective(cardAndItemCat);
+            }
             return returnData.setCode(SUCCESS_CODE).setMessage("月卡添加成功").setObject(true);
         }
         return returnData.setCode(Fail_CODE).setMessage("月卡添加失败").setObject(false);
@@ -67,9 +80,15 @@ public class MonthCardServiceImpl implements IMonthCardService {
      * @Date: 2020/5/9 9:40
      */
     @Override
-    public ReturnData<Boolean> updateMonthCard(MonthCard monthCard) {
+    public ReturnData<Boolean> updateMonthCard(MonthCard monthCard,List<CardAndItemCat> cardAndItemCatList) {
+        for (CardAndItemCat cardAndItemCat : cardAndItemCatList) {
+            CardAndItemCat cardAndItemCatNew = cardAndItemCatMapper.selectByPrimaryKey(cardAndItemCat.getId());
+            cardAndItemCatNew.setCategoryNum(cardAndItemCat.getCategoryNum()).setAppItemCategoryId(cardAndItemCat.getAppItemCategoryId()).setCardId(cardAndItemCat.getCardId());
+            int i = cardAndItemCatMapper.updateByPrimaryKeySelective(cardAndItemCatNew);
+            System.out.println("修改"+i);
+        }
         monthCard.setUpdateTime(DateUtils.formatDate(new Date()));
-        if (monthCardMapper.insertSelective(monthCard) > 0) {
+        if (monthCardMapper.updateByPrimaryKeySelective(monthCard) > 0) {
             return returnData.setCode(SUCCESS_CODE).setMessage("月卡更新成功").setObject(true);
         }
         return returnData.setCode(Fail_CODE).setMessage("月卡更新失败").setObject(false);
@@ -102,7 +121,9 @@ public class MonthCardServiceImpl implements IMonthCardService {
         Example.Criteria criteria = example.createCriteria().andEqualTo("name",name);
         List<MonthCard> monthCards = monthCardMapper.selectByExample(example);
         for (MonthCard monthCard : monthCards) {
-            return monthCard;
+            if (monthCard!=null) {
+                return monthCard;
+            }
         }
         return null;
     }

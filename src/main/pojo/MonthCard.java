@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
@@ -25,7 +27,8 @@ public class MonthCard extends Base {
 
     /**就是id*/
     @Id
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer cardId;
 
     /**下面这些认不得*/
     private Integer count;
@@ -38,6 +41,5 @@ public class MonthCard extends Base {
     private Byte timeType;
     private String detail;
     private Float shareDicount;
-    private Integer appItemCategoryId;
-    private Integer categoryNum;
+    private String itemJson;
 }

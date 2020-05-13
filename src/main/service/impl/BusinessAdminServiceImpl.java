@@ -12,6 +12,7 @@ import mapper.IBusinessAdminMapper;
 import org.springframework.stereotype.Service;
 import pojo.user.SysAdmin;
 import service.IBusinessAdminService;
+import util.DateUtils;
 import util.RandomUtil;
 
 import java.util.List;
@@ -65,7 +66,7 @@ public class BusinessAdminServiceImpl implements IBusinessAdminService {
 
     @Override
     public ReturnData<Boolean> addBusinessAdmin(SysAdmin businessAdmin) {
-        businessAdmin.setCreateTime(com.lanrenxiyi.util.DateUtils.getNowDateTime());
+        businessAdmin.setCreateTime(DateUtils.getNowDateTime());
         businessAdmin.setInvitationCode("b" + RandomUtil.generateRandomString(10).toLowerCase());
         return new ReturnData(SUCCESS_CODE,"操作成功",iBusinessAdminMapper.insert(businessAdmin) > 0 ? true : false);
     }

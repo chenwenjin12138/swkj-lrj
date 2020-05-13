@@ -13,6 +13,7 @@ import service.IAppItemService;
 import tk.mybatis.mapper.entity.Example;
 import util.DateUtils;
 
+
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
@@ -44,6 +45,8 @@ public class AppItemServiceImpl implements IAppItemService {
     @Override
     public PageInfo<AppItem> getAppItemPageByParam(RequestDTO requestDTO) {
         Example example = new Example(AppItem.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("isShow",1);
         int start = requestDTO.getPage() * requestDTO.getSize();
         RowBounds rowBounds = new RowBounds(start, requestDTO.getSize());
         List<AppItem> appItems = itemMapper.selectByExampleAndRowBounds(example, rowBounds);
