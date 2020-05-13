@@ -1,11 +1,14 @@
-package util;
+package service.impl;
 
 import dto.ReturnUpLoad;
-
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import service.IUpLoadService;
+import vo.Local;
 
-import javax.annotation.Resource;
 import javax.imageio.ImageIO;
+import javax.print.attribute.standard.MediaSize;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -13,27 +16,32 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * @Description: 图片上传工具返回信息类
+ * @Description:
  * @Author Lxh
- * @Date 2020/5/12 14:15
+ * @Date 2020/5/13 14:22
  */
+@Service
+public class UpLoadServiceImpl implements IUpLoadService {
 
-public class UpLoadUtil {
+    /*@Value("${img.localDir}")
+    /*
+    项目结构不对无法使用@Value
+    * **/
+    //private String localDir;
 
-
-    private static String localDir;
-
-    private static String localDirUrl;
-
-
+    //@Value("${img.localDirUrl}")
+    //private String localDirUrl;
     /**
-     *
-     * 1.判断文件是否为图片  jpg|png|gif
-     * 2.防止恶意程序             高度/宽度
-     * 3.图片分文件保存          yyyy/MM/dd/
-     * 4.防止重名                      UUID
+     * @param: uploadFile
+     * @Description: 通用图片上传
+     * @Author: LxH
+     * @Date: 2020/5/13 14:26
      */
-    public static ReturnUpLoad fileUpload(MultipartFile uploadFile) {
+    @Override
+    public ReturnUpLoad fileUpload(MultipartFile uploadFile) {
+        Local local = new Local();
+        String localDir = local.getLocalDir();
+        String localDirUrl = local.getLocalDirUrl();
         ReturnUpLoad returnUpLoad = new ReturnUpLoad();
         //1.判断文件是否为图片类型   abc.jpg
         String fileName = uploadFile.getOriginalFilename();
@@ -101,6 +109,4 @@ public class UpLoadUtil {
 
         return returnUpLoad;
     }
-
-
 }

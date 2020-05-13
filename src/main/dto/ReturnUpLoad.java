@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 
 /**
  * @Description:
@@ -14,6 +17,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
+@Component
+@PropertySource("classpath:/info/info.properties")
 public class ReturnUpLoad {
     /**判断是否有误*/
     private Integer error=0;
@@ -23,9 +28,13 @@ public class ReturnUpLoad {
     private Integer width;
     /**图片高度*/
     private Integer height;
+    @Value("${img.localDir}")
+    private String localDir;
+    @Value("${img.localDirUrl}")
+    private String localDirUrl;
 
     /**简化操作,可以提供静态方法*/
     public static ReturnUpLoad fail() {
-        return new ReturnUpLoad(1, null, null, null);
+        return new ReturnUpLoad(1, null, null, null,null,null);
     }
 }

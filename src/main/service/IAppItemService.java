@@ -26,14 +26,12 @@ public interface IAppItemService {
      */
     ReturnData<Boolean> addAppItem(AppItem item);
 
-
     /**
      * @Description: 修改商品信息
      * @Author: LxH
      * @Date: 2020/5/8 10:58
      */
     ReturnData<Boolean> updateAppItem(AppItem item);
-
 
     /**
      * @Description: 根据条件删除用户

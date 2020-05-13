@@ -47,7 +47,7 @@ public class AppItemCatServiceImpl implements IAppItemCatService {
     }
 
     /**
-     * @param appItemCat
+     * @param: appItemCat
      * @Description: 添加商品种类信息
      * @Author: LxH
      * @Date: 2020/5/8 17:53

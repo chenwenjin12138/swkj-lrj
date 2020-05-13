@@ -123,10 +123,11 @@
       <version>1.9.3</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/cn.jpush.api/jpush-client -->
     <dependency>
       <groupId>cn.jpush.api</groupId>
       <artifactId>jpush-client</artifactId>
-      <version>3.3.9</version>
+      <version>3.4.3</version>
     </dependency>
 
   </dependencies>

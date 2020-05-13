@@ -7,6 +7,7 @@ import mapper.IItemCatMapper;
 import mapper.IItemMapper;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pojo.AppItem;
 import pojo.AppItemCat;
 import service.IAppItemService;
@@ -62,6 +63,7 @@ public class AppItemServiceImpl implements IAppItemService {
      * @Author: LxH
      * @Date: 2020/5/8 10:39
      */
+    @Transactional
     @Override
     public ReturnData<Boolean> addAppItem(AppItem item) {
         item.setIsShow(1).setCreateTime(DateUtils.formatDate(new Date()));
@@ -76,6 +78,7 @@ public class AppItemServiceImpl implements IAppItemService {
      * @Author: LxH
      * @Date: 2020/5/8 10:58
      */
+    @Transactional
     @Override
     public ReturnData<Boolean> updateAppItem(AppItem item) {
         item.setUpdateTime(DateUtils.formatDate(new Date()));
@@ -91,6 +94,7 @@ public class AppItemServiceImpl implements IAppItemService {
      * @Author: LxH
      * @Date: 2020/5/8 11:19
      */
+    @Transactional
     @Override
     public ReturnData<Boolean> deleteAppItemById(Integer[] appItemIds) {
         for (Integer appItemId : appItemIds) {
