@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @ToString
@@ -21,7 +23,7 @@ public class AppUser {
      * 状态 1:可用，启用 0：不可用，禁用
      */
     private Integer active;
-    private String createTime = "";
+    private String createTime;
     private Integer isYearsService;
 
     /**
@@ -35,4 +37,5 @@ public class AppUser {
      */
     public static final String COLUMN_APP_USER_ID = "app_user_id";
     public static final String COLUMN_USER_PHONE = "user_phone";
+    public static final String COLUMN_CREATE_TIME = "create_time";
 }

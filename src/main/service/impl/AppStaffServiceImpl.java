@@ -13,10 +13,13 @@ import org.springframework.stereotype.Service;
 import pojo.user.AppStaff;
 import service.IAppStaffService;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
+import static dto.ReturnData.Fail_CODE;
 import static dto.ReturnData.SUCCESS_CODE;
 import static pojo.user.AppStaff.*;
+import static common.Constant.NOT_DELETED;
 
 
 @Service
@@ -53,11 +56,17 @@ public class AppStaffServiceImpl implements IAppStaffService {
     public ReturnData updateAppStaff(AppStaff appStaff) {
         UpdateWrapper<AppStaff> updateWrapper = new UpdateWrapper<AppStaff>();
         updateWrapper.eq(COLUMN_APP_STAFF_ID, appStaff.getAppStaffId());
-        return new ReturnData(SUCCESS_CODE,"操作成功",iAppStaffMapper.update(appStaff, updateWrapper) > 0 ? true : false);
+        if (iAppStaffMapper.update(appStaff, updateWrapper) > 0 ) {
+            return new ReturnData(SUCCESS_CODE,"操作成功", true);
+        }
+        return new ReturnData(Fail_CODE,"操作失败",false);
     }
 
     @Override
     public ReturnData addAppStaff(AppStaff appStaff) {
-        return new ReturnData(SUCCESS_CODE,"操作成功",iAppStaffMapper.insert(appStaff) > 0 ? true : false);
+        if (iAppStaffMapper.insert(appStaff) > 0) {
+            return new ReturnData(SUCCESS_CODE,"操作成功", true);
+        }
+        return new ReturnData(Fail_CODE,"操作失败",false);
     }
 }

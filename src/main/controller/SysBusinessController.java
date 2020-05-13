@@ -49,5 +49,4 @@ public class SysBusinessController {
         return iBusinessAdminService.addBusinessAdmin(sysAdmin);
     }
 
-
 }

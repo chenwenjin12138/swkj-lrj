@@ -1,10 +1,13 @@
 package pojo;
 
+import lombok.ToString;
+
 /**
  * @author : cwj
  * @describe : 管理后台角色
  * @date : 2020-3-18
  */
+@ToString
 public class SysRole {
     private Integer sysRoleId; // 角色ID
     private String roleName = ""; // 角色名称
@@ -51,4 +54,7 @@ public class SysRole {
     public void setActive(Integer active) {
         this.active = active;
     }
+
+    public static final String SYS_ROLE_ID_COLUMN = "sys_role_id";
+    public static final String SYS_AUTHORITY_ID_COLUMN = "sys_authority_id";
 }

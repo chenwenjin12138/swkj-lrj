@@ -15,8 +15,7 @@ import service.IAppUserService;
 
 import java.util.List;
 
-import static pojo.user.AppUser.COLUMN_APP_USER_ID;
-import static pojo.user.AppUser.COLUMN_USER_PHONE;
+import static pojo.user.AppUser.*;
 
 
 @Service
@@ -34,6 +33,7 @@ public class AppUserServiceImpl implements IAppUserService {
         if (appUser != null && StringUtils.isNotEmpty(appUser.getUserPhone())) {
             queryWrapper.like(COLUMN_USER_PHONE, appUser.getUserPhone());
         }
+        queryWrapper.orderByDesc(COLUMN_CREATE_TIME);
         PageHelper.startPage(requestDTO.getPage(),requestDTO.getSize());
         List<AppUser> list = iAppUserMapper.selectList(queryWrapper);
         return new PageInfo<AppUser>(list);
@@ -44,6 +44,10 @@ public class AppUserServiceImpl implements IAppUserService {
     public ReturnData<Boolean> updateAppUser(AppUser appUser) {
         UpdateWrapper<AppUser> updateWrapper = new UpdateWrapper<AppUser>();
         updateWrapper.eq(COLUMN_APP_USER_ID, appUser.getAppUserId());
-        return new ReturnData<Boolean>(ReturnData.SUCCESS_CODE,"操作成功",iAppUserMapper.update(appUser, updateWrapper) > 0 ? true : false);
+        if (iAppUserMapper.update(appUser, updateWrapper) > 0 ) {
+            return new ReturnData<Boolean>(ReturnData.SUCCESS_CODE,"操作成功", true );
+        }
+        return new ReturnData<Boolean>(ReturnData.Fail_CODE,"操作失败", false);
+
     }
 }

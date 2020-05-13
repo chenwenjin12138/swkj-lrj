@@ -2,6 +2,8 @@ package dto;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @author : fl
  * @describe : 分页查询参数类
@@ -23,5 +25,15 @@ public class RequestDTO<E> {
      * 条数
      */
     Integer size=15;
+
+    /**
+     * 开始时间
+     */
+    String beginTime;
+
+    /**
+     * 结束时间
+     */
+    String endTime;
 
 }

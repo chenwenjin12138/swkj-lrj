@@ -118,4 +118,14 @@ public class Constant {
         }
     }
 
+    /**
+     * 已删除
+     */
+    public static final int DELETED = 1;
+
+    /**
+     * 未删除
+     */
+    public static final  int NOT_DELETED = 0;
+
 }
