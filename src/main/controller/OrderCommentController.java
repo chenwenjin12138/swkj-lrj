@@ -6,6 +6,7 @@ import dto.ReturnData;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pojo.OrderComment;
 import pojo.user.AppUser;
@@ -17,7 +18,8 @@ import service.IOrderCommentService;
  * @describe : app用户评论管理控制类
  * @date : 2020-4-27
  */
-@RestController("/orderComment")
+@RestController
+@RequestMapping("/orderComment")
 @AllArgsConstructor
 public class OrderCommentController {
     private IOrderCommentService iOrderCommentService;

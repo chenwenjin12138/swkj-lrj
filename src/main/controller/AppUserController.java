@@ -6,6 +6,7 @@ import dto.ReturnData;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pojo.user.AppUser;
 import service.IAppUserService;
@@ -15,7 +16,8 @@ import service.IAppUserService;
  * @describe : app用户管理控制类
  * @date : 2020-4-27
  */
-@RestController("/appUser")
+@RestController
+@RequestMapping("/appUser")
 @AllArgsConstructor
 public class AppUserController {
     private IAppUserService iAppUserService;

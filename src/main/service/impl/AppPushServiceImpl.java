@@ -19,6 +19,7 @@ import java.util.List;
 
 import static dto.ReturnData.Fail_CODE;
 import static dto.ReturnData.SUCCESS_CODE;
+import static pojo.AppPush.APP_PUSH_ID_COLUMN;
 import static pojo.AppPush.CREATE_TIME_COLUMN;
 import static pojo.user.AppUser.COLUMN_CREATE_TIME;
 import static pojo.user.AppUser.COLUMN_USER_PHONE;
@@ -54,8 +55,26 @@ public class AppPushServiceImpl implements IAppPushService {
             return new ReturnData(SUCCESS_CODE,"推送失败",false);
         }*/
         push.setCreateTime(DateUtils.getNowDateTime());
-        if (appPushMapper.insert(push) > 0) {
-            return new ReturnData(SUCCESS_CODE,"操作成功",true );
+        try {
+            if (appPushMapper.insert(push) > 0) {
+                return new ReturnData(SUCCESS_CODE,"操作成功",true );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ReturnData(Fail_CODE,"操作失败",false );
+    }
+
+    @Override
+    public ReturnData<Boolean> deletePush(AppPush push){
+        QueryWrapper<AppPush> queryWrapper = new QueryWrapper();
+        queryWrapper.eq(APP_PUSH_ID_COLUMN,push.getAppPushId());
+        try {
+            if (appPushMapper.delete(queryWrapper) > 0) {
+                return new ReturnData(SUCCESS_CODE,"操作成功",true );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return new ReturnData(Fail_CODE,"操作失败",false );
     }

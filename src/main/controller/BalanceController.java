@@ -15,7 +15,8 @@ import service.IBalanceService;
  * @describe : app用户管理控制类
  * @date : 2020-4-27
  */
-@RestController("/balance")
+@RestController
+@RequestMapping("/balance")
 @AllArgsConstructor
 public class BalanceController {
     private IBalanceService iBalanceService;

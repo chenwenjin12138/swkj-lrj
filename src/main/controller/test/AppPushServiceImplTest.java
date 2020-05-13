@@ -52,4 +52,15 @@ public class AppPushServiceImplTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void deletePush() {
+        AppPush push = new AppPush();
+        push.setAppPushId(1);
+        try {
+           assertTrue(appPushService.deletePush(push).getObject());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
