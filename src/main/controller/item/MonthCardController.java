@@ -18,6 +18,7 @@ import java.util.List;
  * @Date 2020/5/8 19:56
  */
 @RestController
+@RequestMapping("monthCard")
 public class MonthCardController {
 
     @Resource

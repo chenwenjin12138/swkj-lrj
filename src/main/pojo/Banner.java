@@ -5,10 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 /**
@@ -29,6 +26,8 @@ public class Banner extends Base{
     private String bannerName;
     private String bannerDetails;
     private Integer bannerType;
+    @Transient
+    private String bannerTypeName;
     private String bannerImg;
     private String url;
     private Byte isShow;

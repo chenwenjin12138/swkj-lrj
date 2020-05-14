@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 public class Local implements Serializable {
     private static final long serialVersionUID = 6810494732420784373L;
     private final String localDir="66666";

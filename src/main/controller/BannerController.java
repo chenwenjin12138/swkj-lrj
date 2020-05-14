@@ -5,6 +5,7 @@ import dto.ReturnData;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pojo.Banner;
+import pojo.BannerTypeName;
 import service.IBannerService;
 
 import javax.annotation.Resource;
@@ -16,10 +17,21 @@ import java.util.List;
  * @Date 2020/5/12 16:04
  */
 @RestController
+@RequestMapping("banner")
 public class BannerController {
 
     @Resource
     private IBannerService bannerService;
+
+    /**
+     * @Description: 获取全部BannerTypeName
+     * @Author: LxH
+     * @Date: 2020/5/14 11:30
+     */
+    @RequestMapping("BannerTypeName")
+    public List<BannerTypeName> findAll() {
+        return bannerService.findAll();
+    }
 
     /**
      * @Description: Banner分页查询
@@ -57,8 +69,8 @@ public class BannerController {
      * @Date: 2020/5/13 10:59
      */
     @RequestMapping("addBanner")
-    public ReturnData addBanner(Banner banner){
-        return bannerService.addBanner(banner);
+    public ReturnData addBanner(Banner banner,Integer bannerTypeId){
+        return bannerService.addBanner(banner,bannerTypeId);
     }
 
     /**

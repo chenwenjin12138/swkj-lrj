@@ -4,7 +4,6 @@ import dto.ReturnData;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pojo.AppItemCat;
-import pojo.Balance;
 import service.IAppItemCatService;
 import vo.Node;
 
@@ -17,6 +16,7 @@ import java.util.List;
  * @Date 2020/5/8 16:07
  */
 @RestController
+@RequestMapping("itemCat")
 public class AppItemCatController {
 
     @Resource

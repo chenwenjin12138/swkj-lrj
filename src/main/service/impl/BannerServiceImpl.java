@@ -2,10 +2,12 @@ package service.impl;
 
 import dto.RequestDTO;
 import dto.ReturnData;
+import mapper.BannerTypeNameMapper;
 import mapper.IBannerMapper;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 import pojo.Banner;
+import pojo.BannerTypeName;
 import service.IBannerService;
 import tk.mybatis.mapper.entity.Example;
 import util.DateUtils;
@@ -27,6 +29,9 @@ public class BannerServiceImpl implements IBannerService {
     @Resource
     private IBannerMapper bannerMapper;
 
+    @Resource
+    private BannerTypeNameMapper bannerTypeNameMapper;
+
     private ReturnData returnData = new ReturnData();
 
     /**
@@ -43,7 +48,12 @@ public class BannerServiceImpl implements IBannerService {
         criteria.andEqualTo("isShow", 1);
         int start = requestDTO.getPage() * requestDTO.getPage();
         RowBounds rowBounds = new RowBounds(start, requestDTO.getSize());
-        return bannerMapper.selectByExampleAndRowBounds(example, rowBounds);
+        List<Banner> banners = bannerMapper.selectByExampleAndRowBounds(example, rowBounds);
+        for (Banner banner : banners) {
+            BannerTypeName bannerTypeName = bannerTypeNameMapper.selectByPrimaryKey(banner.getBannerType());
+            banner.setBannerTypeName(bannerTypeName.getBannerTypeName());
+        }
+        return banners;
     }
 
     /**
@@ -83,7 +93,7 @@ public class BannerServiceImpl implements IBannerService {
      * @Date: 2020/5/13 11:00
      */
     @Override
-    public ReturnData addBanner(Banner banner) {
+    public ReturnData addBanner(Banner banner,Integer bannerTypeId) {
         if (banner!=null) {
             banner.setCreateTime(DateUtils.getNowDateTime());
             bannerMapper.insertSelective(banner);
@@ -141,8 +151,20 @@ public class BannerServiceImpl implements IBannerService {
             return returnData.setCode(Fail_CODE).setMessage("该Banner不存在").setObject(null);
         }
         for (Banner banner : banners) {
+            BannerTypeName bannerTypeName = bannerTypeNameMapper.selectByPrimaryKey(bannerType);
+            banner.setBannerTypeName(bannerTypeName.getBannerTypeName());
             return returnData.setCode(SUCCESS_CODE).setMessage("成功").setObject(banner);
         }
         return null;
+    }
+
+    /**
+     * @Description: 获取全部BannerTypeName
+     * @Author: LxH
+     * @Date: 2020/5/14 11:31
+     */
+    @Override
+    public List<BannerTypeName> findAll() {
+        return bannerTypeNameMapper.selectAll();
     }
 }

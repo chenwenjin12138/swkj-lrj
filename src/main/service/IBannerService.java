@@ -3,6 +3,7 @@ package service;
 import dto.RequestDTO;
 import dto.ReturnData;
 import pojo.Banner;
+import pojo.BannerTypeName;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public interface IBannerService {
      * @Author: LxH
      * @Date: 2020/5/13 11:00
      */
-    ReturnData addBanner(Banner banner);
+    ReturnData addBanner(Banner banner,Integer bannerTypeId);
 
     /**
      * @Description: 修改Banner
@@ -61,4 +62,11 @@ public interface IBannerService {
      * @Date: 2020/5/13 11:17
      */
     ReturnData findBannerByName(String bannerName, Integer bannerType);
+
+    /**
+     * @Description: 获取全部BannerTypeName
+     * @Author: LxH
+     * @Date: 2020/5/14 11:31
+     */
+    List<BannerTypeName> findAll();
 }

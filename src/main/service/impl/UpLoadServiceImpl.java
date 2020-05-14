@@ -31,6 +31,7 @@ public class UpLoadServiceImpl implements IUpLoadService {
 
     //@Value("${img.localDirUrl}")
     //private String localDirUrl;
+
     /**
      * @param: uploadFile
      * @Description: 通用图片上传

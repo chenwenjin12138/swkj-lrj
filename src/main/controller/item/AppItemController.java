@@ -16,6 +16,7 @@ import javax.annotation.Resource;
  * @Date 2020/5/8 9:14
  */
 @RestController
+@RequestMapping("item")
 public class AppItemController {
     @Resource
     private IAppItemService appItemService;
