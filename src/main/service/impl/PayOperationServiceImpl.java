@@ -14,6 +14,7 @@ import service.IPayOperationService;
 import java.util.List;
 
 import static pojo.PayOperation.TRADE_SOURCE_COLUMN;
+import static pojo.PayOperation.TRADE_TYPE_COLUMN;
 
 /**
  * @author fl
@@ -36,6 +37,9 @@ public class PayOperationServiceImpl implements IPayOperationService {
         PayOperation payOperation = objectMapper.convertValue(requestDTO.getObject(), PayOperation.class);
         if (payOperation != null && StringUtils.isNotEmpty(payOperation.getTradeSource().toString())) {
             queryWrapper.eq(TRADE_SOURCE_COLUMN, payOperation.getTradeSource());
+        }
+        if (payOperation != null && StringUtils.isNotEmpty(payOperation.getTradeType().toString())) {
+            queryWrapper.eq(TRADE_TYPE_COLUMN, payOperation.getTradeSource());
         }
         PageHelper.startPage(requestDTO.getPage(),requestDTO.getSize());
         List<PayOperation> list = payOperationMapper.selectList(queryWrapper);

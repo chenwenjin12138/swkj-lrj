@@ -41,4 +41,5 @@ public class PayOperation {
     private Integer userId;
 
     public static final String TRADE_SOURCE_COLUMN = "trade_source";
+    public static final String TRADE_TYPE_COLUMN = "trade_type";
 }
