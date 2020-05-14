@@ -6,7 +6,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import pojo.Balance;
 import service.IBalanceService;
+
+import java.math.BigDecimal;
 
 import static org.junit.Assert.*;
 
@@ -24,5 +27,13 @@ public class BalanceServiceImplTest {
     @Test
     public void findByUserId() {
         System.out.println(balanceService.findByUserId("1"));
+    }
+
+    @Test
+    public void updateBalance() {
+        Balance balance = new Balance();
+        balance.setUserId(2);
+        balance.setBalance(new BigDecimal(-20));
+        balanceService.updateBalance(balance);
     }
 }
