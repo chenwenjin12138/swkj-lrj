@@ -1,4 +1,4 @@
-package pojo;
+package pojo.order;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
