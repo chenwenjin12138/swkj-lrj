@@ -34,7 +34,6 @@ public class SysCouponServiceImpl implements ISysCouponService {
     public List<SysCoupon> getListByParam(RequestDTO requestDTO) {
         QueryWrapper<SysCoupon> queryWrapper = new QueryWrapper();
         queryWrapper.orderByDesc(CREATE_TIME_COLUMN);
-        PageHelper.startPage(requestDTO.getPage(),requestDTO.getSize());
         return sysCouponMapper.selectList(queryWrapper);
     }
 

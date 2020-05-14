@@ -18,13 +18,13 @@ import java.util.List;
  * @date : 2020-5-13
  */
 @RestController
-@RequestMapping("/SYSCoupon")
+@RequestMapping("/SysCoupon")
 @AllArgsConstructor
 public class SysCouponController {
     private ISysCouponService sysCouponService;
 
     /**
-     * 查找增值服务
+     * 查找红包类型
      * @param requestDTO 查询条件
      * @return
      */
