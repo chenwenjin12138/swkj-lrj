@@ -7,29 +7,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pojo.order.Order;
+import pojo.order.OrderCustomHouse;
 import pojo.order.OrderMonthCard;
+import service.IOrderCustomHouseService;
 import service.IOrderMonthCardService;
-import service.IOrderService;
 
 /**
  * @author : fl
- * @describe : 月卡管理控制类
- * @date : 2020-4-27
+ * @describe : 家政月卡管理控制类
+ * @date : 2020-5-14
  */
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/orderCustomHouse")
 @AllArgsConstructor
-public class OrderController {
-    private IOrderService iOrderService;
+public class OrderCustomHouseController {
+    private IOrderCustomHouseService orderCustomHouseService;
 
     /**
-     * 分页查询所有订单
+     * 分页查询所有家政月卡订单
      * @return
      */
-    @PostMapping("/getOrderPageByParam")
-    public PageInfo<Order> getOrderPageByParam(@RequestBody RequestDTO requestDTO){
-       return iOrderService.getOrderPageByParam(requestDTO);
+    @PostMapping("/orderCustomHouse")
+    public PageInfo<OrderCustomHouse> getPageByParam(@RequestBody RequestDTO requestDTO){
+       return orderCustomHouseService.getPageByParam(requestDTO);
     }
 
 
