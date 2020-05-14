@@ -2,7 +2,6 @@ package service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
@@ -10,19 +9,14 @@ import dto.ReturnData;
 import mapper.AppPushMapper;
 import org.springframework.stereotype.Service;
 import pojo.AppPush;
-import pojo.user.AppUser;
 import service.IAppPushService;
 import util.DateUtils;
-import util.push.PushUtils;
 
 import java.util.List;
 
 import static dto.ReturnData.Fail_CODE;
 import static dto.ReturnData.SUCCESS_CODE;
-import static pojo.AppPush.APP_PUSH_ID_COLUMN;
 import static pojo.AppPush.CREATE_TIME_COLUMN;
-import static pojo.user.AppUser.COLUMN_CREATE_TIME;
-import static pojo.user.AppUser.COLUMN_USER_PHONE;
 
 /**
  * @author fl
@@ -67,12 +61,14 @@ public class AppPushServiceImpl implements IAppPushService {
 
     @Override
     public ReturnData<Boolean> deletePush(AppPush push){
-        QueryWrapper<AppPush> queryWrapper = new QueryWrapper();
-        queryWrapper.eq(APP_PUSH_ID_COLUMN,push.getAppPushId());
+       if(push ==null || StringUtils.isEmpty(push.getAppPushId().toString())){
+           return new ReturnData(Fail_CODE,"操作失败,请选择要删除的数据",false );
+       }
         try {
-            if (appPushMapper.delete(queryWrapper) > 0) {
+            if (appPushMapper.deleteById(push.getAppPushId()) > 0) {
                 return new ReturnData(SUCCESS_CODE,"操作成功",true );
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

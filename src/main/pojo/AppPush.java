@@ -1,5 +1,6 @@
 package pojo;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import javax.persistence.Id;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
  */
 @Data
 public class AppPush {
+    @TableId("app_push_id")
     private Integer appPushId;
     /**
      * 创建人
