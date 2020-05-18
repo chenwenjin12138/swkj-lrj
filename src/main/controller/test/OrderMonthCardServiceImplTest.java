@@ -1,36 +1,32 @@
 package controller.test;
 
-import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import service.IOrderService;
+import pojo.order.OrderMonthCard;
+import service.IOrderMonthCardService;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * @author fl
- * @Description:
- * @date 2020/4/30 0030下午 2:38
+ * @descrip:
+ * @date 2020/5/14 0014下午 3:43
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class OrderServiceImplTest {
-    @Autowired
-    private IOrderService orderService;
+public class OrderMonthCardServiceImplTest {
 
+    @Autowired
+    private IOrderMonthCardService monthCardService;
     @Test
-    public void getAppUserPageByParam() {
+    public void getOrderPageByParam() {
         RequestDTO requestDTO = new RequestDTO();
         requestDTO.setPage(1);
         requestDTO.setSize(15);
-        PageInfo pageInfo = orderService.getOrderPageByParam(requestDTO);
-        for (Object or:pageInfo.getList()) {
-            System.out.println("数据:"+or.toString());
-        }
+        assertEquals(monthCardService.getOrderPageByParam(requestDTO).getSize(),1);
     }
-
 }

@@ -1,8 +1,6 @@
 package controller;
 
 
-
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,7 +15,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  */
 @SpringBootApplication
 @MapperScan(basePackages = "mapper")//用户扫描MyBatis 的Mapper 接口
-@ComponentScan(value = {"service","mapper","controller","shiro"})  //存在IOC注入，启动器需要指定扫描哪个包下的类生成bean 注入
+@ComponentScan(value = {"service","mapper","controller","shiro","config"})  //存在IOC注入，启动器需要指定扫描哪个包下的类生成bean 注入
 class LrjApplication {
     public static void main(String[] args){
         SpringApplication.run(LrjApplication.class, args);

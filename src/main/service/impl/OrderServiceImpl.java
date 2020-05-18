@@ -10,7 +10,7 @@ import dto.RequestDTO;
 import dto.ReturnData;
 import mapper.IOrderMapper;
 import org.springframework.stereotype.Service;
-import pojo.Order;
+import pojo.order.Order;
 import service.IOrderService;
 
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 import static common.Constant.NOT_DELETED;
 import static dto.ReturnData.Fail_CODE;
 import static dto.ReturnData.SUCCESS_CODE;
-import static pojo.Order.*;
+import static pojo.order.Order.*;
 import static pojo.user.AppUser.COLUMN_APP_USER_ID;
 
 /**
