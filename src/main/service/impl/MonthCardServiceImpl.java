@@ -3,6 +3,7 @@ package service.impl;
 import dto.RequestDTO;
 import dto.ReturnData;
 import mapper.ICardAndItemCatMapper;
+import mapper.IItemMapper;
 import mapper.IMonthCardMapper;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,9 @@ public class MonthCardServiceImpl implements IMonthCardService {
 
     @Resource
     private ICardAndItemCatMapper cardAndItemCatMapper;
+
+    @Resource
+    private IItemMapper itemMapper;
 
     private ReturnData returnData = new ReturnData();
 
@@ -64,6 +68,7 @@ public class MonthCardServiceImpl implements IMonthCardService {
         }
         if (monthCardMapper.insertSelective(monthCard) > 0) {
             for (int i = 0; i < appItemCategoryIds.length; i++) {
+
                 CardAndItemCat cardAndItemCat = new CardAndItemCat();
                 cardAndItemCat.setCardId(monthCard.getCardId()).setAppItemCategoryId(appItemCategoryIds[i]).setCategoryNum(categoryNum[i]);
                 cardAndItemCatMapper.insertSelective(cardAndItemCat);

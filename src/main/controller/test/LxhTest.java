@@ -9,6 +9,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.bind.annotation.RestController;
 import pojo.*;
 import tk.mybatis.mapper.entity.Example;
+import util.DateUtils;
+
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -36,11 +38,8 @@ public class LxhTest {
 
     @Test
     public void test(){
-        AppItem appItem = new AppItem();
-        appItem.setItemName("test3");
-        int insert = itemMapper.insert(appItem);
-        System.out.println("加入"+insert);
-        System.out.println(appItem.getAppItemId());
+        System.out.println(DateUtils.getStartTime().substring(0,10));
+        System.out.println(DateUtils.getEndTime());
        /* Example example = new Example(MonthCard.class);
         Example.Criteria criteria = example.createCriteria().andEqualTo("name","家庭升级");
         List<MonthCard> monthCards = monthCardMapper.selectByExample(example);

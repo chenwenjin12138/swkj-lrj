@@ -60,4 +60,5 @@ public interface IAppItemService {
      * @Date: 2020/5/8 19:07
      */
     ReturnData findImageById(Integer appItemId);
+
 }

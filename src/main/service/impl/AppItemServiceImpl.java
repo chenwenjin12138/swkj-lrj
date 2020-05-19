@@ -151,4 +151,5 @@ public class AppItemServiceImpl implements IAppItemService {
         }
         return new ReturnData().setCode(SUCCESS_CODE).setObject(appItem.getPicture());
     }
+
 }

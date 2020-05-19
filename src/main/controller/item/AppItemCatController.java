@@ -1,6 +1,9 @@
 package controller.item;
 
 import dto.ReturnData;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pojo.AppItemCat;
@@ -17,6 +20,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("itemCat")
+@AllArgsConstructor
+@Api(tags = "商品种类管理")
 public class AppItemCatController {
 
     @Resource
@@ -27,6 +32,7 @@ public class AppItemCatController {
      * @Author: LxH
      * @Date: 2020/5/8 16:13
      */
+    @ApiOperation(value = "tree节点信息查询")
     @RequestMapping("/findTreeNodes")
     public List<Node> findTreeNodes(){
         return appItemCatService.findTreeNodes();
@@ -37,6 +43,7 @@ public class AppItemCatController {
      * @Author: LxH
      * @Date: 2020/5/8 17:21
      */
+    @ApiOperation(value = "获取全部商品种类信息")
     @RequestMapping("/findAllItemCats")
     public ReturnData<List<AppItemCat>> findAllItemCats(){
         return appItemCatService.findAllItemCats();
@@ -47,6 +54,7 @@ public class AppItemCatController {
      * @Author: LxH
      * @Date: 2020/5/8 17:52
      */
+    @ApiOperation(value = "添加商品种类信息")
     @RequestMapping("/addAppItemCat")
     public ReturnData<Boolean> addAppItemCat(AppItemCat appItemCat){
         return appItemCatService.addAppItemCat(appItemCat);

@@ -1,13 +1,21 @@
 package pojo.user;
 import com.baomidou.mybatisplus.annotation.TableField;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.Accessors;
+
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Getter
 @Setter
 @ToString
+@Accessors(chain = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "app_staff")
 public class AppStaff {
+    @Id
     private Integer appStaffId;
     private String staffUser = "";
     private String staffPassword = "";
@@ -47,6 +55,7 @@ public class AppStaff {
     /**
      * 删除状态 1已删除 0 未删除
      */
+    @Transient
     private int isDeleted = 0;
 
 

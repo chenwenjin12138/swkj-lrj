@@ -12,7 +12,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  */
 @SpringBootApplication
 @MapperScan(basePackages = "mapper")//用户扫描MyBatis 的Mapper 接口
-@ComponentScan(value = {"service","mapper","controller","shiro"})
+@ComponentScan(value = {"service","mapper","controller","shiro","config"})
 public class app {
     public static void main(String[] args) {
         SpringApplication.run(app.class, args);

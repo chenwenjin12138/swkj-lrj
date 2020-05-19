@@ -1,36 +1,41 @@
 package controller;
 
-import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pojo.order.Order;
-import pojo.order.OrderMonthCard;
-import service.IOrderMonthCardService;
+
 import service.IOrderService;
+import vo.OrderInfo;
+import vo.Page;
+
+import javax.annotation.Resource;
 
 /**
- * @author : fl
- * @describe : 月卡管理控制类
- * @date : 2020-4-27
+ * @Description: 后台管理系统订单信息管理控制层
+ * @Author Lxh
+ * @Date 2020/5/15 21:23
  */
 @RestController
-@RequestMapping("/order")
+@RequestMapping("order")
 @AllArgsConstructor
+@Api(tags = "订单信息管理")
 public class OrderController {
-    private IOrderService iOrderService;
+
+    @Resource
+    private IOrderService orderService;
 
     /**
-     * 分页查询所有订单
-     * @return
+     * @Description: Order信息分页查询
+     * @Author: LxH
+     * @Date: 2020/5/15 21:31
      */
-    @PostMapping("/getOrderPageByParam")
-    public PageInfo<Order> getOrderPageByParam(@RequestBody RequestDTO requestDTO){
-       return iOrderService.getOrderPageByParam(requestDTO);
+    @ApiOperation(value = "Order信息分页查询")
+    @RequestMapping("getAppOrderInfoPageByParam")
+    public Page<OrderInfo> getAppOrderInfoPageByParam(OrderInfo orderInfo, RequestDTO requestDTO){
+        return orderService.getAppOrderInfoPageByParam(orderInfo, requestDTO);
     }
-
 
 }

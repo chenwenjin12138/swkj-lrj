@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * <b>项目名称</b>：lanrenxiyi<br>
@@ -391,21 +392,38 @@ public class DateUtils {
             return currentDateTime.get(type);
         }
     }
+    public static String getStartTime(){
+        Calendar calendar = new GregorianCalendar();
+        calendar.add(Calendar.DAY_OF_MONTH,-1);
+        //一天的开始时间 yyyy:MM:dd 00:00:00
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MILLISECOND,0);
+        Date dayStart = calendar.getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String startStr = simpleDateFormat.format(dayStart);
 
+        return startStr;
+    }
+
+    public static String getEndTime(){
+        //一天的结束时间 yyyy:MM:dd 23:59:59
+        Calendar calendar = new GregorianCalendar();
+        calendar.set(Calendar.HOUR_OF_DAY,23);
+        calendar.set(Calendar.MINUTE,59);
+        calendar.set(Calendar.SECOND,59);
+        calendar.set(Calendar.MILLISECOND,999);
+        Date dayEnd = calendar.getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String endStr = simpleDateFormat.format(dayEnd);
+        return endStr;
+    }
     public static void main(String[] args) throws Exception {
 
-        // String s = getParamDateAfterNDays("2017-01-09 16:46:20", 58);
-        Date begin = formatStringToDate("2017-03-01", "yyyy-MM-dd");
-        Date end = formatStringToDate("2017-03-26", "yyyy-MM-dd");
-        Date now = formatStringToDate(formateDateWithoutTime(new Date()), "yyyy-MM-dd");
-        
-        
-        System.out.println(now.compareTo(begin));
-        
-        
-        System.out.println(getParamDateAfterNMonthDate("2017-8-1 00:00:00", -3));
-        // System.out.println(getOneOfCurrentDateTime(Calendar.DAY_OF_MONTH));
-        // System.out.println(daysBetween(formatStringToDate("2017-02-07 10:08:00"),formatStringToDate(getParamDateAfterNDays(getNowDateTime(),
-        // 2*29))));
+        String startTime = getStartTime();
+        System.out.println(startTime);
+        String endTime = getEndTime();
+        System.out.println(endTime);
     }
 }

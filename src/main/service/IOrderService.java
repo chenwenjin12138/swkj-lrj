@@ -1,9 +1,13 @@
 package service;
 
+
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
 import dto.ReturnData;
+
 import pojo.order.Order;
+import vo.OrderInfo;
+import vo.Page;
 
 /**
  * @author : fl
@@ -40,4 +44,11 @@ public interface IOrderService {
      * @return
      */
     ReturnData<Boolean> refund(Order order);
+
+    /**
+     * @Description: Order信息分页查询
+     * @Author: LxH
+     * @Date: 2020/5/15 21:37
+     */
+    Page<OrderInfo> getAppOrderInfoPageByParam(OrderInfo orderInfo, RequestDTO requestDTO);
 }

@@ -1,6 +1,7 @@
 package dto;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.util.Date;
 
@@ -10,6 +11,7 @@ import java.util.Date;
  * @date : 2020-4-30
  */
 @Data
+@Accessors(chain = true)
 public class RequestDTO<E> {
     /**
      *查询参数实体
