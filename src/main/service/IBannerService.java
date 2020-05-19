@@ -19,7 +19,7 @@ public interface IBannerService {
      * @Author: LxH
      * @Date: 2020/5/13 9:39
      */
-    List<Banner> getBannerPageByParam(RequestDTO requestDTO);
+    List<Banner> getBannerPageByParam(RequestDTO requestDTO,Banner banner);
 
     /**
      * @Description: 获取Banner图片

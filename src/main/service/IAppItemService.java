@@ -17,7 +17,7 @@ public interface IAppItemService {
      * @Author: LxH
      * @Date: 2020/5/8 9:58
      */
-    PageInfo<AppItem> getAppItemPageByParam(RequestDTO requestDTO);
+    PageInfo<AppItem> getAppItemPageByParam(RequestDTO requestDTO,AppItem appItem);
 
     /**
      * @Description: 添加商品

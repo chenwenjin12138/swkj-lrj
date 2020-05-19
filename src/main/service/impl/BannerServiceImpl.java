@@ -41,17 +41,23 @@ public class BannerServiceImpl implements IBannerService {
      * @Date: 2020/5/13 9:39
      */
     @Override
-    public List<Banner> getBannerPageByParam(RequestDTO requestDTO) {
+    public List<Banner> getBannerPageByParam(RequestDTO requestDTO,Banner banner) {
 
         Example example = new Example(Banner.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("isShow", 1);
+        if (banner.getBannerType()!=null) {
+            criteria.andEqualTo("bannerType",banner.getBannerType());
+        }
+        if (banner.getBannerName()!=null) {
+            criteria.andLike("bannerName","%"+banner.getBannerName()+"%");
+        }
         int start = requestDTO.getPage() * requestDTO.getPage();
         RowBounds rowBounds = new RowBounds(start, requestDTO.getSize());
         List<Banner> banners = bannerMapper.selectByExampleAndRowBounds(example, rowBounds);
-        for (Banner banner : banners) {
-            BannerTypeName bannerTypeName = bannerTypeNameMapper.selectByPrimaryKey(banner.getBannerType());
-            banner.setBannerTypeName(bannerTypeName.getBannerTypeName());
+        for (Banner reBanner : banners) {
+            BannerTypeName bannerTypeName = bannerTypeNameMapper.selectByPrimaryKey(reBanner.getBannerType());
+            reBanner.setBannerTypeName(bannerTypeName.getBannerTypeName());
         }
         return banners;
     }

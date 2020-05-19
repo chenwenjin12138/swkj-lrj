@@ -34,8 +34,8 @@ public class AppItemController {
      */
     @ApiOperation(value = "商品分页查询")
     @RequestMapping("/findAppItemPageByParam")
-    public PageInfo<AppItem> getAppItem(RequestDTO requestDTO){
-        return appItemService.getAppItemPageByParam(requestDTO);
+    public PageInfo<AppItem> getAppItem(RequestDTO requestDTO,AppItem appItem){
+        return appItemService.getAppItemPageByParam(requestDTO,appItem);
     }
 
     /**
@@ -87,11 +87,11 @@ public class AppItemController {
      * @Author: LxH
      * @Date: 2020/5/8 18:08
      */
-    @ApiOperation(value = "条件查询")
+   /* @ApiOperation(value = "条件查询")
     @RequestMapping("/findAppItemByIds")
     public ReturnData findAppItemByIds(Integer appItemId,Integer itemCategoryId){
         return appItemService.findAppItemByIds(appItemId,itemCategoryId);
-    }
+    }*/
 
     /**
      * @Description: 查看图片

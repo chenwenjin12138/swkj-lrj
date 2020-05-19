@@ -46,8 +46,8 @@ public class BannerController {
      */
     @ApiOperation(value = "Banner分页查询")
     @RequestMapping("getBannerPageByParam")
-    public List<Banner> getBannerPageByParam(RequestDTO requestDTO){
-        return bannerService.getBannerPageByParam(requestDTO);
+    public List<Banner> getBannerPageByParam(RequestDTO requestDTO,Banner banner){
+        return bannerService.getBannerPageByParam(requestDTO,banner);
     }
 
     /**
@@ -105,14 +105,14 @@ public class BannerController {
         return bannerService.deleteBanner(appBannerIds);
     }
 
-    /**
+    /*
      * @Description: 条件查询Banner
      * @Author: LxH
      * @Date: 2020/5/13 11:15
-     */
+     *
     @ApiOperation(value = "条件查询Banner")
     @RequestMapping("/findBannerByName")
     public ReturnData findBannerByName(String bannerName,Integer bannerType){
         return bannerService.findBannerByName(bannerName,bannerType);
-    }
+    }*/
 }

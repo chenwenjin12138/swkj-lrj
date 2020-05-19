@@ -12,6 +12,7 @@ import pojo.AppItem;
 import pojo.AppItemCat;
 import service.IAppItemService;
 import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.util.StringUtil;
 import util.DateUtils;
 
 
@@ -44,16 +45,22 @@ public class AppItemServiceImpl implements IAppItemService {
      * @Date: 2020/5/8 10:22
      */
     @Override
-    public PageInfo<AppItem> getAppItemPageByParam(RequestDTO requestDTO) {
+    public PageInfo<AppItem> getAppItemPageByParam(RequestDTO requestDTO,AppItem appItem) {
         Example example = new Example(AppItem.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("isShow",1);
+        if (appItem.getItemCategoryId()!=null) {
+            criteria.andEqualTo("itemCategoryId",appItem.getItemCategoryId());
+        }
+        if (appItem.getItemName()!=null) {
+            criteria.andLike("itemName","%"+appItem.getItemName()+"%");
+        }
         int start = requestDTO.getPage() * requestDTO.getSize();
         RowBounds rowBounds = new RowBounds(start, requestDTO.getSize());
         List<AppItem> appItems = itemMapper.selectByExampleAndRowBounds(example, rowBounds);
-        for (AppItem appItem : appItems) {
-            AppItemCat appItemCat = itemCatMapper.selectByPrimaryKey(appItem.getAppItemId());
-            appItem.setItemCategoryName(appItemCat.getCategoryName());
+        for (AppItem item : appItems) {
+            AppItemCat appItemCat = itemCatMapper.selectByPrimaryKey(item.getItemCategoryId());
+            item.setItemCategoryName(appItemCat.getCategoryName());
         }
         return new PageInfo<AppItem>(appItems);
     }
