@@ -3,6 +3,7 @@ package controller;
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
 import dto.ReturnData;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,7 @@ import service.IPayOperationService;
 @RestController
 @RequestMapping("/payOperation")
 @AllArgsConstructor
+@Api("用户支付退款记录")
 public class PayOperationController {
 
     private IPayOperationService payOperationService;
@@ -32,9 +34,11 @@ public class PayOperationController {
      * @return
      */
     @PostMapping("/payOperation")
-    public PageInfo<PayOperation> getAppUser(@RequestBody RequestDTO requestDTO){
+    @ApiOperation("查询用户退款支付记录")
+    public PageInfo<PayOperation> payOperation(@RequestBody RequestDTO requestDTO){
         return payOperationService.getPageByParam(requestDTO);
     }
+
 
 
 }
