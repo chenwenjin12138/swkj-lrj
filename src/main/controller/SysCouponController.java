@@ -20,7 +20,7 @@ import java.util.List;
  * @date : 2020-5-13
  */
 @RestController
-@RequestMapping("/SysCoupon")
+@RequestMapping("/sysCoupon")
 @AllArgsConstructor
 @Api(tags = "红包管理")
 public class SysCouponController {
