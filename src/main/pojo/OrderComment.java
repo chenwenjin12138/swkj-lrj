@@ -31,6 +31,9 @@ public class OrderComment {
     private Integer userId; // 用户ID
     private Long orderId; // 订单ID
 
+    /**
+     * 1 显示 0不显示
+     */
     private Integer isVisible;//显示
 
     public static final String CREATE_TIME_COLUMN = "create_time";

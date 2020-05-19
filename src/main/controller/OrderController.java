@@ -2,6 +2,8 @@ package controller;
 
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,11 +25,8 @@ import service.IOrderService;
 public class OrderController {
     private IOrderService iOrderService;
 
-    /**
-     * 分页查询所有订单
-     * @return
-     */
     @PostMapping("/getOrderPageByParam")
+    @ApiOperation("")
     public PageInfo<Order> getOrderPageByParam(@RequestBody RequestDTO requestDTO){
        return iOrderService.getOrderPageByParam(requestDTO);
     }

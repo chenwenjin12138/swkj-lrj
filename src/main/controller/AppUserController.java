@@ -3,6 +3,8 @@ package controller;
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
 import dto.ReturnData;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +21,7 @@ import service.IAppUserService;
 @RestController
 @RequestMapping("/appUser")
 @AllArgsConstructor
+@Api(tags = "APP用户管理")
 public class AppUserController {
     private IAppUserService iAppUserService;
     /**
@@ -26,6 +29,7 @@ public class AppUserController {
      * @return
      */
     @PostMapping("/appUserPageByParam")
+    @ApiOperation(value = "分页查询app用户")
     public PageInfo<AppUser> getAppUser(@RequestBody RequestDTO requestDTO){
        return iAppUserService.getAppUserPageByParam(requestDTO);
     }
@@ -35,6 +39,7 @@ public class AppUserController {
      * @return
      */
     @PostMapping("/updateAppUser")
+    @ApiOperation(value = "修改app用户")
     public ReturnData<Boolean> updateAppUser(@RequestBody AppUser appUser){
         return iAppUserService.updateAppUser(appUser);
     }

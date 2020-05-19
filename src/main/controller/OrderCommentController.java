@@ -3,6 +3,8 @@ package controller;
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
 import dto.ReturnData;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +23,7 @@ import service.IOrderCommentService;
 @RestController
 @RequestMapping("/orderComment")
 @AllArgsConstructor
+@Api(tags = "app用户评论管理")
 public class OrderCommentController {
     private IOrderCommentService iOrderCommentService;
     /**
@@ -28,15 +31,17 @@ public class OrderCommentController {
      * @return
      */
     @PostMapping("/orderCommentPageByParam")
+    @ApiOperation("查询用户评论")
     public PageInfo<OrderComment> orderCommentPageByParam(@RequestBody RequestDTO requestDTO){
        return iOrderCommentService.getOrderCommentPageByParam(requestDTO);
     }
 
     /**
-     * 修改app用户
+     * 修改app用户评论
      * @return
      */
     @PostMapping("/updateOrder")
+    @ApiOperation(value = "修改app用户评论",notes = "显示用户评论：isVisible 属性传1")
     public ReturnData<Boolean> updateOrder(@RequestBody OrderComment orderComment){
         return iOrderCommentService.updateOrder(orderComment);
     }
