@@ -18,7 +18,7 @@ public class PayOperation {
      */
     private Integer tradeSource;
     /**
-     * 1 充值 2提现
+     * 1 支付  -1 退款
      */
     private Integer tradeType;
     /**
@@ -40,6 +40,14 @@ public class PayOperation {
     private String createTime;
     private Integer userId;
 
+    /**
+     * 审核状态 0 待审核 1审核通过 -1 不通过
+     */
+    private String checkStatus;
+
+    private String reason;
+
     public static final String TRADE_SOURCE_COLUMN = "trade_source";
     public static final String TRADE_TYPE_COLUMN = "trade_type";
+    public static final String CHECK_STATUS_COLUMN = "check_status";
 }

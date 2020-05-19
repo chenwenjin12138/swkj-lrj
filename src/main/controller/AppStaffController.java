@@ -23,7 +23,7 @@ import service.IAppStaffService;
 @RestController
 @RequestMapping("/appStaff")
 @AllArgsConstructor
-@Api(tags = "员工管理")
+@Api(tags = "APP员工管理")
 public class AppStaffController {
 
     private IAppStaffService iAppStaffService;

@@ -13,8 +13,7 @@ import service.IPayOperationService;
 
 import java.util.List;
 
-import static pojo.PayOperation.TRADE_SOURCE_COLUMN;
-import static pojo.PayOperation.TRADE_TYPE_COLUMN;
+import static pojo.PayOperation.*;
 
 /**
  * @author fl
@@ -41,6 +40,11 @@ public class PayOperationServiceImpl implements IPayOperationService {
         if (payOperation != null && StringUtils.isNotEmpty(payOperation.getTradeType().toString())) {
             queryWrapper.eq(TRADE_TYPE_COLUMN, payOperation.getTradeSource());
         }
+
+        if (payOperation != null && StringUtils.isNotEmpty(payOperation.getCheckStatus())) {
+            queryWrapper.eq(CHECK_STATUS_COLUMN, payOperation.getCheckStatus());
+        }
+
         PageHelper.startPage(requestDTO.getPage(),requestDTO.getSize());
         List<PayOperation> list = payOperationMapper.selectList(queryWrapper);
         return new PageInfo<PayOperation>(list);

@@ -2,6 +2,8 @@ package controller;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.sun.deploy.net.HttpResponse;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -27,6 +29,7 @@ import java.util.Map;
  * @date : 2020-3-18
  */
 @Controller
+@Api(tags = "用户控制中心")
 public class SysUserController{
 
     /**
@@ -45,6 +48,7 @@ public class SysUserController{
      * @param request
      * @return
      */
+    @ApiOperation("用户登录")
     @RequestMapping(value = "/userLogin",method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
     public Map<String,Object> userLogin(String userName, String passWord, HttpServletRequest request, HttpServletResponse response){
@@ -86,8 +90,6 @@ public class SysUserController{
         }
         if (subject.isAuthenticated()) {
             System.out.println("认证成功了！。。。。。。。");
-            boolean b2 = subject.isPermitted( "系统后台管理" );   // 这个用户是否有某权限
-            System.out.println( b2 );
             resultMap.put("errorCode", 0);
             resultMap.put("errorTip","main");
         } else {

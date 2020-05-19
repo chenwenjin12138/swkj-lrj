@@ -3,6 +3,8 @@ package controller;
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
 import dto.ReturnData;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/valueAddService")
 @AllArgsConstructor
+@Api(tags = "增值服务管理")
 public class ValueAddServiceController {
     private IValueAddServicesService valueAddServicesService;
 
@@ -30,6 +33,7 @@ public class ValueAddServiceController {
      * @return
      */
     @GetMapping("/getListByParam")
+    @ApiOperation(value = "查询增值服务",notes = "不传参数")
    public List<ValueAddedServices> getListByParam(RequestDTO requestDTO){
         return valueAddServicesService.getListByParam(requestDTO);
     }
@@ -41,6 +45,7 @@ public class ValueAddServiceController {
      */
 
     @PostMapping("/add")
+    @ApiOperation(value = "增加增值服务")
     public ReturnData<Boolean> add(ValueAddedServices valueAddedServices){
         return  valueAddServicesService.add(valueAddedServices);
     }
@@ -51,6 +56,7 @@ public class ValueAddServiceController {
      * @return
      */
     @PostMapping("/update")
+    @ApiOperation(value = "修改增值服务")
     public ReturnData<Boolean> update(ValueAddedServices valueAddedServices){
         return valueAddServicesService.update(valueAddedServices);
     }
@@ -61,11 +67,10 @@ public class ValueAddServiceController {
      * @return
      */
     @DeleteMapping("/delete/{id}")
+    @ApiOperation(value = "删除增值服务")
     public ReturnData<Boolean> delete(@PathVariable int id){
         return valueAddServicesService.delete(id);
     }
-
-
 
 
 }

@@ -2,6 +2,8 @@ package controller;
 
 import dto.RequestDTO;
 import dto.ReturnData;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,8 +22,9 @@ import java.util.List;
  * @date : 2020-5-13
  */
 @RestController
-@RequestMapping("/UserCoupon")
+@RequestMapping("/userCoupon")
 @AllArgsConstructor
+@Api(tags = "用户红包管理")
 public class UserCouponController {
     private IUserCouponService userCouponService;
 
@@ -31,6 +34,7 @@ public class UserCouponController {
      * @return
      */
     @GetMapping("/getListByParam")
+    @ApiOperation(value = "查询用户红包",notes = "参数传userId")
    public List<UserCoupon> getListByParam(RequestDTO requestDTO){
         return userCouponService.getListByParam(requestDTO);
     }

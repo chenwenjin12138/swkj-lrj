@@ -34,7 +34,6 @@ public class ValueAddServicesServiceImpl  implements IValueAddServicesService {
     public List<ValueAddedServices> getListByParam(RequestDTO requestDTO) {
         QueryWrapper<ValueAddedServices> queryWrapper = new QueryWrapper();
         queryWrapper.orderByDesc(CREATE_TIME_COLUMN);
-        PageHelper.startPage(requestDTO.getPage(),requestDTO.getSize());
         return valueAddServicesMapper.selectList(queryWrapper);
     }
 
