@@ -29,7 +29,7 @@ public class AppFeedbackController {
      */
     @PostMapping("/getPageByParam")
     @ApiOperation(value = "查询用户反馈",notes = "查询条件：电话号码")
-   public PageInfo<AppFeedback> getPageByParam(RequestDTO requestDTO){
+   public PageInfo<AppFeedback> getPageByParam(@RequestBody RequestDTO requestDTO){
         return appFeedbackService.getPageByParam(requestDTO);
     }
 
