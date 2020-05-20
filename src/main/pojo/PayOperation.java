@@ -2,6 +2,8 @@ package pojo;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 /**
  * @author fl
  * @Description: 订单流水
@@ -28,7 +30,7 @@ public class PayOperation {
     /**
      * 金额
      */
-    private String totalFee;
+    private BigDecimal totalFee;
     /**
      *第三方支付订单号
      */
