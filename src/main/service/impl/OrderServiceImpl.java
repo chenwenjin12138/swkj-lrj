@@ -1,4 +1,5 @@
 package service.impl;
+import	java.io.IOException;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
@@ -11,20 +12,20 @@ import dto.ReturnData;
 import mapper.*;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
-import pojo.AppStaffOrder;
-import pojo.Distributionrelation;
-import pojo.User;
+import pojo.*;
 import pojo.order.Order;
 import pojo.user.AppStaff;
 import service.IOrderService;
 import tk.mybatis.mapper.entity.Example;
 import util.DateUtils;
+import util.JavaSmsApi;
 import vo.OrderInfo;
 import vo.Page;
 
 import javax.annotation.Resource;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static common.Constant.NOT_DELETED;
@@ -42,6 +43,8 @@ import static pojo.user.AppUser.COLUMN_APP_USER_ID;
 @Service
 public class OrderServiceImpl implements IOrderService {
 
+    public static final String API_KEY = "cf71f38465ba87627035f066ad456e4a";
+
     @Resource
     private IOrderMapper iOrderMapper;
 
@@ -57,8 +60,13 @@ public class OrderServiceImpl implements IOrderService {
     @Resource
     private DistributionrelationMapper distributionrelationMapper;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    @Resource
+    private ReservationMapper reservationMapper;
 
+    @Resource
+    private SmsTemplateMapper smsTemplateMapper;
+
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     public OrderServiceImpl(IOrderMapper iOrderMapper) {
         this.iOrderMapper = iOrderMapper;
@@ -83,7 +91,6 @@ public class OrderServiceImpl implements IOrderService {
         List<Order> list = iOrderMapper.selectList(queryWrapper);
         return new PageInfo<Order>(list);
     }
-
 
     @Override
     public ReturnData<Boolean> updateOrder(Order order) {
@@ -128,6 +135,60 @@ public class OrderServiceImpl implements IOrderService {
         return getAppOrderInfo(requestDTO, orderInfo);
     }
 
+    /**
+     * @param: orderNumbers
+     * @param: phoneNumbers
+     * @Description: 短信群发功能
+     * @Author: LxH
+     * @Date: 2020/5/20 17:09
+     */
+    @Override
+    public ReturnData sendMessages(String[] orderNumbers, String[] phoneNumbers) {
+        String context = "【懒人家】尊敬的懒人家用户，您好：您的订单编号为#orderNumber#的物件在分拣过程中发现：#content#，其他：（#other#）如情况不属实请于10分钟内致电客服0871-65628435，超出时间将视作情况属实，如出现问题将按照《用户须知》进行处理。";
+        for (int i = 0; i < orderNumbers.length; i++) {
+            Example example = new Example(SmsTemplate.class);
+            example.createCriteria().andEqualTo("orderNumber",orderNumbers[i]);
+            List<SmsTemplate> smsTemplates = smsTemplateMapper.selectByExample(example);
+            for (SmsTemplate smsTemplate : smsTemplates) {
+                if (smsTemplate.getOther()==null||"".equals(smsTemplate.getOther())) {
+                    smsTemplate.setOther("无");
+                }
+                /*问题内容*/
+                StringBuilder content = new StringBuilder();
+                /*破损问题*/
+                if (smsTemplate.getIsWearOut() == 1) {
+                    content.append("[破损问题]");
+                }
+                /* 染色问退 */
+                if (smsTemplate.getIsDye() == 1) {
+                    content.append("[染色问题]");
+                }
+                /* 起球问退 */
+                if (smsTemplate.getIsBallingUp() == 1) {
+                    content.append("[起球问题]");
+                }
+                /* 发黄发白问题 */
+                if (smsTemplate.getIsYellowWhite() == 1) {
+                    content.append("[发黄发白问题]");
+                }
+                /* 串色问题 */
+                if (smsTemplate.getIsCrossColor() == 1) {
+                    content.append("[串色问题]");
+                }
+                /* 替换内容 */
+                context = context.replace("#orderNumber#", orderNumbers[i]).replace("#content#", content.toString()).replace("#other#", smsTemplate.getOther());
+                try {
+                    String s = JavaSmsApi.sendSms(API_KEY, context, phoneNumbers[i]);
+                    System.out.println("--------------------"+s+"-------------------------");
+                    smsTemplate.setUpdateTime(DateUtils.formatDate(new Date()));
+                }catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return new ReturnData(SUCCESS_CODE,"短信发送成功",true);
+    }
+
     private Page<OrderInfo> getAppOrderInfo(RequestDTO requestDTO, OrderInfo orderInfo) {
         ArrayList<OrderInfo> list = new ArrayList<OrderInfo>();
         Example example = new Example(Order.class);
@@ -149,6 +210,21 @@ public class OrderServiceImpl implements IOrderService {
             Example e = new Example(AppStaffOrder.class);
             e.createCriteria().andEqualTo("orderId", orderId);
             List<AppStaffOrder> appStaffOrders = appStaffOrderMapper.selectByExample(e);
+            Example example1 = new Example(Reservation.class);
+            Example.Criteria criteria1 = example1.createCriteria();
+            criteria1.andEqualTo("orderNumber",order.getOrderNumber());
+            List<Reservation> reservations = reservationMapper.selectByExample(example1);
+            for (Reservation reservation : reservations) {
+                if (reservation.getTrackingStatus()==11) {
+                    info.setSentTime(reservation.getUpdateTime());
+                }
+            }
+            Example example2 = new Example(SmsTemplate.class);
+            example.createCriteria().andEqualTo("orderNumber",order.getOrderNumber());
+            List<SmsTemplate> smsTemplates = smsTemplateMapper.selectByExample(example2);
+            for (SmsTemplate smsTemplate : smsTemplates) {
+                info.setItemDefects(smsTemplate.getOther());
+            }
             for (AppStaffOrder appStaffOrder : appStaffOrders) {
                 info.setTakeOrderTime(appStaffOrder.getCreateTime()).setAppStaffId(appStaffOrder.getStaffId());
                 AppStaff appStaff = staffMapper.selectByPrimaryKey(appStaffOrder.getStaffId());

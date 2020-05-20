@@ -61,5 +61,8 @@ public class OrderInfo {
     private Integer appTraceStatusId;
     private String traceStatusName;
     private Integer type;
+    private String sentTime;
+    /**商品瑕疵*/
+    private String itemDefects;
 
 }

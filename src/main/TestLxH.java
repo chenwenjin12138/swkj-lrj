@@ -34,11 +34,13 @@ public class TestLxH {
     private AppStaffOrderMapper appStaffOrderMapper;
     @Resource
     private DistributionrelationMapper distributionrelationMapper;
+    @Resource
+    private SmsTemplateMapper smsTemplateMapper;
     @Test
     public void test(){
-        OrderInfo orderInfo = null;
-        if (orderInfo==null){
-            System.out.println("是空的");
+        List<SmsTemplate> smsTemplates = smsTemplateMapper.selectAll();
+        for (SmsTemplate smsTemplate : smsTemplates) {
+            System.out.println(smsTemplate.toString());
         }
 
         /*List<User> users = userMapper.selectAll();
