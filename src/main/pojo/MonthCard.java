@@ -5,11 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @Description:
@@ -35,11 +33,11 @@ public class MonthCard extends Base {
 
     private String name;
     private BigDecimal price;
-    private Integer expire;
     private Byte status;
-    private Byte cardType;
-    private Byte timeType;
-    private String detail;
     private Float shareDicount;
-    private String itemJson;
+    private String notice;
+    @Transient
+    private List<String> appItemCategoryName;
+    @Transient
+    private List<Integer> categoryNum;
 }

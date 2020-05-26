@@ -23,14 +23,7 @@ import java.util.UUID;
 @Service
 public class UpLoadServiceImpl implements IUpLoadService {
 
-    /*@Value("${img.localDir}")
-    /*
-    项目结构不对无法使用@Value
-    * **/
-    //private String localDir;
 
-    //@Value("${img.localDirUrl}")
-    //private String localDirUrl;
 
     /**
      * @param: uploadFile

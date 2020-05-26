@@ -4,6 +4,7 @@ import dto.RequestDTO;
 import dto.ReturnData;
 import pojo.CardAndItemCat;
 import pojo.MonthCard;
+import vo.Page;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public interface IMonthCardService {
      * @Author: LxH
      * @Date: 2020/5/8 20:12
      */
-    List<MonthCard> getMcPageByParam(RequestDTO requestDTO);
+    Page<MonthCard> getMcPageByParam(MonthCard monthCard,RequestDTO requestDTO);
 
     /**
      * @Description: 新增月卡

@@ -3,17 +3,22 @@ package service.impl;
 import dto.RequestDTO;
 import dto.ReturnData;
 import mapper.ICardAndItemCatMapper;
+import mapper.IItemCatMapper;
 import mapper.IItemMapper;
 import mapper.IMonthCardMapper;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
+import pojo.AppItemCat;
 import pojo.CardAndItemCat;
 import pojo.MonthCard;
 import service.IMonthCardService;
 import tk.mybatis.mapper.entity.Example;
 import util.DateUtils;
+import vo.Page;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -34,7 +39,7 @@ public class MonthCardServiceImpl implements IMonthCardService {
     private ICardAndItemCatMapper cardAndItemCatMapper;
 
     @Resource
-    private IItemMapper itemMapper;
+    private IItemCatMapper itemCatMapper;
 
     private ReturnData returnData = new ReturnData();
 
@@ -45,13 +50,34 @@ public class MonthCardServiceImpl implements IMonthCardService {
      * @Date: 2020/5/8 20:12
      */
     @Override
-    public List<MonthCard> getMcPageByParam(RequestDTO requestDTO) {
+    public Page<MonthCard> getMcPageByParam(MonthCard monthCard,RequestDTO requestDTO) {
+
+        ArrayList<String> name = new ArrayList<String>();
+        ArrayList<Integer> num = new ArrayList<Integer>();
         Example example = new Example(MonthCard.class);
+        example.orderBy("createTime");
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("status",1);
+        if (monthCard.getName()!=null) {
+            criteria.andLike("name","%"+monthCard.getName()+"%");
+        }
         int start = requestDTO.getPage()*requestDTO.getSize();
         RowBounds rowBounds = new RowBounds(start,requestDTO.getSize());
-        return monthCardMapper.selectByExampleAndRowBounds(example,rowBounds);
+        List<MonthCard> monthCards = monthCardMapper.selectByExampleAndRowBounds(example, rowBounds);
+        for (MonthCard card : monthCards) {
+            Example example1 = new Example(CardAndItemCat.class);
+            example1.createCriteria().andEqualTo("cardId", card.getCardId());
+            List<CardAndItemCat> cardAndItemCats = cardAndItemCatMapper.selectByExample(example1);
+                for (CardAndItemCat cardAndItemCat : cardAndItemCats) {
+                    Integer catNum = cardAndItemCat.getCategoryNum();
+                    AppItemCat appItemCat = itemCatMapper.selectByPrimaryKey(cardAndItemCat.getAppItemCategoryId());
+                    System.out.println("商品名" + appItemCat.getCategoryName());
+                    name.add(appItemCat.getCategoryName());
+                    num.add(catNum);
+                }
+                card.setAppItemCategoryName(name).setCategoryNum(num);
+            }
+        return new Page<MonthCard>(monthCards,monthCards.size());
     }
 
     /**

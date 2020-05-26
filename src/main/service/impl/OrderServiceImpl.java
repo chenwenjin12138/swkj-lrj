@@ -125,13 +125,18 @@ public class OrderServiceImpl implements IOrderService {
 
         String startTime = null;
         String endTime = null;
-        if (orderInfo.getInquire()==null) {
+        if (orderInfo.getInquire() == null) {
             startTime = DateUtils.getStartTime();
             endTime = DateUtils.getEndTime();
             requestDTO.setBeginTime(startTime).setEndTime(endTime);
             return getAppOrderInfo(requestDTO, orderInfo);
         }
-        requestDTO.setBeginTime(startTime).setEndTime(endTime);
+           /*2020-05-18 00:00:00
+            2020-05-19 23:59:59*/
+        String inquireTime = orderInfo.getInquireTime();
+        String startTimeNew = inquireTime + " 01:00:00";
+        String endTimeNew = inquireTime + " 23:59:59";
+        requestDTO.setBeginTime(startTimeNew).setEndTime(endTimeNew);
         return getAppOrderInfo(requestDTO, orderInfo);
     }
 
@@ -147,10 +152,10 @@ public class OrderServiceImpl implements IOrderService {
         String context = "【懒人家】尊敬的懒人家用户，您好：您的订单编号为#orderNumber#的物件在分拣过程中发现：#content#，其他：（#other#）如情况不属实请于10分钟内致电客服0871-65628435，超出时间将视作情况属实，如出现问题将按照《用户须知》进行处理。";
         for (int i = 0; i < orderNumbers.length; i++) {
             Example example = new Example(SmsTemplate.class);
-            example.createCriteria().andEqualTo("orderNumber",orderNumbers[i]);
+            example.createCriteria().andEqualTo("orderNumber", orderNumbers[i]);
             List<SmsTemplate> smsTemplates = smsTemplateMapper.selectByExample(example);
             for (SmsTemplate smsTemplate : smsTemplates) {
-                if (smsTemplate.getOther()==null||"".equals(smsTemplate.getOther())) {
+                if (smsTemplate.getOther() == null || "".equals(smsTemplate.getOther())) {
                     smsTemplate.setOther("无");
                 }
                 /*问题内容*/
@@ -179,23 +184,34 @@ public class OrderServiceImpl implements IOrderService {
                 context = context.replace("#orderNumber#", orderNumbers[i]).replace("#content#", content.toString()).replace("#other#", smsTemplate.getOther());
                 try {
                     String s = JavaSmsApi.sendSms(API_KEY, context, phoneNumbers[i]);
-                    System.out.println("--------------------"+s+"-------------------------");
+                    System.out.println("--------------------" + s + "-------------------------");
                     smsTemplate.setUpdateTime(DateUtils.formatDate(new Date()));
-                }catch (IOException e) {
+                } catch (IOException e) {
                     System.out.println(e.getMessage());
                 }
             }
         }
-        return new ReturnData(SUCCESS_CODE,"短信发送成功",true);
+        return new ReturnData(SUCCESS_CODE, "短信发送成功", true);
     }
 
     private Page<OrderInfo> getAppOrderInfo(RequestDTO requestDTO, OrderInfo orderInfo) {
         ArrayList<OrderInfo> list = new ArrayList<OrderInfo>();
         Example example = new Example(Order.class);
+        example.orderBy("createTime");
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("status", 0).andBetween("createTime", requestDTO.getBeginTime(),requestDTO.getEndTime());
+        if (orderInfo.getOrderNumber()!=null) {
+            criteria.andEqualTo("orderNumber",orderInfo.getOrderNumber());
+        }
+        if (orderInfo.getType()!=null) {
+            criteria.andEqualTo("orderType",orderInfo.getType());
+        }
+        criteria.andEqualTo("status", 0).andBetween("createTime", requestDTO.getBeginTime(), requestDTO.getEndTime());
+        Integer size = requestDTO.getSize();
+        if (orderInfo.getUserPhone()!=null) {
+            size = iOrderMapper.selectCount(new Order());
+        }
         int start = requestDTO.getPage() * requestDTO.getSize();
-        RowBounds rowBounds = new RowBounds(start, requestDTO.getSize());
+        RowBounds rowBounds = new RowBounds(start, size);
         List<Order> orders = iOrderMapper.selectByExampleAndRowBounds(example, rowBounds);
         for (Order order : orders) {
             OrderInfo info = new OrderInfo();
@@ -204,23 +220,32 @@ public class OrderServiceImpl implements IOrderService {
             BigInteger orderId = new BigInteger(orderNumber);
             Integer userId = order.getUserId();
             User user = userMapper.selectByPrimaryKey(userId);
-            Distributionrelation distributionrelation = distributionrelationMapper.selectByPrimaryKey(userId);
-            User u = userMapper.selectByPrimaryKey(distributionrelation.getSuperId());
-            info.setUserId(userId).setNickname(user.getNickName()).setUserPhone(user.getUserPhone()).setSuperUser(u.getNickName());
+            try {
+                Distributionrelation distributionrelation = distributionrelationMapper.selectByPrimaryKey(userId);
+                User u = userMapper.selectByPrimaryKey(distributionrelation.getSuperId());
+                info.setSuperUser(u.getNickName());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            } finally {
+                if (info.getSuperUser() == null) {
+                    info.setSuperUser("无");
+                }
+            }
+            info.setUserId(userId).setNickname(user.getNickName()).setUserPhone(user.getUserPhone());
             Example e = new Example(AppStaffOrder.class);
             e.createCriteria().andEqualTo("orderId", orderId);
             List<AppStaffOrder> appStaffOrders = appStaffOrderMapper.selectByExample(e);
             Example example1 = new Example(Reservation.class);
             Example.Criteria criteria1 = example1.createCriteria();
-            criteria1.andEqualTo("orderNumber",order.getOrderNumber());
+            criteria1.andEqualTo("orderNumber", order.getOrderNumber());
             List<Reservation> reservations = reservationMapper.selectByExample(example1);
             for (Reservation reservation : reservations) {
-                if (reservation.getTrackingStatus()==11) {
+                if (reservation.getTrackingStatus() == 11) {
                     info.setSentTime(reservation.getUpdateTime());
                 }
             }
             Example example2 = new Example(SmsTemplate.class);
-            example.createCriteria().andEqualTo("orderNumber",order.getOrderNumber());
+            example.createCriteria().andEqualTo("orderNumber", order.getOrderNumber());
             List<SmsTemplate> smsTemplates = smsTemplateMapper.selectByExample(example2);
             for (SmsTemplate smsTemplate : smsTemplates) {
                 info.setItemDefects(smsTemplate.getOther());
@@ -232,7 +257,9 @@ public class OrderServiceImpl implements IOrderService {
             }
             list.add(info);
         }
-        if (orderInfo.getInquire()==1) {
+        if (list.size() == 0 || list == null) {
+            return new Page<OrderInfo>(list, list.size());
+        } else {
             String number = orderInfo.getOrderNumber();
             String userPhone = orderInfo.getUserPhone();
             Integer type = orderInfo.getType();
@@ -242,24 +269,34 @@ public class OrderServiceImpl implements IOrderService {
             ArrayList<OrderInfo> infos = new ArrayList<OrderInfo>();
 
             for (OrderInfo reOrderInfo : list) {
-                if (number!=null&&userPhone!=null) {
-                    if (number.equals(reOrderInfo.getOrderNumber())&&userPhone.equals(reOrderInfo.getUserPhone())) {
+                if (number != null && userPhone != null) {
+                    if (number.equals(reOrderInfo.getOrderNumber()) && userPhone.equals(reOrderInfo.getUserPhone())) {
                         infos.add(reOrderInfo);
                     }
                 }
-                if (type!=null) {
+                if (userPhone != null) {
+                    if (userPhone.equals(reOrderInfo.getUserPhone())) {
+                        infos.add(reOrderInfo);
+                    }
+                }
+                if (type != null) {
                     if (type.equals(reOrderInfo.getType())) {
                         infos.add(reOrderInfo);
                     }
                 }
-                if (inquireTime!=null) {
-                    if (inquireTime.equals(reOrderInfo.getUnderOrderTime().substring(0,10))) {
+                if (inquireTime != null) {
+                    if (inquireTime.equals(reOrderInfo.getUnderOrderTime().substring(0, 10))) {
                         infos.add(reOrderInfo);
                     }
                 }
             }
+            if (infos.size()==0||infos==null) {
+                return new Page<OrderInfo>(list, list.size());
+            }
             return new Page<OrderInfo>(infos, infos.size());
-        }
-        return new Page<OrderInfo>(list, list.size());
+        } /*else {
+                return new Page<OrderInfo>(list, list.size());
+            }*/
     }
 }
+

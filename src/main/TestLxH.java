@@ -1,9 +1,12 @@
+import com.alibaba.fastjson.JSON;
 import mapper.*;
+import org.apache.ibatis.session.RowBounds;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pojo.*;
+import pojo.order.Order;
 import pojo.user.AppStaff;
 import tk.mybatis.mapper.entity.Example;
 import util.DateUtils;
@@ -36,13 +39,17 @@ public class TestLxH {
     private DistributionrelationMapper distributionrelationMapper;
     @Resource
     private SmsTemplateMapper smsTemplateMapper;
+    @Resource
+    private MerchantManagementMapper merchantManagementMapper;
+    @Resource
+    private IMonthCardMapper monthCardMapper;
     @Test
     public void test(){
-        List<SmsTemplate> smsTemplates = smsTemplateMapper.selectAll();
-        for (SmsTemplate smsTemplate : smsTemplates) {
-            System.out.println(smsTemplate.toString());
-        }
 
+        List<User> users = userMapper.selectAll();
+        for (User user : users) {
+            System.out.println(user.toString());
+        }
         /*List<User> users = userMapper.selectAll();
         for (User user : users) {
             System.out.println(user.toString());

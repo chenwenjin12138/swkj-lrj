@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pojo.CardAndItemCat;
 import pojo.MonthCard;
 import service.IMonthCardService;
+import vo.Page;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -36,8 +37,8 @@ public class MonthCardController {
      */
     @ApiOperation(value = "月卡分页查询")
     @RequestMapping("/getMcPageByParam")
-    public List<MonthCard> getMcPageByParam(RequestDTO requestDTO) {
-        return monthCardService.getMcPageByParam(requestDTO);
+    public Page<MonthCard> getMcPageByParam(MonthCard monthCard ,RequestDTO requestDTO) {
+        return monthCardService.getMcPageByParam(monthCard,requestDTO);
     }
 
     /**
@@ -77,10 +78,10 @@ public class MonthCardController {
      * @Description: 条件查询月卡
      * @Author: LxH
      * @Date: 2020/5/9 10:24
-     */
+     *//*
     @ApiOperation(value = "条件查询月卡")
     @RequestMapping("/findCardByName")
     public MonthCard findCardByName(String name){
         return monthCardService.findCardByName(name);
-    }
+    }*/
 }

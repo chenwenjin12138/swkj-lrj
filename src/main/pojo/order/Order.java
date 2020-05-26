@@ -40,6 +40,9 @@ public class Order implements Serializable {
     @Transient
     private String rechargeAccount; //充值手机账户
     private Byte isShare;//是否分享
+    private String traceStatus;
+    @Transient
+    private String ew;
 
     public static final String ORDER_NUMBER_COLUMN = "order_number";
     public static final String RECHARGE_ACCOUNT_COLUMN = "recharge_account";
