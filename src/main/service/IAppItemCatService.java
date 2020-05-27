@@ -34,4 +34,11 @@ public interface IAppItemCatService {
      * @Date: 2020/5/8 17:53
      */
     ReturnData<Boolean> addAppItemCat(AppItemCat appItemCat);
+
+    /**
+     * 根据商品id查询种类
+     * @param ids
+     * @return
+     */
+    List<AppItemCat> findListByParam(List <String> ids);
 }

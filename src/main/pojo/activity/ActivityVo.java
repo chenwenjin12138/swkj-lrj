@@ -1,6 +1,8 @@
 package pojo.activity;
 
 import lombok.Data;
+import pojo.AppItem;
+import pojo.AppItemCat;
 
 import java.util.List;
 
@@ -13,5 +15,7 @@ import java.util.List;
 public class ActivityVo {
     private Activity activity;
     private List<ActivityTime> activityTimeList;
-    private List<ActivityItem> activityItemList;
+    private List<ActivityItemVO> activityItemList;
+    private List<AppItemCat> itemCatsList;
+    private List<AppItem> itemList;
 }

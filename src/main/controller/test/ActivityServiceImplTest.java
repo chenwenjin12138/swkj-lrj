@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pojo.AppFeedback;
-import pojo.activity.Activity;
-import pojo.activity.ActivityItem;
-import pojo.activity.ActivityTime;
-import pojo.activity.ActivityVo;
+import pojo.activity.*;
 import service.IActivityService;
 import service.IAppFeedbackService;
 import util.DateUtil;
@@ -66,6 +63,7 @@ public class ActivityServiceImplTest {
         activityTime.setBeginTime("00:00:00");
         activityTime.setEndTime("12:00:00");
 
+        ActivityItemVO activityItemVO = new ActivityItemVO();
         ActivityItem item = new ActivityItem();
         item.setActivityNumber(100);
         item.setReduceType(1);
@@ -73,8 +71,6 @@ public class ActivityServiceImplTest {
         item.setReduceQuota(-1);
 
         List<ActivityItem> itemList =new ArrayList<ActivityItem>();
-        itemList.add(item);
-        activityVo.setActivityItemList(itemList);
 
         List<ActivityTime> timeList =new ArrayList<ActivityTime>();
         timeList.add(activityTime);

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sun.tools.javap.TypeAnnotationWriter;
 import common.Constant;
 import dto.RequestDTO;
 import dto.ReturnData;
@@ -15,15 +16,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import pojo.AppFeedback;
-import pojo.activity.Activity;
-import pojo.activity.ActivityItem;
-import pojo.activity.ActivityTime;
-import pojo.activity.ActivityVo;
+import pojo.AppItemCat;
+import pojo.activity.*;
 import service.IActivityItemService;
 import service.IActivityService;
 import service.IActivityTimeService;
+import service.IAppItemCatService;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static dto.ReturnData.Fail_CODE;
@@ -41,6 +43,7 @@ public class ActivityServiceImpl implements IActivityService {
     private ObjectMapper objectMapper;
     private IActivityItemService activityItemService;
     private IActivityTimeService activityTimeService;
+    private IAppItemCatService appItemCatService;
 
     public ActivityServiceImpl(ActivityMapper activityMapper, ObjectMapper objectMapper, IActivityItemService activityItemService, IActivityTimeService activityTimeService) {
         this.activityMapper = activityMapper;
@@ -69,13 +72,22 @@ public class ActivityServiceImpl implements IActivityService {
         List<Activity> list = activityMapper.selectList(queryWrapper);
         PageInfo<Activity> activityPageInfo =new PageInfo<Activity>(list);
         List<ActivityVo>returnList = new ArrayList<ActivityVo>();
+        List<ActivityItemVO> activityItemVOList = new ArrayList<ActivityItemVO>();
         for (Activity activity:activityPageInfo.getList()) {
             List<ActivityItem> itemList = activityItemService.getListByParam(activity.getId());
+            for (ActivityItem activityItem:itemList) {
+                ActivityItemVO itemVO = new ActivityItemVO();
+                itemVO.setActivityItem(activityItem);
+                List<String> itemCatIds = Arrays.asList(activityItem.getAppItemCategoryId().split(","));
+                List<AppItemCat> itemCatList = appItemCatService.findListByParam(itemCatIds);
+                itemVO.setAppItemCatList(itemCatList);
+                activityItemVOList.add(itemVO);
+            }
             List<ActivityTime> timeList = activityTimeService.getListByParam(activity.getId());
             ActivityVo activityVo1 = new ActivityVo();
             activityVo1.setActivity(activity);
             activityVo1.setActivityTimeList(timeList);
-            activityVo1.setActivityItemList(itemList);
+            activityVo1.setActivityItemList(activityItemVOList);
             returnList.add(activityVo1);
         }
         PageInfo pageInfo = new PageInfo();
@@ -118,7 +130,8 @@ public class ActivityServiceImpl implements IActivityService {
                     }
                 }
                 if (activityVo.getActivityItemList()!= null || activityVo.getActivityItemList().size()>1) {
-                    for (ActivityItem activityItem : activityVo.getActivityItemList()) {
+                    for (ActivityItemVO activityItemVO : activityVo.getActivityItemList()) {
+                        ActivityItem activityItem = activityItemVO.getActivityItem();
                         activityItem.setActivityId(activity.getId());
                         ReturnData itemReturnData;
                         if (activityItem.getId()>0) {
