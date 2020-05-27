@@ -33,7 +33,7 @@ public class AreaManagementController {
      * @Date: 2020/5/27 15:31
      */
     @RequestMapping("findAreaByItemId")
-    @ApiOperation(value = "根据商品查询面积信息")
+    @ApiOperation(value = "根据商品id查询面积信息")
     public List<AreaManagement> findAreaByItemId(Integer itemId){
         return areaManagementService.findAreaByItemId(itemId);
     }
