@@ -37,9 +37,9 @@ public class AppFeedbackServiceImplTest {
     @Test
     public void getListByParam() {
         RequestDTO requestDTO = new RequestDTO();
-        AppFeedback appFeedback = new AppFeedback();
+      /*  AppFeedback appFeedback = new AppFeedback();
         appFeedback.setContact("489");
-        requestDTO.setObject(appFeedback);
+        requestDTO.setObject(appFeedback);*/
         PageInfo<AppFeedback> page = appFeedbackService.getPageByParam(requestDTO);
         for (Object or : page.getList()) {
             System.out.println("数据:" + or.toString());

@@ -1,9 +1,12 @@
 package service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import common.Constant;
 import dto.ReturnData;
 import mapper.IItemCatMapper;
 import org.springframework.stereotype.Service;
 import pojo.AppItemCat;
+import pojo.activity.Activity;
 import service.IAppItemCatService;
 import vo.Node;
 
@@ -12,6 +15,7 @@ import java.util.List;
 
 import static dto.ReturnData.Fail_CODE;
 import static dto.ReturnData.SUCCESS_CODE;
+import static pojo.AppPush.CREATE_TIME_COLUMN;
 
 /**
  * @Description:
@@ -59,5 +63,12 @@ public class AppItemCatServiceImpl implements IAppItemCatService {
             return returnData.setCode(SUCCESS_CODE).setMessage("添加商品种类信息成功!").setObject(true);
         }
         return returnData.setCode(Fail_CODE).setMessage("添加商品种类信息失败!").setObject(false);
+    }
+
+    @Override
+    public List<AppItemCat> findListByParam(List<String> ids) {
+        QueryWrapper<AppItemCat> queryWrapper = new QueryWrapper();
+        queryWrapper.in(AppItemCat.ID_COLUMN,ids);
+        return itemCatMapper.selectList(queryWrapper);
     }
 }

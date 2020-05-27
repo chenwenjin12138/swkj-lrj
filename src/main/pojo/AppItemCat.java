@@ -1,5 +1,6 @@
 package pojo;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "app_item_category")
+@TableName("app_item_category")
 public class AppItemCat implements Serializable{
     private static final long serialVersionUID = -226125165955136009L;
     @Id
@@ -26,4 +28,6 @@ public class AppItemCat implements Serializable{
     private String categroryPic;
     private String pid;
     private Integer isShow;
+
+    public static final String ID_COLUMN = "app_item_category_id";
 }
