@@ -47,6 +47,7 @@ public class MerchantManagementController {
      * @Author: LxH
      * @Date: 2020/5/26 15:26
      */
+    @ApiOperation(value = "添加商户")
     @RequestMapping("addMerchant")
     public ReturnData addMerchant(User user){
         return merchantManagementService.addMerchant(user);
@@ -57,6 +58,7 @@ public class MerchantManagementController {
      * @Author: LxH
      * @Date: 2020/5/26 15:48
      */
+    @ApiOperation(value = "修改商家信息")
     @RequestMapping("updateMerchant")
     public ReturnData updateMerchant(User user){
         return merchantManagementService.updateMerchant(user);
@@ -67,6 +69,7 @@ public class MerchantManagementController {
      * @Author: LxH
      * @Date: 2020/5/26 15:58
      */
+    @ApiOperation(value = "删除商户")
     @RequestMapping("deleteMerchantById")
     public ReturnData deleteMerchantById(@RequestParam("id[]")Integer[] userIds){
         return merchantManagementService.deleteMerchantById(userIds);

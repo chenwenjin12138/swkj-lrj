@@ -43,12 +43,14 @@ public class TestLxH {
     private MerchantManagementMapper merchantManagementMapper;
     @Resource
     private IMonthCardMapper monthCardMapper;
+    @Resource
+    private AreaManagementMapper areaManagementMapper;
     @Test
     public void test(){
 
-        List<User> users = userMapper.selectAll();
-        for (User user : users) {
-            System.out.println(user.toString());
+        List<AreaManagement> areaManagements = areaManagementMapper.selectAll();
+        for (AreaManagement areaManagement : areaManagements) {
+            System.out.println(areaManagement.toString());
         }
         /*List<User> users = userMapper.selectAll();
         for (User user : users) {

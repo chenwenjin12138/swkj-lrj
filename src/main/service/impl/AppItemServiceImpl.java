@@ -3,6 +3,7 @@ package service.impl;
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
 import dto.ReturnData;
+import mapper.AreaManagementMapper;
 import mapper.IItemCatMapper;
 import mapper.IItemMapper;
 import org.apache.ibatis.session.RowBounds;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pojo.AppItem;
 import pojo.AppItemCat;
+import pojo.AreaManagement;
 import service.IAppItemService;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
@@ -36,6 +38,9 @@ public class AppItemServiceImpl implements IAppItemService {
 
     @Resource
     private IItemCatMapper itemCatMapper;
+
+    @Resource
+    private AreaManagementMapper areaManagementMapper;
 
     private ReturnData returnData = new ReturnData();
 
@@ -75,7 +80,13 @@ public class AppItemServiceImpl implements IAppItemService {
     public ReturnData<Boolean> addAppItem(AppItem item) {
         item.setIsShow(1).setCreateTime(DateUtils.formatDate(new Date()));
         if (itemMapper.insertSelective(item) > 0) {
-            return returnData.setCode(SUCCESS_CODE).setMessage("商品添加成功!").setObject(true);
+            System.out.println("有没有"+item.getAppItemId());
+            if (item.getItemCategoryId()==25||item.getItemCategoryId()==26||item.getItemCategoryId()==27) {
+                AreaManagement areaManagement = new AreaManagement().setItemId(item.getAppItemId());
+                if (areaManagementMapper.insertSelective(areaManagement)>0) {
+                    return returnData.setCode(SUCCESS_CODE).setMessage("商品添加成功!").setObject(true);
+                }
+            }
         }
         return returnData.setCode(Fail_CODE).setMessage("商品添加失败!").setObject(false);
     }
