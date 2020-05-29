@@ -1,5 +1,6 @@
 package pojo.order;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,15 +34,16 @@ public class Order implements Serializable {
     private String createTime; // 生成时间
     private Integer userCouponId = 0; //红包Id
     private Integer orderType;       //订单类型  1.洗衣订单 2.洗衣月卡订单  3.单项家政服务  4.定制家政服务 5 充值订单
-    @Transient
     private Integer deleted = 0;  //1删除
-    @Transient
+    @TableField(exist = false)
     private String createUser; //创建人
-    @Transient
+    @TableField(exist = false)
     private String rechargeAccount; //充值手机账户
     private Byte isShare;//是否分享
+    //TODO LXH 添加字段注释，如果是数据库字段在数据库里添加
+    @TableField(exist = false)
     private String traceStatus;
-    @Transient
+    @TableField(exist = false)
     private String ew;
 
     public static final String ORDER_NUMBER_COLUMN = "order_number";
@@ -49,4 +51,5 @@ public class Order implements Serializable {
     public static final String DELETE_COLUMN = "deleted";
     public static final String CREATE_TIME_COLUMN = "create_time";
     public static final String ID_COLUMN = "id";
+    public static final String USER_ID_COLUMN = "user_id";
 }

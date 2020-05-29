@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import dto.RequestDTO;
+import dto.ReturnData;
 import mapper.UserCouponMapper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ import sun.nio.cs.US_ASCII;
 
 import java.util.List;
 
+import static dto.ReturnData.Fail_CODE;
+import static dto.ReturnData.SUCCESS_CODE;
 import static org.omg.PortableServer.IdAssignmentPolicyValue.USER_ID;
 import static pojo.AppPush.CREATE_TIME_COLUMN;
 
@@ -42,5 +45,17 @@ public class UserCouponServiceImpl implements IUserCouponService {
         }
         queryWrapper.orderByDesc(CREATE_TIME_COLUMN);
         return userCouponMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public ReturnData<Boolean> add(UserCoupon userCoupon) {
+        try {
+            if (userCouponMapper.insert(userCoupon) > 0) {
+                return new ReturnData(SUCCESS_CODE,"操作成功", true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ReturnData(Fail_CODE,"操作失败",false );
     }
 }

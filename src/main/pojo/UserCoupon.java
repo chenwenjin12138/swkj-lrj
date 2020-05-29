@@ -10,11 +10,15 @@ import lombok.Data;
 @Data
 public class UserCoupon {
     private Integer userId;// 用户ID
-    private Integer couponId; // 自增主键
+    private Integer id; // 自增主键
     private Integer sysCouponId;// 属于系统哪种红包
     private String createTime; //创建时间
     private String limitTime;// 过期时间
     private Integer active; //是否可用  0：不可用   1：可用
+    /**
+     * 红包获得方式：1.后台发放红包，2.订单分享赠送，3.唤醒红包
+     */
+    private String source;
 
     public static final String USER_ID_COLUMN = "user_id";
 }

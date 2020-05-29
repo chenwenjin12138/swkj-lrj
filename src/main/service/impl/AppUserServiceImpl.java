@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import common.Constant;
 import dto.RequestDTO;
 import dto.ReturnData;
 import mapper.IAppUserMapper;
@@ -29,7 +30,12 @@ public class AppUserServiceImpl implements IAppUserService {
     @Override
     public PageInfo<AppUser> getAppUserPageByParam(RequestDTO requestDTO) {
         QueryWrapper<AppUser> queryWrapper = new QueryWrapper();
-        AppUser appUser = objectMapper.convertValue(requestDTO.getObject(), AppUser.class);
+        AppUser appUser = null;
+        try {
+            appUser = objectMapper.convertValue(requestDTO.getObject(), AppUser.class);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
         if (appUser != null && StringUtils.isNotEmpty(appUser.getUserPhone())) {
             queryWrapper.like(COLUMN_USER_PHONE, appUser.getUserPhone());
         }
@@ -39,6 +45,21 @@ public class AppUserServiceImpl implements IAppUserService {
         return new PageInfo<AppUser>(list);
     }
 
+    @Override
+    public List<AppUser> getAppUserListByParam(RequestDTO requestDTO) {
+        QueryWrapper<AppUser> queryWrapper = new QueryWrapper();
+        AppUser appUser = null;
+        try {
+            appUser = objectMapper.convertValue(requestDTO.getObject(), AppUser.class);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+        if (appUser != null && StringUtils.isNotEmpty(appUser.getActive().toString())) {
+            queryWrapper.like(Column_ACTIVE, Constant.ACTIVE);
+        }
+        queryWrapper.orderByDesc(COLUMN_CREATE_TIME);
+        return iAppUserMapper.selectList(queryWrapper);
+    }
 
     @Override
     public ReturnData<Boolean> updateAppUser(AppUser appUser) {

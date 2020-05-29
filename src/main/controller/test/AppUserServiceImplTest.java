@@ -11,6 +11,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import pojo.user.AppUser;
 import service.IAppUserService;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -32,6 +34,17 @@ public class AppUserServiceImplTest {
         PageInfo pageInfo = iAppUserService.getAppUserPageByParam(requestDTO);
         assertEquals(pageInfo.getSize(),2);
     }
+
+    @Test
+    public void getAppUserListByParam() {
+        RequestDTO requestDTO = new RequestDTO();
+        AppUser appUser = new AppUser();
+        appUser.setActive(1);
+        requestDTO.setObject(appUser);
+        List<AppUser> appUserList = iAppUserService.getAppUserListByParam(requestDTO);
+        assertEquals(appUserList.size(),44226);
+    }
+
 
     @Test
     public void updateAppUser() {

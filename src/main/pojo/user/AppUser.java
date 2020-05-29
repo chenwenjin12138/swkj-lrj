@@ -38,4 +38,5 @@ public class AppUser {
     public static final String COLUMN_APP_USER_ID = "app_user_id";
     public static final String COLUMN_USER_PHONE = "user_phone";
     public static final String COLUMN_CREATE_TIME = "create_time";
+    public static final String Column_ACTIVE ="active";
 }
