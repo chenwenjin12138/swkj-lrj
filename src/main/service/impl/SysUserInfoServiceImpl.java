@@ -87,7 +87,6 @@ public class SysUserInfoServiceImpl implements ISysUserInfoService {
         QueryWrapper<SysAuthority> queryWrapper = new QueryWrapper();
         queryWrapper.eq(SYS_AUTHORITY_ID_COLUMN, id);
         return sysAuthorityMapper.selectOne(queryWrapper);
-
     }
 
     @Override

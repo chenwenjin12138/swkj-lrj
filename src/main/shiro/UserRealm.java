@@ -1,15 +1,21 @@
 package shiro;
 
+import com.github.pagehelper.PageInfo;
+import dto.RequestDTO;
+import net.bytebuddy.asm.Advice;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import pojo.SysAuthority;
 import pojo.SysUser;
+import pojo.user.SysAdmin;
+import service.IBusinessAdminService;
 import service.ISysUserInfoService;
 
 import javax.annotation.Resource;
@@ -23,8 +29,12 @@ import java.util.List;
 @Component
 public class UserRealm extends AuthorizingRealm{
 
-    @Resource
+    @Autowired
     private ISysUserInfoService sysUserInfoService;
+    @Autowired
+    private IBusinessAdminService businessAdminService;
+
+
 
     /**
      * 授权
@@ -54,7 +64,6 @@ public class UserRealm extends AuthorizingRealm{
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
         String userName = token.getUsername();
         String passWord = String.valueOf(token.getPassword());
-
         SysUser sysUser = sysUserInfoService.getUserInfoByLoginInfo(userName);
         if(sysUser != null && sysUser.getAdminName().equals(userName)){
             if(sysUser.getAdminPassword().equals(passWord)){

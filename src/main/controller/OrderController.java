@@ -1,14 +1,14 @@
 package controller;
 
+import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
 import dto.ReturnData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import pojo.order.Order;
 import service.IOrderService;
 import vo.OrderInfo;
 import vo.Page;
@@ -51,5 +51,12 @@ public class OrderController {
                                    @RequestParam("phoneNumber[]") String [] phoneNumbers){
         return orderService.sendMessages(orderNumbers,phoneNumbers);
     }
+
+    @ApiOperation(value = "充值订单查询",notes = "orderType字段传5")
+    @PostMapping("/getOrderPageByParam")
+    public PageInfo<Order> getOrderPageByParam(@RequestBody RequestDTO requestDTO){
+        return orderService.getOrderPageByParam(requestDTO);
+    }
+
 
 }

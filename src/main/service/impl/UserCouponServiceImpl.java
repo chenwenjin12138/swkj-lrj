@@ -11,9 +11,13 @@ import org.springframework.stereotype.Service;
 import pojo.SysCoupon;
 import pojo.UserCoupon;
 import pojo.user.AppStaff;
+import service.ISysCouponService;
 import service.IUserCouponService;
 import sun.nio.cs.US_ASCII;
+import vo.Local;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static dto.ReturnData.Fail_CODE;
@@ -30,6 +34,7 @@ import static pojo.AppPush.CREATE_TIME_COLUMN;
 public class UserCouponServiceImpl implements IUserCouponService {
     private UserCouponMapper userCouponMapper;
     private ObjectMapper objectMapper;
+    private ISysCouponService sysCouponService;
 
     public UserCouponServiceImpl(UserCouponMapper userCouponMapper, ObjectMapper objectMapper) {
         this.userCouponMapper = userCouponMapper;
@@ -50,6 +55,26 @@ public class UserCouponServiceImpl implements IUserCouponService {
     @Override
     public ReturnData<Boolean> add(UserCoupon userCoupon) {
         try {
+            if (userCoupon.getSysCouponId() == null) {
+                return new ReturnData(Fail_CODE,"红包类型不能为空,操作失败",false );
+            }
+            if (userCoupon.getSysCouponId() != null) {
+                RequestDTO requestDTO = new RequestDTO();
+                SysCoupon sysCouponParam = new SysCoupon();
+                sysCouponParam.setSysCouponId(userCoupon.getSysCouponId());
+                requestDTO.setObject(sysCouponParam);
+                List<SysCoupon> list =sysCouponService.getListByParam(requestDTO);
+                if (list == null || list.size()<1) {
+                    return new ReturnData(Fail_CODE,"没有对应的红包类型,操作失败",false );
+                }
+                LocalDateTime localDateTime = LocalDateTime.now();
+                userCoupon.setCreateTime(localDateTime);
+                userCoupon.setLimitTime(localDateTime.plusDays(list.get(0).getAging()));
+                if (userCoupon.getDenomination() == null || userCoupon.getDenomination().compareTo(BigDecimal.ZERO) == 0) {
+                    userCoupon.setDenomination(list.get(0).getDenomination());
+                }
+            }
+
             if (userCouponMapper.insert(userCoupon) > 0) {
                 return new ReturnData(SUCCESS_CODE,"操作成功", true);
             }

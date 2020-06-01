@@ -39,4 +39,17 @@ public class UserCouponController {
         return userCouponService.getListByParam(requestDTO);
     }
 
+
+    /**
+     * 添加
+     * @param userCoupon
+     * @return
+     */
+
+    @PostMapping("/add")
+    @ApiOperation("发放红包")
+    public ReturnData<Boolean> add(UserCoupon userCoupon){
+        return  userCouponService.add(userCoupon);
+    }
+
 }
