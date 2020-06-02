@@ -37,5 +37,8 @@ public class AppItem extends Base{
     private BigDecimal promotionOriginalCost;
     private String promotionBeginDate;
     private String promotionEndDate;
+    private Integer active;
+    @Transient
+    private Integer quantity;
 
 }

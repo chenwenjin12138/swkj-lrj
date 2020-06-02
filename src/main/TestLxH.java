@@ -7,15 +7,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pojo.*;
 import pojo.order.Order;
+import pojo.order.OrderMonthCard;
+import pojo.order.OrderWashing;
 import pojo.user.AppStaff;
 import tk.mybatis.mapper.entity.Example;
 import util.DateUtils;
+import vo.ItemJson;
 import vo.OrderInfo;
 
 import javax.annotation.Resource;
 
 import java.math.BigInteger;
 import java.util.List;
+
+import static pojo.CardAndItemCat.COLUMN_CARD_ID;
 
 /**
  * @Description: LxH测试类
@@ -45,16 +50,34 @@ public class TestLxH {
     private IMonthCardMapper monthCardMapper;
     @Resource
     private AreaManagementMapper areaManagementMapper;
+    @Resource
+    private OrderWashingMapper orderWashingMapper;
+    @Resource
+    private TraceStatusNameMapper traceStatusNameMapper;
+    @Resource
+    private OrderHouseServiceMapper orderHouseServiceMapper;
+    @Resource
+    private OrderMonthCardMapper orderMonthCardMapper;
+    @Resource
+    private IItemCatMapper itemCatMapper;
+    @Resource
+    private ICardAndItemCatMapper cardAndItemCatMapper;
     @Test
     public void test(){
 
-        List<AreaManagement> areaManagements = areaManagementMapper.selectAll();
-        for (AreaManagement areaManagement : areaManagements) {
-            System.out.println(areaManagement.toString());
+        Example example = new Example(CardAndItemCat.class);
+        example.createCriteria().andEqualTo("cardId",2);
+        List<CardAndItemCat> cardAndItemCats = cardAndItemCatMapper.selectByExample(example);
+        for (CardAndItemCat cardAndItemCat : cardAndItemCats) {
+            System.out.println(cardAndItemCat.toString());
         }
-        /*List<User> users = userMapper.selectAll();
-        for (User user : users) {
-            System.out.println(user.toString());
+
+       /* Example e = new Example(CardAndItemCat.class);
+        e.createCriteria().andNotEqualTo("cardId",1);
+        List<CardAndItemCat> cardAndItemCats = cardAndItemCatMapper.selectByExample(e);
+        for (CardAndItemCat cardAndItemCat : cardAndItemCats) {
+            AppItemCat appItemCat = itemCatMapper.selectByPrimaryKey(cardAndItemCat.getAppItemCategoryId());
+            System.out.println(appItemCat.getCategoryName());
         }*/
         /*String startTime = null; //DateUtils.getStartTime();
         String endTime = null; //DateUtils.getEndTime();

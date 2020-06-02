@@ -25,7 +25,7 @@ public class AreaManagementImpl implements AreaManagementService {
     @Resource
     private AreaManagementMapper areaManagementMapper;
 
-    private ReturnData returnData = new ReturnData();;
+    private ReturnData returnData = new ReturnData();
 
     /**
      * @param: itemId
@@ -80,6 +80,18 @@ public class AreaManagementImpl implements AreaManagementService {
             areaManagementMapper.deleteByPrimaryKey(areaManagementId);
         }
         return returnData.setCode(SUCCESS_CODE).setMessage("删除成功").setObject(null);
+    }
+
+    /**
+     * @Description: 获取基础价格
+     * @Author: LxH
+     * @Date: 2020/5/28 10:13
+     */
+    @Override
+    public List<AreaManagement> findBasisArea() {
+        Example example = new Example(AreaManagement.class);
+        example.createCriteria().andEqualTo("itemId",388);
+        return areaManagementMapper.selectByExample(example);
     }
 
 }

@@ -38,7 +38,8 @@ public class SysCouponServiceImplTest {
     @Test
     public void add() {
         SysCoupon sysCoupon = new SysCoupon();
-        sysCoupon.setType(1);
+        sysCoupon.setType("1,2");
+        sysCoupon.setActive(0);
         sysCoupon.setAging(3);
         sysCoupon.setDenomination(new BigDecimal("0.5"));
         sysCoupon.setInstructions("5角的红包");
@@ -48,6 +49,7 @@ public class SysCouponServiceImplTest {
     @Test
     public void update() {
         SysCoupon sysCoupon = new SysCoupon();
+        sysCoupon.setActive(1);
         assertTrue(sysCouponService.update(sysCoupon).getObject());
     }
 }

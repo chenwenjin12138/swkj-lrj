@@ -39,6 +39,16 @@ public class AreaManagementController {
     }
 
     /**
+     * @Description: 获取基础价格
+     * @Author: LxH
+     * @Date: 2020/5/28 10:12
+     */
+    @RequestMapping("findBasisArea")
+    public List<AreaManagement> findBasisArea(){
+        return areaManagementService.findBasisArea();
+    }
+
+    /**
      * @Description: 根据商品添加面积信息
      * @Author: LxH
      * @Date: 2020/5/27 15:39

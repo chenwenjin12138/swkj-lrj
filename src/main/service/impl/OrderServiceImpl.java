@@ -1,13 +1,14 @@
 package service.impl;
 import	java.io.IOException;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import common.Constant;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import dto.RequestDTO;
 import dto.ReturnData;
 import mapper.*;
@@ -15,16 +16,20 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 import pojo.*;
 import pojo.order.Order;
+import pojo.order.OrderMonthCard;
+import pojo.order.OrderWashing;
 import pojo.user.AppStaff;
-import pojo.user.AppUser;
 import service.IOrderService;
 import tk.mybatis.mapper.entity.Example;
 import util.DateUtils;
 import util.JavaSmsApi;
+import vo.BalanceVo;
+import vo.ItemJson;
 import vo.OrderInfo;
 import vo.Page;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,8 +39,11 @@ import static common.Constant.NOT_DELETED;
 import static dto.ReturnData.Fail_CODE;
 import static dto.ReturnData.SUCCESS_CODE;
 
+import static pojo.CardAndItemCat.COLUMN_CARD_ID;
+import static pojo.Reservation.*;
 import static pojo.order.Order.*;
-import static pojo.user.AppUser.*;
+import static pojo.order.OrderMonthCard.COLUMN_ORDER_NUMBER;
+import static pojo.user.AppUser.COLUMN_APP_USER_ID;
 
 /**
  * @author fl
@@ -57,16 +65,40 @@ public class OrderServiceImpl implements IOrderService {
     private StaffMapper staffMapper;
 
     @Resource
-    private AppStaffOrderMapper appStaffOrderMapper;
+    private BalanceVoMapper balanceVoMapper;
 
     @Resource
-    private DistributionrelationMapper distributionrelationMapper;
+    private OrderWashingMapper orderWashingMapper;
 
     @Resource
     private ReservationMapper reservationMapper;
 
     @Resource
     private SmsTemplateMapper smsTemplateMapper;
+
+    @Resource
+    private ConsigneeMapper consigneeMapper;
+
+    @Resource
+    private TraceStatusNameMapper traceStatusNameMapper;
+
+    @Resource
+    private OrderHouseServiceMapper orderHouseServiceMapper;
+
+    @Resource
+    private OrderMonthCardMapper orderMonthCardMapper;
+
+    @Resource
+    private IMonthCardMapper monthCardMapper;
+
+    @Resource
+    private IItemMapper itemMapper;
+
+    @Resource
+    private IItemCatMapper itemCatMapper;
+
+    @Resource
+    private ICardAndItemCatMapper cardAndItemCatMapper;
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -196,7 +228,207 @@ public class OrderServiceImpl implements IOrderService {
         return new ReturnData(SUCCESS_CODE, "短信发送成功", true);
     }
 
-    private Page<OrderInfo> getAppOrderInfo(RequestDTO requestDTO, OrderInfo orderInfo) {
+    /**
+     * @param: orderInfo
+     * @Description: 获取订单商品信息
+     * @Author: LxH
+     * @Date: 2020/5/29 11:25
+     */
+    @Override
+    public ReturnData findOrderItem(OrderInfo orderInfo) {
+        ReturnData returnData = new ReturnData();
+        Integer type = orderInfo.getType();
+        if (type==1) {
+            Example example = new Example(OrderWashing.class);
+            example.createCriteria().andEqualTo("orderNumber",orderInfo.getOrderNumber());
+            List<OrderWashing> orderWashings = orderWashingMapper.selectByExample(example);
+            for (OrderWashing orderWashing : orderWashings) {
+                return returnData.setObject(orderWashing.getShoppingJSON());
+            }
+        }
+        if (type==2) {
+
+        }
+        if (type==3) {
+
+        }
+        if (type==4) {
+
+        }
+        return null;
+    }
+
+    private Page<OrderInfo> getAppOrderInfo(RequestDTO requestDTO, OrderInfo orderInfo){
+        ArrayList<OrderInfo> list = new ArrayList<OrderInfo>();
+        Example example = new Example(Reservation.class);
+        Example.Criteria criteria = example.createCriteria();
+        if (orderInfo.getFindType()==1) {
+            criteria.andBetween(COLUMN_ORDER_TYPE,TYPE_LAUNDRY,TYPE_HOUSEKEEPING);
+            criteria.andNotEqualTo(COLUMN_ORDER_TYPE,TYPE_MONTH_CARD);
+        } else if (orderInfo.getFindType()==2){
+            criteria.andBetween(COLUMN_ORDER_TYPE,TYPE_MONTH_CARD,TYPE_CUSTOM);
+            criteria.andNotEqualTo(COLUMN_ORDER_TYPE,TYPE_HOUSEKEEPING);
+        }
+        criteria.andBetween(COLUMN_CREATE_TIME,requestDTO.getBeginTime(),requestDTO.getEndTime());
+        int start = requestDTO.getPage() * requestDTO.getSize();
+        RowBounds rowBounds = new RowBounds(start, requestDTO.getSize());
+        List<Reservation> reservations = reservationMapper.selectByExampleAndRowBounds(example, rowBounds);
+        for (Reservation reservation : reservations) {
+            OrderInfo info = new OrderInfo();
+            if (reservation.getIsShare()==1) {
+                info.setShareName("已分享");
+            }else if (reservation.getIsShare()==0){
+                info.setShareName("未分享");
+            }
+            if (reservation.getPayStatus()==1) {
+                info.setPayStatusName("已支付");
+            }else if (reservation.getPayStatus()==0){
+                info.setPayStatusName("未支付");
+            }
+            if (reservation.getIsEnd()==1) {
+                info.setIsEnd("订单已完成");
+            }else if (reservation.getIsEnd()==0){
+                info.setIsEnd("订单未完成");
+            }
+            String number = reservation.getOrderNumber();
+            Integer userId = reservation.getUserId();
+            User user = userMapper.selectByPrimaryKey(userId);
+            info.setOrderNumber(number).setUserId(userId).setUnderOrderTime(reservation.getCreateTime()).setUserPhone(user.getUserPhone())
+                    .setNickname(user.getNickName()).setTotalPrice(reservation.getTotalPrice()).setType(reservation.getOrderType());
+            if (reservation.getOrderType().equals(TYPE_LAUNDRY) || reservation.getOrderType().equals(TYPE_HOUSEKEEPING)) {
+                if (reservation.getTakeOrderTime()==null) {
+                    info.setTakeOrderTime("未抢单");
+                }else {
+                    info.setTakeOrderTime(reservation.getTakeOrderTime());
+                }
+                AppStaff appStaff = staffMapper.selectByPrimaryKey(reservation.getGrabOrderId());
+                info.setAppStaffId(appStaff.getAppStaffId()).setStaffUser(appStaff.getStaffUser()).setRealName(appStaff.getRealName())
+                        .setTelephone(appStaff.getTelephone()).setRegisterTime(appStaff.getRegisterTime());
+                TraceStatusName traceStatusName = traceStatusNameMapper.selectByPrimaryKey(reservation.getTrackingStatus());
+                info.setTraceStatusName(traceStatusName.getTraceStatusName());
+                if (reservation.getIsUrgent() == 1) {
+                    info.setUrgentFee(new BigDecimal("50.00"));
+                } else {
+                    info.setUrgentFee(new BigDecimal("0.00"));
+                }
+                if (reservation.getIsService() == 1) {
+                    info.setServiceCharge(new BigDecimal("8.00"));
+                }else {
+                    info.setServiceCharge(new BigDecimal("0.00"));
+                }
+                if (reservation.getStatus()==1) {
+                    info.setStatus("已抢");
+                }else if (reservation.getStatus()==0){
+                    info.setStatus("未抢");
+                }
+                if (reservation.getOrderType().equals(TYPE_LAUNDRY)) {
+                    if (reservation.getReGetClothesTime()==null) {
+                        info.setReGetClothesTime("未取衣");
+                    }else {
+                        info.setReGetClothesTime(reservation.getReGetClothesTime());
+                    }
+                    if (reservation.getSendBackTime()==null) {
+                        info.setSendBackTime("未送回");
+                    }else {
+                        info.setSendBackTime(reservation.getSendBackTime());
+                    }
+                    info = getLaundry(number,info);
+                }
+                if (reservation.getOrderType().equals(TYPE_HOUSEKEEPING)) {
+                    if (reservation.getReGetClothesTime()==null) {
+                        info.setReGetClothesTime("未到达");
+                    }else {
+                        info.setReGetClothesTime(reservation.getReGetClothesTime());
+                    }
+                    if (reservation.getSendBackTime()==null) {
+                        info.setSendBackTime("未结束");
+                    }else {
+                        info.setSendBackTime(reservation.getSendBackTime());
+                    }
+                    info = getHousekeeping(number,info);
+                }
+            }
+            if (reservation.getOrderType().equals(TYPE_MONTH_CARD) || reservation.getOrderType().equals(TYPE_CUSTOM)) {
+                if (reservation.getOrderType().equals(TYPE_MONTH_CARD)) {
+                    info = findMonthCard(number,info);
+                }
+                if (reservation.getOrderType().equals(TYPE_CUSTOM)) {
+                    info = findCustom(number,info);
+                }
+            }
+            list.add(info);
+        }
+        if (orderInfo.getInquire()==1) {
+            return conditionalQuery(list,orderInfo);
+        }else if (orderInfo.getInquire()==null){
+            return new Page<OrderInfo>(list,list.size());
+        }
+        return null;
+    }
+
+    private Page<OrderInfo> conditionalQuery(ArrayList<OrderInfo> list, OrderInfo orderInfo) {
+        return null;
+    }
+
+    private OrderInfo findCustom(String number, OrderInfo info) {
+
+        return null;
+    }
+
+    private OrderInfo findMonthCard(String number, OrderInfo info) {
+        ArrayList<String> name = new ArrayList<String>();
+        ArrayList<Integer> num = new ArrayList<Integer>();
+        MonthCard monthCard = new MonthCard();
+        Example example = new Example(OrderMonthCard.class);
+        example.createCriteria().andNotEqualTo(COLUMN_ORDER_NUMBER,number);
+        List<OrderMonthCard> orderMonthCards = orderMonthCardMapper.selectByExample(example);
+        for (OrderMonthCard orderMonthCard : orderMonthCards) {
+            info.setUserMonthCardCount(orderMonthCard.getUserMonthCardCount()).setStartTime(orderMonthCard.getCreateTime()).setEndTime(orderMonthCard.getEndTime());
+            monthCard = monthCardMapper.selectByPrimaryKey(orderMonthCard.getMonthCardId());
+        }
+        Example e = new Example(CardAndItemCat.class);
+        e.createCriteria().andEqualTo(COLUMN_CARD_ID,monthCard.getCardId());
+        List<CardAndItemCat> cardAndItemCats = cardAndItemCatMapper.selectByExample(e);
+        for (CardAndItemCat cardAndItemCat : cardAndItemCats) {
+            AppItemCat appItemCat = itemCatMapper.selectByPrimaryKey(cardAndItemCat.getAppItemCategoryId());
+            name.add(appItemCat.getCategoryName());
+            num.add(cardAndItemCat.getCategoryNum());
+        }
+        monthCard.setAppItemCategoryName(name).setCategoryNum(num);
+        info.setMonthCard(monthCard).setTotalPrice(monthCard.getPrice());
+        return info;
+    }
+
+    private OrderInfo getHousekeeping(String number, OrderInfo info) {
+        Example example = new Example(OrderHouseService.class);
+        example.createCriteria().andNotEqualTo("orderNumber",number);
+        List<OrderHouseService> orderHouseServices = orderHouseServiceMapper.selectByExample(example);
+        for (OrderHouseService orderHouseService : orderHouseServices) {
+            Consignee consignee = consigneeMapper.selectByPrimaryKey(orderHouseService.getTakeConsigneeId());
+            info.setTakeUserName(consignee.getConsigneeName()).setTakePhone(consignee.getConsigneeMobile()).setTakeConsignee(consignee.getName()+consignee.getAddress());
+            info.setHouseItem(itemMapper.selectByPrimaryKey(orderHouseService.getItemId()));
+        }
+        return info;
+    }
+
+    private OrderInfo getLaundry(String number, OrderInfo info) {
+        Example example = new Example(OrderWashing.class);
+        example.createCriteria().andNotEqualTo("orderNumber",number);
+        List<OrderWashing> orderWashings = orderWashingMapper.selectByExample(example);
+        for (OrderWashing orderWashing : orderWashings) {
+            info.setGetClothesTime(orderWashing.getTakeTime());
+            Consignee takeConsignee = consigneeMapper.selectByPrimaryKey(orderWashing.getTakeConsigneeId());
+            info.setTakeUserName(takeConsignee.getConsigneeName()).setTakePhone(takeConsignee.getConsigneeMobile()).setTakeConsignee(takeConsignee.getName()+takeConsignee.getAddress());
+            Consignee sendConsignee = consigneeMapper.selectByPrimaryKey(orderWashing.getSendConsigneeId());
+            info.setSendUserName(sendConsignee.getConsigneeName()).setSendPhone(sendConsignee.getConsigneeMobile()).setSendConsignee(sendConsignee.getName()+sendConsignee.getAddress());
+            info.setListItems(JSON.parseArray(orderWashing.getShoppingJSON(), ItemJson.class));
+            BalanceVo balanceVo = balanceVoMapper.selectByPrimaryKey(info.getUserId());
+            info.setUseBalance(balanceVo.getBalance());
+        }
+        return info;
+    }
+
+   /* private Page<OrderInfo> getAppOrderInf(RequestDTO requestDTO, OrderInfo orderInfo) {
         ArrayList<OrderInfo> list = new ArrayList<OrderInfo>();
         Example example = new Example(Order.class);
         example.orderBy("createTime");
@@ -222,7 +454,7 @@ public class OrderServiceImpl implements IOrderService {
             BigInteger orderId = new BigInteger(orderNumber);
             Integer userId = order.getUserId();
             User user = userMapper.selectByPrimaryKey(userId);
-            try {
+            *//*try {
                 Distributionrelation distributionrelation = distributionrelationMapper.selectByPrimaryKey(userId);
                 User u = userMapper.selectByPrimaryKey(distributionrelation.getSuperId());
                 info.setSuperUser(u.getNickName());
@@ -232,7 +464,7 @@ public class OrderServiceImpl implements IOrderService {
                 if (info.getSuperUser() == null) {
                     info.setSuperUser("无");
                 }
-            }
+            }*//*
             info.setUserId(userId).setNickname(user.getNickName()).setUserPhone(user.getUserPhone());
             Example e = new Example(AppStaffOrder.class);
             e.createCriteria().andEqualTo("orderId", orderId);
@@ -246,12 +478,12 @@ public class OrderServiceImpl implements IOrderService {
                     info.setSentTime(reservation.getUpdateTime());
                 }
             }
-            Example example2 = new Example(SmsTemplate.class);
+            *//*Example example2 = new Example(SmsTemplate.class);
             example.createCriteria().andEqualTo("orderNumber", order.getOrderNumber());
             List<SmsTemplate> smsTemplates = smsTemplateMapper.selectByExample(example2);
             for (SmsTemplate smsTemplate : smsTemplates) {
                 info.setItemDefects(smsTemplate.getOther());
-            }
+            }*//*
             for (AppStaffOrder appStaffOrder : appStaffOrders) {
                 info.setTakeOrderTime(appStaffOrder.getCreateTime()).setAppStaffId(appStaffOrder.getStaffId());
                 AppStaff appStaff = staffMapper.selectByPrimaryKey(appStaffOrder.getStaffId());
@@ -266,8 +498,8 @@ public class OrderServiceImpl implements IOrderService {
             String userPhone = orderInfo.getUserPhone();
             Integer type = orderInfo.getType();
             String inquireTime = orderInfo.getInquireTime();
-            /*2020-05-18 00:00:00
-            2020-05-19 23:59:59*/
+            *//*2020-05-18 00:00:00
+            2020-05-19 23:59:59*//*
             ArrayList<OrderInfo> infos = new ArrayList<OrderInfo>();
 
             for (OrderInfo reOrderInfo : list) {
@@ -296,25 +528,9 @@ public class OrderServiceImpl implements IOrderService {
                 return new Page<OrderInfo>(list, list.size());
             }
             return new Page<OrderInfo>(infos, infos.size());
-        } /*else {
+        } *//*else {
                 return new Page<OrderInfo>(list, list.size());
-            }*/
-    }
-
-    @Override
-    public List<Order> getAppOrderListByParam(RequestDTO requestDTO) {
-        QueryWrapper<Order> queryWrapper = new QueryWrapper();
-        Order order = null;
-        try {
-            order = objectMapper.convertValue(requestDTO.getObject(), Order.class);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
-        if (order != null && StringUtils.isNotEmpty(order.getUserId().toString())) {
-            queryWrapper.like(USER_ID_COLUMN, order.getUserId());
-        }
-        queryWrapper.orderByDesc(COLUMN_CREATE_TIME);
-        return iOrderMapper.selectList(queryWrapper);
-    }
+            }*//*
+    }*/
 }
 

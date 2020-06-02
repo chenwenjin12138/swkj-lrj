@@ -5,8 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 /**
  * @Description:
@@ -27,10 +29,36 @@ public class Reservation extends Base{
     private Integer orderType;
     private Integer grabOrderId;
     private String address;
+    private BigDecimal totalPrice;
     private Integer userId;
     private String orderNumber;
     private String longitude;
     private String latitude;
+    @Column(name = "reservationJson")
+    private String reservationJson;
+    private Integer isUrgent;
+    private Integer isService;
+    private Byte isShare;
+    private Byte isEnd;
+    private Byte payStatus;
+    /**抢单时间*/
+    private String takeOrderTime;
+    /**取衣时间*/
+    private String getClothesTime;
+    /**实际取衣时间*/
+    private String reGetClothesTime;
+    /**送回时间*/
+    private String sendBackTime;
+
+    /**
+     * 数据库字段名
+     */
+    public static final String COLUMN_ORDER_TYPE = "orderType";
+    public static final Integer TYPE_LAUNDRY = 1;
+    public static final Integer TYPE_MONTH_CARD = 2;
+    public static final Integer TYPE_HOUSEKEEPING = 3;
+    public static final Integer TYPE_CUSTOM = 4;
+    public static final String COLUMN_CREATE_TIME = "createTime";
 
     /**订单追踪状态**/
     //小哥上门收件中

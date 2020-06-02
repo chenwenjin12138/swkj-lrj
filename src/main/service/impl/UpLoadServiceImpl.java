@@ -23,8 +23,6 @@ import java.util.UUID;
 @Service
 public class UpLoadServiceImpl implements IUpLoadService {
 
-
-
     /**
      * @param: uploadFile
      * @Description: 通用图片上传

@@ -39,4 +39,11 @@ public interface AreaManagementService {
      * @Date: 2020/5/27 16:00
      */
     ReturnData deleteAreaByItemIds(Integer[] areaManagementIds);
+
+    /**
+     * @Description: 获取基础价格
+     * @Author: LxH
+     * @Date: 2020/5/28 10:13
+     */
+    List<AreaManagement> findBasisArea();
 }
