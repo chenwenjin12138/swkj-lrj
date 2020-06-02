@@ -78,15 +78,9 @@ public class AppItemServiceImpl implements IAppItemService {
     @Transactional
     @Override
     public ReturnData<Boolean> addAppItem(AppItem item) {
-        item.setIsShow(1).setCreateTime(DateUtils.formatDate(new Date()));
+        item.setIsShow(1).setActive(1).setCreateTime(DateUtils.formatDate(new Date()));
         if (itemMapper.insertSelective(item) > 0) {
-            System.out.println("有没有"+item.getAppItemId());
-            if (item.getItemCategoryId()==25||item.getItemCategoryId()==26||item.getItemCategoryId()==27) {
-                AreaManagement areaManagement = new AreaManagement().setItemId(item.getAppItemId());
-                if (areaManagementMapper.insertSelective(areaManagement)>0) {
-                    return returnData.setCode(SUCCESS_CODE).setMessage("商品添加成功!").setObject(true);
-                }
-            }
+            return returnData.setCode(SUCCESS_CODE).setMessage("商品添加成功!").setObject(true);
         }
         return returnData.setCode(Fail_CODE).setMessage("商品添加失败!").setObject(false);
     }

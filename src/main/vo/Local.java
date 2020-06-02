@@ -18,6 +18,6 @@ import java.io.Serializable;
 //@AllArgsConstructor
 public class Local implements Serializable {
     private static final long serialVersionUID = 6810494732420784373L;
-    private final String localDir="66666";
-    private final String localDirUrl="555555";
+    private final String localDir="D:/wy/pic";
+    private final String localDirUrl="http://51lrj.com/";
 }

@@ -27,4 +27,6 @@ public class CardAndItemCat {
     private Integer cardId;
     private Integer appItemCategoryId;
     private Integer categoryNum;
+
+    public static final String COLUMN_CARD_ID= "cardId";
 }

@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Repository
 public interface ISysUserInfoMapper {
-    @Select("SELECT * FROM sys_admin WHERE admin_name=#{userName}")
+    @Select("SELECT * FROM sys_admin WHERE adminName=#{userName}")
     SysUser getUserInfoByLoginInfo(String userName);
 
     /**
