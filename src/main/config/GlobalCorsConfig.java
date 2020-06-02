@@ -8,7 +8,7 @@ import org.springframework.web.filter.CorsFilter;
 
 /**
  * @author fl
- * @descrip: 过滤器配置
+ * @descrip: 跨域过滤器配置
  * @date 2020/5/29 0029下午 4:03
  */
 @Configuration

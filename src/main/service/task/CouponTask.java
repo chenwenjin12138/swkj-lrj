@@ -15,15 +15,9 @@ import service.IAppUserService;
 import service.IOrderService;
 import service.ISysCouponService;
 import service.IUserCouponService;
-import util.DateUtil;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-
-import static dto.ReturnData.Fail_CODE;
 
 /**
  * @author fl
@@ -37,6 +31,14 @@ public class CouponTask {
     private IOrderService orderService;
     private IUserCouponService userCouponService;
     private ISysCouponService sysCouponService;
+
+    public CouponTask(IAppUserService appUserService, IOrderService orderService, IUserCouponService userCouponService, ISysCouponService sysCouponService) {
+        this.appUserService = appUserService;
+        this.orderService = orderService;
+        this.userCouponService = userCouponService;
+        this.sysCouponService = sysCouponService;
+    }
+
     /**
      * 系统发放红包
      * 1.没有下过单的新用户发放通用红包 金额30
@@ -52,6 +54,11 @@ public class CouponTask {
         requestDTO.setObject(appUser);
         List<AppUser> appUserList = appUserService.getAppUserListByParam(requestDTO);
         for (AppUser appUser1:appUserList) {
+            UserCoupon userCouponParam = new UserCoupon();
+            userCouponParam.setSource(CouponConstant.ROUSE);
+            requestDTO.setObject(userCouponParam);
+           // List<UserCoupon> couponList  = userCouponService.getListByParam(requestDTO);
+
             Order order = new Order();
             order.setUserId(appUser1.getAppUserId());
             requestDTO.setObject(order);

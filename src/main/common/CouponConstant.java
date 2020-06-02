@@ -2,7 +2,7 @@ package common;
 
 /**
  * @author fl
- * @descrip:
+ * @descrip: 红包常量类
  * @date 2020/6/1 0001下午 2:06
  */
 public class CouponConstant {

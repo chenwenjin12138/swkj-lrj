@@ -88,6 +88,9 @@ public class OrderServiceImpl implements IOrderService {
         if (StringUtils.isNotEmpty(requestDTO.getBeginTime()) && StringUtils.isNotEmpty(requestDTO.getEndTime())) {
             queryWrapper.between(CREATE_TIME_COLUMN, requestDTO.getBeginTime(), requestDTO.getEndTime());
         }
+        if (order != null && order.getOrderType() != 0 ) {
+            queryWrapper.eq(ORDER_TYPE_COLUMN, order.getOrderType());
+        }
         queryWrapper.orderByDesc(CREATE_TIME_COLUMN);
         PageHelper.startPage(requestDTO.getPage(), requestDTO.getSize());
         List<Order> list = iOrderMapper.selectList(queryWrapper);
