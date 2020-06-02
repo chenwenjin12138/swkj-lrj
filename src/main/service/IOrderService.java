@@ -9,6 +9,8 @@ import pojo.order.Order;
 import vo.OrderInfo;
 import vo.Page;
 
+import java.util.List;
+
 /**
  * @author : fl
  * @describe : 订单管理
@@ -65,4 +67,12 @@ public interface IOrderService {
      * @Date: 2020/5/29 11:25
      */
     ReturnData findOrderItem(OrderInfo orderInfo);
+
+    /**
+     * 获取所有类型订单信息列表
+     * @param requestDTO
+     * @return
+     */
+    List<Order> getAppOrderListByParam(RequestDTO requestDTO);
+
 }

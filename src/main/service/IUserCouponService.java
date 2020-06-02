@@ -1,6 +1,8 @@
 package service;
 
 import dto.RequestDTO;
+import dto.ReturnData;
+import pojo.AppFeedback;
 import pojo.UserCoupon;
 
 import java.util.List;
@@ -20,5 +22,10 @@ public interface IUserCouponService {
     List<UserCoupon> getListByParam(RequestDTO requestDTO);
 
 
-
+    /**
+     * 添加用户红包
+     * @param userCoupon
+     * @return
+     */
+    ReturnData<Boolean> add(UserCoupon userCoupon) ;
 }

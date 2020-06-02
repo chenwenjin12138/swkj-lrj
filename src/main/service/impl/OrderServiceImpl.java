@@ -44,6 +44,7 @@ import static pojo.Reservation.*;
 import static pojo.order.Order.*;
 import static pojo.order.OrderMonthCard.COLUMN_ORDER_NUMBER;
 import static pojo.user.AppUser.COLUMN_APP_USER_ID;
+import static pojo.user.AppUser.COLUMN_CREATE_TIME;
 
 /**
  * @author fl
@@ -535,5 +536,21 @@ public class OrderServiceImpl implements IOrderService {
                 return new Page<OrderInfo>(list, list.size());
             }*//*
     }*/
+
+    @Override
+    public List<Order> getAppOrderListByParam(RequestDTO requestDTO) {
+        QueryWrapper<Order> queryWrapper = new QueryWrapper();
+        Order order = null;
+        try {
+            order = objectMapper.convertValue(requestDTO.getObject(), Order.class);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+        if (order != null && StringUtils.isNotEmpty(order.getUserId().toString())) {
+            queryWrapper.like(USER_ID_COLUMN, order.getUserId());
+        }
+        queryWrapper.orderByDesc(COLUMN_CREATE_TIME);
+        return iOrderMapper.selectList(queryWrapper);
+    }
 }
 
