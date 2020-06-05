@@ -22,7 +22,7 @@ import service.IOrderMonthCardService;
 @RestController
 @RequestMapping("/orderCustomHouse")
 @AllArgsConstructor
-@Api(tags = "家政月卡管理")
+@Api(tags = "定制家政月卡管理")
 public class OrderCustomHouseController {
     private IOrderCustomHouseService orderCustomHouseService;
 
@@ -31,7 +31,7 @@ public class OrderCustomHouseController {
      * @return
      */
     @PostMapping("/orderCustomHouse")
-    @ApiOperation(value = "分页查询所有家政月卡订单",notes = "查询条件：订单编号，订单创建时间")
+    @ApiOperation(value = "分页查询所有定制家政月卡订单",notes = "查询条件：订单编号，订单创建时间")
     public PageInfo<OrderCustomHouse> getPageByParam(@RequestBody RequestDTO requestDTO){
        return orderCustomHouseService.getPageByParam(requestDTO);
     }
