@@ -115,9 +115,9 @@ public class OrderServiceImpl implements IOrderService {
         if (order != null && StringUtils.isNotEmpty(order.getOrderNumber())) {
             queryWrapper.like(ORDER_NUMBER_COLUMN, order.getOrderNumber());
         }
-        if (order != null && StringUtils.isNotEmpty(order.getRechargeAccount())) {
+     /*   if (order != null && StringUtils.isNotEmpty(order.getRechargeAccount())) {
             queryWrapper.like(RECHARGE_ACCOUNT_COLUMN, order.getRechargeAccount());
-        }
+        }*/
         if (StringUtils.isNotEmpty(requestDTO.getBeginTime()) && StringUtils.isNotEmpty(requestDTO.getEndTime())) {
             queryWrapper.between(CREATE_TIME_COLUMN, requestDTO.getBeginTime(), requestDTO.getEndTime());
         }

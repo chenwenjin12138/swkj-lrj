@@ -45,4 +45,14 @@ public class CouponConstant {
      * 系统唤醒
      */
     public static final int ROUSE = 3;
+    
+    /**
+     * 已使用
+     */
+    public static final int USED = 1;
+
+    /**
+     * 未使用
+     */
+    public static final int NOT_USED = 0;
 }

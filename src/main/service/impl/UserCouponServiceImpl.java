@@ -55,9 +55,6 @@ public class UserCouponServiceImpl implements IUserCouponService {
     @Override
     public ReturnData<Boolean> add(UserCoupon userCoupon) {
         try {
-            if (userCoupon.getSysCouponId() == null) {
-                return new ReturnData(Fail_CODE,"红包类型不能为空,操作失败",false );
-            }
             if (userCoupon.getSysCouponId() != null) {
                 RequestDTO requestDTO = new RequestDTO();
                 SysCoupon sysCouponParam = new SysCoupon();
@@ -74,7 +71,6 @@ public class UserCouponServiceImpl implements IUserCouponService {
                     userCoupon.setDenomination(list.get(0).getDenomination());
                 }
             }
-
             if (userCouponMapper.insert(userCoupon) > 0) {
                 return new ReturnData(SUCCESS_CODE,"操作成功", true);
             }

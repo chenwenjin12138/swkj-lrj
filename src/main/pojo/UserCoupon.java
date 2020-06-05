@@ -18,7 +18,10 @@ public class UserCoupon {
     private LocalDateTime createTime; //创建时间
     private LocalDateTime limitTime;// 过期时间
     private Integer active; //是否可用  0：不可用   1：可用
-
+    /**
+     * 使用状态 0未使用 1 已使用
+     */
+    private Integer useStatus;
     /**
      * 红包获得方式：1.后台发放红包，2.订单分享赠送，3.唤醒红包
      */
