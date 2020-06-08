@@ -40,7 +40,7 @@ public class Order implements Serializable {
     //TODO LXH 添加字段注释，如果是数据库字段在数据库里添加
     @TableField(exist = false)
     private String traceStatus;
-
+    private String userPhone;
 
     public static final String ORDER_NUMBER_COLUMN = "order_number";
     public static final String RECHARGE_ACCOUNT_COLUMN = "recharge_account";

@@ -7,12 +7,20 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
 import mapper.OrderMonthCardMapper;
+import org.apache.shiro.crypto.hash.Hash;
 import org.springframework.stereotype.Service;
 import pojo.order.Order;
 import pojo.order.OrderMonthCard;
+import pojo.order.OrderMonthCardVo;
 import service.IOrderMonthCardService;
+import vo.Local;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static common.Constant.NOT_DELETED;
 import static pojo.order.Order.*;
@@ -35,24 +43,28 @@ public class OrderMonthCardServiceImpl implements IOrderMonthCardService {
     }
 
     @Override
-    public PageInfo<OrderMonthCard> getOrderPageByParam(RequestDTO requestDTO) {
-        QueryWrapper<OrderMonthCard> queryWrapper = new QueryWrapper();
-        OrderMonthCard orderMonthCard = objectMapper.convertValue(requestDTO.getObject(),OrderMonthCard.class);
-        if (orderMonthCard != null && StringUtils.isNotEmpty(orderMonthCard.getOrderNumber())) {
-            queryWrapper.like(ORDER_NUMBER_COLUMN,orderMonthCard.getOrderNumber());
+    public PageInfo<OrderMonthCardVo> getOrderPageByParam(RequestDTO requestDTO) {
+        String orderNumber = null;
+        String userPhone = null;
+        LocalDateTime start = null;
+        LocalDateTime end = null;
+        QueryWrapper<OrderMonthCardVo> queryWrapper = new QueryWrapper();
+        OrderMonthCardVo orderMonthCardVo = objectMapper.convertValue(requestDTO.getObject(),OrderMonthCardVo.class);
+        if (orderMonthCardVo !=null ) {
+            if (StringUtils.isNotEmpty(orderMonthCardVo.getOrderNumber())) {
+                orderNumber = orderMonthCardVo.getOrderNumber();
+            }
+            if (StringUtils.isNotEmpty(orderMonthCardVo.getUserPhone())){
+                userPhone = orderMonthCardVo.getUserPhone();
+            }
         }
 
-        if (StringUtils.isNotEmpty(requestDTO.getBeginTime()) && StringUtils.isNotEmpty(requestDTO.getEndTime()) ) {
-            queryWrapper.between(CREATE_TIME_COLUMN,requestDTO.getBeginTime(),requestDTO.getEndTime());
+        if (requestDTO.getStartLocalDateTime() !=null  && requestDTO.getEndLocalDateTime() !=null ) {
+            start = requestDTO.getStartLocalDateTime();
+            end = requestDTO.getEndLocalDateTime();
         }
-
-        if (orderMonthCard != null && StringUtils.isNotEmpty(orderMonthCard.getActive().toString())) {
-            queryWrapper.like(USER_ID_COLUMN,orderMonthCard.getUserId());
-        }
-
-        queryWrapper.orderByDesc(CREATE_TIME_COLUMN);
         PageHelper.startPage(requestDTO.getPage(),requestDTO.getSize());
-        List<OrderMonthCard> list = orderMonthCardMapper.selectList(queryWrapper);
-        return new PageInfo<OrderMonthCard>(list);
+        List<OrderMonthCardVo> list = orderMonthCardMapper.getOrderPageByParam(orderNumber,userPhone,start,end);
+        return new PageInfo<OrderMonthCardVo>(list);
     }
 }

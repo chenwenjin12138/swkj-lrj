@@ -5,6 +5,7 @@ import dto.RequestDTO;
 import dto.ReturnData;
 import pojo.order.Order;
 import pojo.order.OrderMonthCard;
+import pojo.order.OrderMonthCardVo;
 
 /**
  * @author : fl
@@ -18,7 +19,7 @@ public interface IOrderMonthCardService {
      * @param requestDTO 查询条件
      * @return
      */
-    PageInfo<OrderMonthCard> getOrderPageByParam(RequestDTO requestDTO);
+    PageInfo<OrderMonthCardVo> getOrderPageByParam(RequestDTO requestDTO);
 
 
 }

@@ -9,6 +9,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import pojo.order.OrderMonthCard;
 import service.IOrderMonthCardService;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import static org.junit.Assert.*;
 
 /**
@@ -26,7 +29,13 @@ public class OrderMonthCardServiceImplTest {
     public void getOrderPageByParam() {
         RequestDTO requestDTO = new RequestDTO();
         requestDTO.setPage(1);
-        requestDTO.setSize(15);
+        requestDTO.setSize(3);
+           LocalDateTime start =
+                LocalDateTime.parse("2020-01-01 15:55:31", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime end =
+                LocalDateTime.parse("2020-07-05 15:55:31", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        requestDTO.setStartLocalDateTime(start);
+        requestDTO.setEndLocalDateTime(end);
         assertEquals(monthCardService.getOrderPageByParam(requestDTO).getSize(),1);
     }
 }

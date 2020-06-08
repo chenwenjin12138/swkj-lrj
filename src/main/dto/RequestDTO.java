@@ -4,7 +4,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import vo.Local;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -40,5 +42,8 @@ public class RequestDTO<E> {
      * 结束时间
      */
     String endTime;
+
+    LocalDateTime startLocalDateTime;
+    LocalDateTime endLocalDateTime;
 
 }

@@ -31,11 +31,16 @@ public class OrderMonthCard {
      */
     private String orderNumber;
     private String userId;
+
+    /**
+     * 0 不能用 1 能用
+     */
     private Integer active;
     /**
      * 月卡类型id
      */
     private String monthCardId;
+
     /**
      *月卡使用次数
      */
