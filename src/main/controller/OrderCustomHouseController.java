@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pojo.order.OrderCustomHouse;
+import pojo.order.OrderCustomHouseVo;
 import pojo.order.OrderMonthCard;
 import service.IOrderCustomHouseService;
 import service.IOrderMonthCardService;
@@ -31,8 +32,8 @@ public class OrderCustomHouseController {
      * @return
      */
     @PostMapping("/orderCustomHouse")
-    @ApiOperation(value = "分页查询所有定制家政月卡订单",notes = "查询条件：订单编号，订单创建时间")
-    public PageInfo<OrderCustomHouse> getPageByParam(@RequestBody RequestDTO requestDTO){
+    @ApiOperation(value = "分页查询所有定制家政月卡订单",notes = "查询条件：订单编号，订单创建时间.用户手机号")
+    public PageInfo<OrderCustomHouseVo> getPageByParam(@RequestBody RequestDTO requestDTO){
        return orderCustomHouseService.getPageByParam(requestDTO);
     }
 

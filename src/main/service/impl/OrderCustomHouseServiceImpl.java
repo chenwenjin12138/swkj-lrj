@@ -1,23 +1,17 @@
 package service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
 import mapper.OrderCustomHouseMapper;
-import org.omg.CORBA.OBJ_ADAPTER;
 import org.springframework.stereotype.Service;
-import pojo.order.OrderCustomHouse;
-import pojo.order.OrderMonthCard;
+import pojo.order.OrderCustomHouseVo;
 import service.IOrderCustomHouseService;
 
+import java.time.LocalDateTime;
 import java.util.List;
-
-import static pojo.order.Order.CREATE_TIME_COLUMN;
-import static pojo.order.Order.ORDER_NUMBER_COLUMN;
-import static pojo.order.OrderMonthCard.USER_ID_COLUMN;
 
 /**
  * @author fl
@@ -35,24 +29,27 @@ public class OrderCustomHouseServiceImpl implements IOrderCustomHouseService {
     }
 
     @Override
-    public PageInfo<OrderCustomHouse> getPageByParam(RequestDTO requestDTO) {
-        QueryWrapper<OrderCustomHouse> queryWrapper = new QueryWrapper();
-        OrderCustomHouse orderMonthCard = objectMapper.convertValue(requestDTO.getObject(),OrderCustomHouse.class);
-        if (orderMonthCard != null && StringUtils.isNotEmpty(orderMonthCard.getOrderNumber())) {
-            queryWrapper.like(ORDER_NUMBER_COLUMN,orderMonthCard.getOrderNumber());
+    public PageInfo<OrderCustomHouseVo> getPageByParam(RequestDTO requestDTO) {
+        String orderNumber = null;
+        String userPhone = null;
+        LocalDateTime start = null;
+        LocalDateTime end = null;
+        OrderCustomHouseVo orderCustomHouseVo = objectMapper.convertValue(requestDTO.getObject(),OrderCustomHouseVo.class);
+        if (orderCustomHouseVo !=null ) {
+            if (StringUtils.isNotEmpty(orderCustomHouseVo.getOrderNumber())) {
+                orderNumber = orderCustomHouseVo.getOrderNumber();
+            }
+            if (StringUtils.isNotEmpty(orderCustomHouseVo.getUserPhone())){
+                userPhone = orderCustomHouseVo.getUserPhone();
+            }
         }
 
-        if (StringUtils.isNotEmpty(requestDTO.getBeginTime()) && StringUtils.isNotEmpty(requestDTO.getEndTime()) ) {
-            queryWrapper.between(CREATE_TIME_COLUMN,requestDTO.getBeginTime(),requestDTO.getEndTime());
+        if (requestDTO.getStartLocalDateTime() !=null  && requestDTO.getEndLocalDateTime() !=null ) {
+            start = requestDTO.getStartLocalDateTime();
+            end = requestDTO.getEndLocalDateTime();
         }
-
-        if (orderMonthCard != null && StringUtils.isNotEmpty(orderMonthCard.getActive().toString())) {
-            queryWrapper.like(USER_ID_COLUMN,orderMonthCard.getUserId());
-        }
-
-        queryWrapper.orderByDesc(CREATE_TIME_COLUMN);
         PageHelper.startPage(requestDTO.getPage(),requestDTO.getSize());
-        List<OrderCustomHouse> list = orderCustomHouseMapper.selectList(queryWrapper);
-        return new PageInfo<OrderCustomHouse>(list);
+        List<OrderCustomHouseVo> list = orderCustomHouseMapper.getOrderPageByParam(orderNumber,userPhone,start,end);
+        return new PageInfo<OrderCustomHouseVo>(list);
     }
 }

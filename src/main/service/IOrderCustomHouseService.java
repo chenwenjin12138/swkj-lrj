@@ -3,6 +3,7 @@ package service;
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
 import pojo.order.OrderCustomHouse;
+import pojo.order.OrderCustomHouseVo;
 
 /**
  * @author : fl
@@ -16,7 +17,7 @@ public interface IOrderCustomHouseService {
      * @param requestDTO 查询条件
      * @return
      */
-    PageInfo<OrderCustomHouse> getPageByParam(RequestDTO requestDTO);
+    PageInfo<OrderCustomHouseVo> getPageByParam(RequestDTO requestDTO);
 
 
 }
