@@ -2,6 +2,9 @@ package pojo;
 
 import lombok.Data;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -12,7 +15,9 @@ import java.time.LocalDateTime;
  */
 @Data
 public class UserCoupon {
-    private Integer id; // 自增主键
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id; // 自增主键
     private Integer userId;// 用户ID
     private Integer sysCouponId;// 属于系统哪种红包
     private LocalDateTime createTime; //创建时间
@@ -31,7 +36,11 @@ public class UserCoupon {
      */
     private Integer couponType;
     private BigDecimal denomination;
+    private String useInstructions;
 
     public static final String USER_ID_COLUMN = "user_id";
+    public static final String ACTIVE = "active";
+    public static final String USE_STATUS = "use_status";
+    public static final String ID ="id";
 
 }

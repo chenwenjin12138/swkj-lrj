@@ -55,7 +55,7 @@ public class AppUserServiceImpl implements IAppUserService {
             e.printStackTrace();
         }
         if (appUser != null && StringUtils.isNotEmpty(appUser.getActive().toString())) {
-            queryWrapper.like(Column_ACTIVE, Constant.ACTIVE);
+            queryWrapper.eq(Column_ACTIVE, Constant.ACTIVE);
         }
         queryWrapper.orderByDesc(COLUMN_CREATE_TIME);
         return iAppUserMapper.selectList(queryWrapper);

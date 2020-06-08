@@ -28,4 +28,11 @@ public interface IUserCouponService {
      * @return
      */
     ReturnData<Boolean> add(UserCoupon userCoupon) ;
+
+    /**
+     * 修改用户红包
+     * @param userCoupon
+     * @return
+     */
+    ReturnData<Boolean> update(UserCoupon userCoupon) ;
 }

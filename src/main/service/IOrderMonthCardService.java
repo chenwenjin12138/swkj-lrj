@@ -7,6 +7,8 @@ import pojo.order.Order;
 import pojo.order.OrderMonthCard;
 import pojo.order.OrderMonthCardVo;
 
+import java.util.List;
+
 /**
  * @author : fl
  * @describe : 月卡订单管理
@@ -21,5 +23,7 @@ public interface IOrderMonthCardService {
      */
     PageInfo<OrderMonthCardVo> getOrderPageByParam(RequestDTO requestDTO);
 
+    List<OrderMonthCard> getOrderListByParam(RequestDTO requestDTO);
 
+    ReturnData<Boolean> update(OrderMonthCard orderMonthCard);
 }

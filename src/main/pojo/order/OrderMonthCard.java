@@ -57,4 +57,5 @@ public class OrderMonthCard {
     public static final String USER_ID_COLUMN = "user_id";
     public static final String COLUMN_ORDER_NUMBER = "orderNumber";
     public static final String COLUMN_MONTH_CARD_ID= "monthCardId";
+    public static final String ACTIVE = "active";
 }

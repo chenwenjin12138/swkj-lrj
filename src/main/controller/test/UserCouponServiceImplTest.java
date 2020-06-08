@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pojo.UserCoupon;
 import service.IUserCouponService;
+import service.task.CouponTask;
 
 import java.util.List;
 
@@ -24,6 +25,10 @@ import static org.junit.Assert.*;
 public class UserCouponServiceImplTest {
     @Autowired
     private IUserCouponService userCouponService;
+
+    @Autowired
+    private CouponTask  couponTask;
+
     @Test
     public void getListByParam() {
         RequestDTO requestDTO = new RequestDTO();
@@ -32,5 +37,14 @@ public class UserCouponServiceImplTest {
         requestDTO.setObject(userCoupon);
         List list = userCouponService.getListByParam(requestDTO);
         assertEquals(list.size(),0);
+    }
+
+    @Test
+    public void grantCoupon() {
+        couponTask.grantCoupon();
+    }
+    @Test
+    public void updateCoupon() {
+        couponTask.updateUserCoupon();
     }
 }

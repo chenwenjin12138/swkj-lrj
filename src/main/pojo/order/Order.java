@@ -49,4 +49,5 @@ public class Order implements Serializable {
     public static final String ID_COLUMN = "id";
     public static final String USER_ID_COLUMN = "user_id";
     public static final String ORDER_TYPE_COLUMN = "order_type";
+    public static final String ACTIVE = "active";
 }

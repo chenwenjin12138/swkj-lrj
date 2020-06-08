@@ -2,8 +2,12 @@ package service;
 
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
+import dto.ReturnData;
 import pojo.order.OrderCustomHouse;
 import pojo.order.OrderCustomHouseVo;
+import pojo.order.OrderMonthCard;
+
+import java.util.List;
 
 /**
  * @author : fl
@@ -20,4 +24,7 @@ public interface IOrderCustomHouseService {
     PageInfo<OrderCustomHouseVo> getPageByParam(RequestDTO requestDTO);
 
 
+    List<OrderCustomHouse> getCustomHouseListByParam(RequestDTO requestDTO);
+
+    ReturnData<Boolean> update(OrderCustomHouse orderCustomHouse);
 }

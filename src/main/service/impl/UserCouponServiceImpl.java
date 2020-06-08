@@ -1,6 +1,7 @@
 package service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import dto.RequestDTO;
@@ -10,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import pojo.SysCoupon;
 import pojo.UserCoupon;
+import pojo.ValueAddedServices;
 import pojo.user.AppStaff;
 import service.ISysCouponService;
 import service.IUserCouponService;
@@ -23,6 +25,7 @@ import static dto.ReturnData.Fail_CODE;
 import static dto.ReturnData.SUCCESS_CODE;
 import static org.omg.PortableServer.IdAssignmentPolicyValue.USER_ID;
 import static pojo.AppPush.CREATE_TIME_COLUMN;
+import static pojo.ValueAddedServices.VALUE_ADDED_SERVICES_ID_COLUMN;
 
 /**
  * @author fl
@@ -45,9 +48,16 @@ public class UserCouponServiceImpl implements IUserCouponService {
     public List<UserCoupon> getListByParam(RequestDTO requestDTO) {
         QueryWrapper<UserCoupon> queryWrapper = new QueryWrapper();
         UserCoupon userCoupon = objectMapper.convertValue(requestDTO.getObject(), UserCoupon.class);
-        if (userCoupon != null && StringUtils.isNotEmpty(userCoupon.getUserId().toString())) {
+        if (userCoupon != null && userCoupon.getUserId() != null && StringUtils.isNotEmpty(userCoupon.getUserId().toString())) {
             queryWrapper.eq(UserCoupon.USER_ID_COLUMN,userCoupon.getUserId());
         }
+        if (userCoupon != null &&userCoupon.getActive() != null) {
+            queryWrapper.eq(UserCoupon.ACTIVE,userCoupon.getActive());
+        }
+        if (userCoupon != null && userCoupon.getUseStatus() !=null) {
+            queryWrapper.eq(UserCoupon.USE_STATUS,userCoupon.getUseStatus());
+        }
+
         queryWrapper.orderByDesc(CREATE_TIME_COLUMN);
         return userCouponMapper.selectList(queryWrapper);
     }
@@ -78,5 +88,19 @@ public class UserCouponServiceImpl implements IUserCouponService {
             e.printStackTrace();
         }
         return new ReturnData(Fail_CODE,"操作失败",false );
+    }
+
+    @Override
+    public ReturnData<Boolean> update(UserCoupon userCoupon) {
+        UpdateWrapper<UserCoupon> updateWrapper = new UpdateWrapper<UserCoupon>();
+        updateWrapper.eq(UserCoupon.ID,userCoupon.getId());
+        try {
+            if (userCouponMapper.update(userCoupon, updateWrapper) > 0) {
+                return new ReturnData(SUCCESS_CODE, "操作成功", true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ReturnData(Fail_CODE, "操作失败", false);
     }
 }

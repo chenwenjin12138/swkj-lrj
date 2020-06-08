@@ -1,5 +1,6 @@
 package common;
 
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -127,5 +128,8 @@ public class Constant {
      * 未删除
      */
     public static final  int NOT_DELETED = 0;
+
+    public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
 
 }

@@ -1,5 +1,8 @@
 package common;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * @author fl
  * @descrip: 红包常量类
@@ -11,13 +14,13 @@ public class CouponConstant {
      */
     public static final int GENERAL = 1;
     /**
-     *衣物红包
+     * 衣物红包
      */
     public static final int CLOTHING = 2;
     /**
      * 袋洗红包
      */
-    public  static final int BAG_TO_WASH = 3;
+    public static final int BAG_TO_WASH = 3;
     /**
      * 通用红包
      */
@@ -39,13 +42,13 @@ public class CouponConstant {
     /**
      * 订单分享红包
      */
-    public static final int ORDER_SHARE= 2;
+    public static final int ORDER_SHARE = 2;
 
     /**
      * 系统唤醒
      */
     public static final int ROUSE = 3;
-    
+
     /**
      * 已使用
      */
@@ -55,4 +58,30 @@ public class CouponConstant {
      * 未使用
      */
     public static final int NOT_USED = 0;
+
+
+    @AllArgsConstructor
+    @Getter
+    public enum CouponType{
+        GENERAL(1,"通用红包，不限种类"),
+        CLOTHING(2,"衣物红包，下单衣物类商品时可使用"),
+        BAG_TO_WASH(3,"袋洗红包，下单袋洗商品时可使用"),
+        SHOES(4,"鞋类红包，下单鞋类商品时可使用");
+
+        private int  code;
+        private String useInstructions;
+
+        public static String getUseInstructions(int code){
+            for (CouponType couponType:CouponType.values()) {
+                if (code == couponType.getCode() ) {
+                    return couponType.getUseInstructions();
+                }
+            }
+            return null;
+        }
+    }
+
+
 }
+
+
