@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pojo.*;
+import pojo.order.CustomHouseService;
 import pojo.order.Order;
 import pojo.order.OrderMonthCard;
 import pojo.order.OrderWashing;
@@ -62,14 +63,16 @@ public class TestLxH {
     private IItemCatMapper itemCatMapper;
     @Resource
     private ICardAndItemCatMapper cardAndItemCatMapper;
+    @Resource
+    private CustomHouseServiceMapper customHouseServiceMapper;
+    @Resource
+    private PayOperationMapper payOperationMapper;
     @Test
     public void test(){
 
-        Example example = new Example(CardAndItemCat.class);
-        example.createCriteria().andEqualTo("cardId",2);
-        List<CardAndItemCat> cardAndItemCats = cardAndItemCatMapper.selectByExample(example);
-        for (CardAndItemCat cardAndItemCat : cardAndItemCats) {
-            System.out.println(cardAndItemCat.toString());
+        List<PayOperation> payOperations = payOperationMapper.selectAll();
+        for (PayOperation payOperation : payOperations) {
+            System.out.println(payOperation.toString());
         }
 
        /* Example e = new Example(CardAndItemCat.class);

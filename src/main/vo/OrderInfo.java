@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import pojo.AppItem;
 import pojo.MonthCard;
+import pojo.order.CustomHouseService;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -37,12 +38,16 @@ public class OrderInfo implements Serializable {
     private String underOrderTime;
     /**支付状态*/
     private String payStatusName;
+    private Byte payStatus;
     /**分享状态*/
     private String shareName;
+    private Byte isShare;
     /**抢单状态*/
-    private String status;
+    private String statusName;
+    private Byte status;
     /**订单状态*/
-    private String isEnd;
+    private String isEndName;
+    private Byte isEnd;
     /******************* 员工信息 ********************/
     private Integer appStaffId;
     private String staffUser;
@@ -93,4 +98,7 @@ public class OrderInfo implements Serializable {
     /**月卡*/
     private MonthCard monthCard;
     private Integer userMonthCardCount;
+    /**定制家政*/
+    private CustomHouseService customHouseService;
+
 }

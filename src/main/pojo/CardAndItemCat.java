@@ -19,14 +19,16 @@ import javax.persistence.Table;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "app_month_card_item_category")
+@Table(name = "app_month_card_item")
 public class CardAndItemCat {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer cardId;
-    private Integer appItemCategoryId;
-    private Integer categoryNum;
+    //private Integer appItemCategoryId;
+    //private Integer categoryNum;
+    private Integer itemId;
+    private Integer itemNum;
 
     public static final String COLUMN_CARD_ID= "cardId";
 }

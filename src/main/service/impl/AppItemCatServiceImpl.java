@@ -1,12 +1,10 @@
 package service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import common.Constant;
 import dto.ReturnData;
 import mapper.IItemCatMapper;
 import org.springframework.stereotype.Service;
 import pojo.AppItemCat;
-import pojo.activity.Activity;
 import service.IAppItemCatService;
 import vo.Node;
 
@@ -15,7 +13,6 @@ import java.util.List;
 
 import static dto.ReturnData.Fail_CODE;
 import static dto.ReturnData.SUCCESS_CODE;
-import static pojo.AppPush.CREATE_TIME_COLUMN;
 
 /**
  * @Description:
@@ -24,6 +21,7 @@ import static pojo.AppPush.CREATE_TIME_COLUMN;
  */
 @Service
 public class AppItemCatServiceImpl implements IAppItemCatService {
+
     @Resource
     private IItemCatMapper itemCatMapper;
 

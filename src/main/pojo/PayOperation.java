@@ -1,7 +1,13 @@
 package pojo;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
 /**
@@ -10,7 +16,13 @@ import java.math.BigDecimal;
  * @date 2020/5/7 0007下午 3:17
  */
 @Data
+@Accessors(chain = true)
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
+@Table(name = "pay_operation")
 public class PayOperation {
+    @Id
     private Integer id;
     /**
      * 充值平台
@@ -48,6 +60,8 @@ public class PayOperation {
     private String checkStatus;
 
     private String reason;
+
+    private String userPhone;
 
     public static final String TRADE_SOURCE_COLUMN = "trade_source";
     public static final String TRADE_TYPE_COLUMN = "trade_type";

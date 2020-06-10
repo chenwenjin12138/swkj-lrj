@@ -5,6 +5,7 @@ import dto.RequestDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,10 +30,8 @@ public class OrderCustomHouseController {
      * @return
      */
     @PostMapping("/orderCustomHouse")
-    @ApiOperation(value = "分页查询所有定制家政月卡订单",notes = "查询条件：订单编号，订单创建时间.用户手机号")
-    public PageInfo<OrderCustomHouseVo> getPageByParam(@RequestBody RequestDTO requestDTO){
+    @ApiOperation(value = "分页查询所有定制家政月卡订单",notes = "查询条件：订单编号，订单创建时间")
+    public PageInfo<OrderCustomHouseVo> getPageByParam(@RequestBody RequestDTO<T> requestDTO){
        return orderCustomHouseService.getPageByParam(requestDTO);
     }
-
-
 }

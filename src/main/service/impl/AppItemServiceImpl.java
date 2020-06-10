@@ -24,6 +24,7 @@ import util.DateUtils;
 
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -70,12 +71,14 @@ public class AppItemServiceImpl implements IAppItemService {
         }
         int start = requestDTO.getPage() * requestDTO.getSize();
         RowBounds rowBounds = new RowBounds(start, requestDTO.getSize());
+        int count = itemMapper.selectCount(new AppItem());
+        System.out.println(count);
         List<AppItem> appItems = itemMapper.selectByExampleAndRowBounds(example, rowBounds);
         for (AppItem item : appItems) {
             AppItemCat appItemCat = itemCatMapper.selectByPrimaryKey(item.getItemCategoryId());
             item.setItemCategoryName(appItemCat.getCategoryName());
         }
-        return new PageInfo<AppItem>(appItems);
+        return new PageInfo<AppItem>(appItems,count);
     }
 
     /**

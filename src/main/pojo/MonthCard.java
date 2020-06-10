@@ -37,7 +37,7 @@ public class MonthCard extends Base {
     private Float shareDicount;
     private String notice;
     @Transient
-    private List<String> appItemCategoryName;
+    private List<String> appItemName;
     @Transient
-    private List<Integer> categoryNum;
+    private List<Integer> itemNum;
 }
