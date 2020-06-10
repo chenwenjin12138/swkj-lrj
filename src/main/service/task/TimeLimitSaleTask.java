@@ -81,22 +81,21 @@ public class TimeLimitSaleTask {
             }
         });
         int itemCount = 0;
+        RequestDTO param = new RequestDTO();
+        AppItem paramItem = new AppItem();
+        paramItem.setBargainType(AppItem.BargainType.TIME_LIMIT_SALE.toString());
+        param.setObject(paramItem);
+        List<AppItem> timeLimitList = appItemService.getAppItemListByParam(param);
+        timeLimitList.forEach(appItem -> {
+            appItem.setBargainType(AppItem.BargainType.NORMAL.toString());
+            appItem.setPrice(appItem.getPromotionOriginalCost());
+            appItem.setPromotionOriginalCost(null);
+            appItemService.updateAppItem(appItem);
+        });
         for (Map.Entry<Integer, Integer> data : list_Data) {
             if (itemCount > 3) {
                 break;
             }
-            RequestDTO param = new RequestDTO();
-            AppItem paramItem = new AppItem();
-            paramItem.setBargainType(AppItem.BargainType.TIME_LIMIT_SALE.toString());
-            param.setObject(paramItem);
-            List<AppItem> timeLimitList = appItemService.getAppItemListByParam(param);
-            timeLimitList.forEach(appItem -> {
-                appItem.setBargainType(AppItem.BargainType.NORMAL.toString());
-                appItem.setPrice(appItem.getPromotionOriginalCost());
-                appItem.setPromotionOriginalCost(null);
-                appItemService.updateAppItem(appItem);
-            });
-
             paramItem = new AppItem();
             paramItem.setAppItemId(data.getKey());
             param.setObject(paramItem);
