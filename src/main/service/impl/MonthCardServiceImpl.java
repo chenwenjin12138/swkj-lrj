@@ -8,6 +8,7 @@ import mapper.IItemMapper;
 import mapper.IMonthCardMapper;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
+import pojo.AppItem;
 import pojo.AppItemCat;
 import pojo.CardAndItemCat;
 import pojo.MonthCard;
@@ -41,6 +42,9 @@ public class MonthCardServiceImpl implements IMonthCardService {
     @Resource
     private IItemCatMapper itemCatMapper;
 
+    @Resource
+    private IItemMapper itemMapper;
+
     private ReturnData returnData = new ReturnData();
 
     /**
@@ -69,13 +73,12 @@ public class MonthCardServiceImpl implements IMonthCardService {
             example1.createCriteria().andEqualTo("cardId", card.getCardId());
             List<CardAndItemCat> cardAndItemCats = cardAndItemCatMapper.selectByExample(example1);
                 for (CardAndItemCat cardAndItemCat : cardAndItemCats) {
-                    Integer catNum = cardAndItemCat.getCategoryNum();
-                    AppItemCat appItemCat = itemCatMapper.selectByPrimaryKey(cardAndItemCat.getAppItemCategoryId());
-                    System.out.println("商品名" + appItemCat.getCategoryName());
-                    name.add(appItemCat.getCategoryName());
-                    num.add(catNum);
+                    Integer itemNum = cardAndItemCat.getItemNum();
+                    AppItem appItem = itemMapper.selectByPrimaryKey(cardAndItemCat.getItemId());
+                    name.add(appItem.getItemName());
+                    num.add(itemNum);
                 }
-                card.setAppItemCategoryName(name).setCategoryNum(num);
+                card.setAppItemName(name).setItemNum(num);
             }
         return new Page<MonthCard>(monthCards,monthCards.size());
     }
@@ -87,16 +90,15 @@ public class MonthCardServiceImpl implements IMonthCardService {
      * @Date: 2020/5/8 20:23
      */
     @Override
-    public ReturnData<Boolean> addMonthCard(MonthCard monthCard,Integer[] appItemCategoryIds,Integer[] categoryNum ) {
+    public ReturnData<Boolean> addMonthCard(MonthCard monthCard,Integer[] itemIds,Integer[] itemNum) {
         monthCard.setCreateTime(DateUtils.formatDate(new Date()));
-        if (appItemCategoryIds.length!=categoryNum.length) {
+        if (itemIds.length!=itemNum.length) {
             return returnData.setCode(Fail_CODE).setMessage("月卡添加失败,参数不匹配").setObject(false);
         }
         if (monthCardMapper.insertSelective(monthCard) > 0) {
-            for (int i = 0; i < appItemCategoryIds.length; i++) {
-
+            for (int i = 0; i < itemIds.length; i++) {
                 CardAndItemCat cardAndItemCat = new CardAndItemCat();
-                cardAndItemCat.setCardId(monthCard.getCardId()).setAppItemCategoryId(appItemCategoryIds[i]).setCategoryNum(categoryNum[i]);
+                cardAndItemCat.setCardId(monthCard.getCardId()).setItemId(itemIds[i]).setItemNum(itemNum[i]);
                 cardAndItemCatMapper.insertSelective(cardAndItemCat);
             }
             return returnData.setCode(SUCCESS_CODE).setMessage("月卡添加成功").setObject(true);
@@ -114,7 +116,7 @@ public class MonthCardServiceImpl implements IMonthCardService {
     public ReturnData<Boolean> updateMonthCard(MonthCard monthCard,List<CardAndItemCat> cardAndItemCatList) {
         for (CardAndItemCat cardAndItemCat : cardAndItemCatList) {
             CardAndItemCat cardAndItemCatNew = cardAndItemCatMapper.selectByPrimaryKey(cardAndItemCat.getId());
-            cardAndItemCatNew.setCategoryNum(cardAndItemCat.getCategoryNum()).setAppItemCategoryId(cardAndItemCat.getAppItemCategoryId()).setCardId(cardAndItemCat.getCardId());
+            cardAndItemCatNew.setItemId(cardAndItemCat.getItemId()).setItemNum(cardAndItemCat.getItemNum());
             int i = cardAndItemCatMapper.updateByPrimaryKeySelective(cardAndItemCatNew);
             System.out.println("修改"+i);
         }

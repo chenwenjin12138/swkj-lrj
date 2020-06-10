@@ -27,7 +27,7 @@ public interface IMonthCardService {
      * @Author: LxH
      * @Date: 2020/5/8 20:23
      */
-    ReturnData<Boolean> addMonthCard(MonthCard monthCard,Integer[] appItemCategoryIds,Integer[] categoryNum);
+    ReturnData<Boolean> addMonthCard(MonthCard monthCard,Integer[] itemIds,Integer[] itemNum);
 
     /**
      * @Description: 月卡更新

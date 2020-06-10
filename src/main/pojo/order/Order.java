@@ -37,7 +37,7 @@ public class Order implements Serializable {
     @Transient
     private Integer deleted = 0;  //1删除
     private Byte isShare;//是否分享
-    //TODO LXH 添加字段注释，如果是数据库字段在数据库里添加
+    /**物流信息*/
     @TableField(exist = false)
     private String traceStatus;
     private String userPhone;

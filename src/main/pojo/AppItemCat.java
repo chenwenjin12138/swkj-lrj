@@ -28,6 +28,7 @@ public class AppItemCat implements Serializable{
     private String categroryPic;
     private String pid;
     private Integer isShow;
+    private Integer categoryType;
 
     public static final String ID_COLUMN = "app_item_category_id";
 }

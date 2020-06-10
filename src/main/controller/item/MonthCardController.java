@@ -12,7 +12,6 @@ import pojo.CardAndItemCat;
 import pojo.MonthCard;
 import service.IMonthCardService;
 import vo.Page;
-
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -48,8 +47,8 @@ public class MonthCardController {
      */
     @ApiOperation(value = "新增月卡")
     @RequestMapping("/addMonthCard")
-    public ReturnData<Boolean> addMonthCard(MonthCard monthCard,Integer[] appItemCategoryIds,Integer[] categoryNum){
-        return monthCardService.addMonthCard(monthCard,appItemCategoryIds,categoryNum);
+    public ReturnData<Boolean> addMonthCard(MonthCard monthCard,Integer[] itemIds,Integer[] itemNum){
+        return monthCardService.addMonthCard(monthCard,itemIds,itemNum);
     }
 
     /**
@@ -74,7 +73,7 @@ public class MonthCardController {
         return monthCardService.setDisplay(monthCard);
     }
 
-    /**
+    /*
      * @Description: 条件查询月卡
      * @Author: LxH
      * @Date: 2020/5/9 10:24

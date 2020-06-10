@@ -39,6 +39,7 @@ public class Reservation extends Base{
     private Integer isService;
     private Byte isShare;
     private Byte isEnd;
+    //private Byte payStatus;
     /**抢单时间*/
     private String takeOrderTime;
     /**取衣时间*/
@@ -56,7 +57,7 @@ public class Reservation extends Base{
     public static final Integer TYPE_MONTH_CARD = 2;
     public static final Integer TYPE_HOUSEKEEPING = 3;
     public static final Integer TYPE_CUSTOM = 4;
-    public static final String COLUMN_CREATE_TIME = "create_time";
+    public static final String COLUMN_CREATE_TIME = "createTime";
 
     /**订单追踪状态**/
     //小哥上门收件中
