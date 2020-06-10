@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import pojo.UserCoupon;
 import service.IUserCouponService;
 import service.task.CouponTask;
+import service.task.TimeLimitSaleTask;
 
 import java.util.List;
 
@@ -29,6 +30,9 @@ public class UserCouponServiceImplTest {
     @Autowired
     private CouponTask  couponTask;
 
+    @Autowired
+    private TimeLimitSaleTask timeLimitSaleTask;
+
     @Test
     public void getListByParam() {
         RequestDTO requestDTO = new RequestDTO();
@@ -43,8 +47,15 @@ public class UserCouponServiceImplTest {
     public void grantCoupon() {
         couponTask.grantCoupon();
     }
+
+
     @Test
     public void updateCoupon() {
         couponTask.updateUserCoupon();
+    }
+
+    @Test
+    public void grantTimeLimitSale() {
+        timeLimitSaleTask.grantTimeLimitSale();
     }
 }

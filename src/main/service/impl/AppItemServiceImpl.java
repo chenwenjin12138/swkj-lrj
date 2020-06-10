@@ -1,5 +1,8 @@
 package service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
 import dto.ReturnData;
@@ -7,11 +10,13 @@ import mapper.AreaManagementMapper;
 import mapper.IItemCatMapper;
 import mapper.IItemMapper;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pojo.AppItem;
 import pojo.AppItemCat;
 import pojo.AreaManagement;
+import pojo.Reservation;
 import service.IAppItemService;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
@@ -41,6 +46,9 @@ public class AppItemServiceImpl implements IAppItemService {
 
     @Resource
     private AreaManagementMapper areaManagementMapper;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     private ReturnData returnData = new ReturnData();
 
@@ -164,4 +172,19 @@ public class AppItemServiceImpl implements IAppItemService {
         return new ReturnData().setCode(SUCCESS_CODE).setObject(appItem.getPicture());
     }
 
+    @Override
+    public List<AppItem> getAppItemListByParam(RequestDTO requestDTO){
+        QueryWrapper<AppItem> queryWrapper = new QueryWrapper();
+        queryWrapper.eq(AppItem.SHOW_COLUMN,1);
+        if (requestDTO.getObject() !=null ) {
+            AppItem appItem = objectMapper.convertValue(requestDTO.getObject(), AppItem.class);
+            if (appItem != null && appItem.getAppItemId()!= null) {
+                queryWrapper.eq(AppItem.ID_COLUMN,appItem.getAppItemId());
+            }
+            if (appItem != null && StringUtils.isNotEmpty(appItem.getBargainType())) {
+                queryWrapper.eq(AppItem.BARGAIN_TYPE_COLUMN,appItem.getBargainType());
+            }
+        }
+        return itemMapper.selectList(queryWrapper);
+    }
 }

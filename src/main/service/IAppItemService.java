@@ -5,6 +5,8 @@ import dto.RequestDTO;
 import dto.ReturnData;
 import pojo.AppItem;
 
+import java.util.List;
+
 /**
  * @Description:
  * @Author Lxh
@@ -60,5 +62,13 @@ public interface IAppItemService {
      * @Date: 2020/5/8 19:07
      */
     ReturnData findImageById(Integer appItemId);
+
+    /**
+     * @Description: 商品列表查询
+     * @Author: LxH
+     * @Date: 2020/5/8 9:58
+     */
+    List<AppItem> getAppItemListByParam(RequestDTO requestDTO);
+
 
 }

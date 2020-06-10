@@ -284,11 +284,11 @@ public class OrderServiceImpl implements IOrderService {
             }else if (reservation.getIsShare()==0){
                 info.setShareName("未分享");
             }
-            if (reservation.getPayStatus()==1) {
+           /* if (reservation.getPayStatus()==1) {
                 info.setPayStatusName("已支付");
             }else if (reservation.getPayStatus()==0){
                 info.setPayStatusName("未支付");
-            }
+            }*/
             if (reservation.getIsEnd()==1) {
                 info.setIsEnd("订单已完成");
             }else if (reservation.getIsEnd()==0){

@@ -1,5 +1,6 @@
 package pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import javax.annotation.Generated;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * @author Lxh
@@ -24,8 +26,12 @@ public class AppItem extends Base{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer appItemId;
+
+    @TableField(exist = false)
+    private Integer itemId;
     private Integer itemCategoryId;
     @Transient
+    @TableField(exist = false)
     private String itemCategoryName;
     private String itemName ;
     private String itemUnit ;
@@ -35,10 +41,19 @@ public class AppItem extends Base{
     private String picture ;
     private Integer isShow;
     private BigDecimal promotionOriginalCost;
-    private String promotionBeginDate;
-    private String promotionEndDate;
+    private LocalDateTime promotionBeginDate;
+    private LocalDateTime promotionEndDate;
     private Integer active;
     @Transient
+    @TableField(exist = false)
     private Integer quantity;
+    private String bargainType;
+    public enum BargainType{
+        TIME_LIMIT_SALE,
+        NORMAL
+    }
+    public static final String ID_COLUMN =  "app_item_id";
+    public static final String SHOW_COLUMN = "is_show";
+    public static final String BARGAIN_TYPE_COLUMN = "bargain_type";
 
 }

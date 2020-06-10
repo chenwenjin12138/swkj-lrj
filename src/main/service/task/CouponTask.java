@@ -1,6 +1,5 @@
 package service.task;
 
-import com.google.gson.internal.$Gson$Preconditions;
 import common.Constant;
 import common.CouponConstant;
 import dto.RequestDTO;
@@ -8,7 +7,6 @@ import dto.ReturnData;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import pojo.SysCoupon;
 import pojo.UserCoupon;
 import pojo.order.Order;
 import pojo.user.AppUser;
@@ -76,7 +74,7 @@ public class CouponTask {
             requestDTO.setObject(order);
             List<Order> orderList = orderService.getAppOrderListByParam(requestDTO);
             if (orderList == null || orderList.size() == 0) {
-               /* UserCoupon userCoupon = new UserCoupon();
+                UserCoupon userCoupon = new UserCoupon();
                 userCoupon.setUserId(appUser1.getAppUserId());
                 userCoupon.setActive(Constant.ACTIVE);
                 userCoupon.setSource(CouponConstant.ROUSE);
@@ -86,7 +84,7 @@ public class CouponTask {
                 userCoupon.setCreateTime(now);
                 userCoupon.setLimitTime(now.plusDays(7));
                 userCoupon.setUseStatus(CouponConstant.NOT_USED);
-                ReturnData returnData = userCouponService.add(userCoupon);*/
+                ReturnData returnData = userCouponService.add(userCoupon);
             } else {
                 //袋鞋衣家证下单商品排比，比重为：1：2：3：4 随机发送
                 List<Double> list = new ArrayList<>();
