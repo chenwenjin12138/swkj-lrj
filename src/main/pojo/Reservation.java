@@ -58,6 +58,7 @@ public class Reservation extends Base{
     public static final Integer TYPE_HOUSEKEEPING = 3;
     public static final Integer TYPE_CUSTOM = 4;
     public static final String COLUMN_CREATE_TIME = "createTime";
+    public static final String COLUMN_CREATE_TIME1 = "create_time";
 
     /**订单追踪状态**/
     //小哥上门收件中
