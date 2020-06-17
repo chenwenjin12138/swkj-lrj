@@ -3,8 +3,11 @@ package service;
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
 import dto.ReturnData;
+import net.bytebuddy.asm.Advice;
 import pojo.PayOperation;
 import pojo.user.AppStaff;
+
+import java.math.BigDecimal;
 
 /**
  * @author : fl
@@ -19,5 +22,20 @@ public interface IPayOperationService {
      * @return
      */
     PageInfo<PayOperation> getPageByParam(RequestDTO requestDTO);
+
+    /**
+     * 商户提现
+     * @return
+     */
+    ReturnData<Boolean> add(PayOperation payOperation);
+
+    /**
+     * 退款提现处理
+     * @return
+     */
+    ReturnData<Boolean> withdraw(PayOperation payOperation);
+
+    BigDecimal getTotalWithDraw(int userId);
+
 
 }

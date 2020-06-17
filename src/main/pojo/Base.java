@@ -1,5 +1,6 @@
 package pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,6 @@ public class Base implements Serializable {
     private static final long serialVersionUID = -8228639198011278668L;
     private String createTime ;
     @Transient
+    @TableField(exist = false)
     private String updateTime ;
 }
