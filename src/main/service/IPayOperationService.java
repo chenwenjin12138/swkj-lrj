@@ -26,4 +26,10 @@ public interface IPayOperationService {
      * @return
      */
     ReturnData<Boolean> add(PayOperation payOperation);
+
+    /**
+     * 退款提现处理
+     * @return
+     */
+    ReturnData<Boolean> update(PayOperation payOperation);
 }

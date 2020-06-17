@@ -13,6 +13,7 @@ import lombok.experimental.Accessors;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * @author fl
@@ -61,7 +62,7 @@ public class PayOperation {
     private String outTradeNo;
 
     @ApiModelProperty("创建时间")
-    private String createTime;
+    private LocalDateTime createTime;
 
     @ApiModelProperty("用户id")
     private Integer userId;
@@ -70,7 +71,7 @@ public class PayOperation {
      * 审核状态 0 待审核 1审核通过 -1 不通过
      */
     @ApiModelProperty("审核状态 0 待审核 1审核通过 -1 不通过")
-    private String checkStatus;
+    private Integer checkStatus = 0 ;
 
     @ApiModelProperty("审核原因")
     private String reason;

@@ -39,6 +39,16 @@ public class PayOperationController {
         return payOperationService.getPageByParam(requestDTO);
     }
 
+    @PostMapping("/add")
+    @ApiOperation("提现")
+    public ReturnData<Boolean> add(@RequestBody PayOperation payOperation){
+        return payOperationService.add(payOperation);
+    }
 
+    @PostMapping("/update")
+    @ApiOperation("提现退款记录处理")
+    public ReturnData<Boolean> update(@RequestBody PayOperation payOperation){
+        return payOperationService.update(payOperation);
+    }
 
 }

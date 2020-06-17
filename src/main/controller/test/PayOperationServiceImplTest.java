@@ -9,6 +9,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import pojo.PayOperation;
 import service.IPayOperationService;
 
+import java.math.BigDecimal;
+
 import static org.junit.Assert.*;
 
 /**
@@ -31,5 +33,25 @@ public class PayOperationServiceImplTest {
         payOperation.setTradeSource(0);
         requestDTO.setObject(payOperation);
         assertEquals(payOperationService.getPageByParam(requestDTO).getList().size(),1);
+    }
+
+
+    @Test
+    public void add() {
+        PayOperation payOperation = new PayOperation();
+        payOperation.setUserId(1);
+        payOperation.setUserPhone("18388202474");
+        payOperation.setTotalFee(new BigDecimal(20));
+        payOperation.setTradeType(2);
+        payOperation.setCheckStatus(0);
+        assertTrue(payOperationService.add(payOperation).getObject());
+    }
+
+    @Test
+    public void update() {
+        PayOperation payOperation = new PayOperation();
+        payOperation.setCheckStatus(-1);
+        payOperation.setId(2);
+        assertTrue(payOperationService.update(payOperation).getObject());
     }
 }
