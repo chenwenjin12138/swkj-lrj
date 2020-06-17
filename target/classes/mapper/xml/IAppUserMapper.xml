@@ -6,7 +6,7 @@
 <mapper namespace="mapper.ISysUserInfoMapper">
 
     <select id="getUserInfoByLoginInfo" resultType="pojo.SysUser" parameterType="String">
-        SELECT * FROM sys_admin WHERE adminName=#{userName}
+        SELECT * FROM sys_admin WHERE admin_name=#{userName}
     </select>
     <select id="getRoleById" parameterType="Integer">
         SELECT * FROM sys_role WHERE sys_role_id=#{roleId}

@@ -3,6 +3,7 @@ package service;
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
 import dto.ReturnData;
+import net.bytebuddy.asm.Advice;
 import pojo.PayOperation;
 import pojo.user.AppStaff;
 
@@ -20,4 +21,9 @@ public interface IPayOperationService {
      */
     PageInfo<PayOperation> getPageByParam(RequestDTO requestDTO);
 
+    /**
+     * 商户提现
+     * @return
+     */
+    ReturnData<Boolean> add(PayOperation payOperation);
 }
