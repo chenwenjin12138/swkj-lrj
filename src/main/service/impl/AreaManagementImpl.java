@@ -49,9 +49,9 @@ public class AreaManagementImpl implements AreaManagementService {
     @Override
     public ReturnData addAreaByItemId(AreaManagement areaManagement) {
         if (areaManagementMapper.insertSelective(areaManagement)>0) {
-            return returnData.setCode(SUCCESS_CODE).setMessage("添加成功").setObject(null);
+            return returnData.setCode(SUCCESS_CODE).setMessage("添加成功").setData(null);
         }
-        return returnData.setCode(Fail_CODE).setMessage("添加失败").setObject(null);
+        return returnData.setCode(Fail_CODE).setMessage("添加失败").setData(null);
     }
 
     /**
@@ -63,9 +63,9 @@ public class AreaManagementImpl implements AreaManagementService {
     @Override
     public ReturnData updateAreaByItemId(AreaManagement areaManagement) {
         if (areaManagementMapper.updateByPrimaryKeySelective(areaManagement)>0) {
-            return returnData.setCode(SUCCESS_CODE).setMessage("修改成功").setObject(null);
+            return returnData.setCode(SUCCESS_CODE).setMessage("修改成功").setData(null);
         }
-        return returnData.setCode(Fail_CODE).setMessage("修改失败").setObject(null);
+        return returnData.setCode(Fail_CODE).setMessage("修改失败").setData(null);
     }
 
     /**
@@ -79,7 +79,7 @@ public class AreaManagementImpl implements AreaManagementService {
         for (Integer areaManagementId : areaManagementIds) {
             areaManagementMapper.deleteByPrimaryKey(areaManagementId);
         }
-        return returnData.setCode(SUCCESS_CODE).setMessage("删除成功").setObject(null);
+        return returnData.setCode(SUCCESS_CODE).setMessage("删除成功").setData(null);
     }
 
     /**

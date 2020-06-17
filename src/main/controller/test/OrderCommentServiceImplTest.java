@@ -41,7 +41,7 @@ public class OrderCommentServiceImplTest {
         OrderComment orderComment = new OrderComment();
         orderComment.setOrderCommentId(1);
         orderComment.setIsVisible(1);
-        assertTrue(orderCommentService.updateOrder(orderComment).getObject());
+        assertTrue(orderCommentService.updateOrder(orderComment).getData());
 
     }
 }

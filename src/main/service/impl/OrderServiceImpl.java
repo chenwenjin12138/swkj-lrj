@@ -114,7 +114,7 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public PageInfo<Order> getOrderPageByParam(RequestDTO requestDTO) {
         QueryWrapper<Order> queryWrapper = new QueryWrapper();
-        Order order = objectMapper.convertValue(requestDTO.getObject(), Order.class);
+        Order order = objectMapper.convertValue(requestDTO.getData(), Order.class);
         queryWrapper.eq(DELETE_COLUMN, NOT_DELETED);
         if (order != null && StringUtils.isNotEmpty(order.getOrderNumber())) {
             queryWrapper.like(ORDER_NUMBER_COLUMN, order.getOrderNumber());
@@ -251,7 +251,7 @@ public class OrderServiceImpl implements IOrderService {
             example.createCriteria().andEqualTo("orderNumber",orderInfo.getOrderNumber());
             List<OrderWashing> orderWashings = orderWashingMapper.selectByExample(example);
             for (OrderWashing orderWashing : orderWashings) {
-                return returnData.setObject(orderWashing.getShoppingJSON());
+                return returnData.setData(orderWashing.getShoppingJSON());
             }
         }
         if (type==2) {
@@ -563,7 +563,7 @@ public class OrderServiceImpl implements IOrderService {
         QueryWrapper<Order> queryWrapper = new QueryWrapper();
         Order order = null;
         try {
-            order = objectMapper.convertValue(requestDTO.getObject(), Order.class);
+            order = objectMapper.convertValue(requestDTO.getData(), Order.class);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }

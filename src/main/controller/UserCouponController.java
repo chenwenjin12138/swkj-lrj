@@ -35,7 +35,7 @@ public class UserCouponController {
      */
     @GetMapping("/getListByParam")
     @ApiOperation(value = "查询用户红包",notes = "参数传userId")
-   public List<UserCoupon> getListByParam(RequestDTO requestDTO){
+    public List<UserCoupon> getListByParam(RequestDTO requestDTO){
         return userCouponService.getListByParam(requestDTO);
     }
 

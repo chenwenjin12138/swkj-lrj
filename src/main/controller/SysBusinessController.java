@@ -33,7 +33,7 @@ public class SysBusinessController {
      */
     @PostMapping("/businessPageByParam")
     @ApiOperation(value = "分页查询所有商家",notes = "查询条件：商家名称、商家联系电话")
-    public PageInfo<SysAdmin> getAppUser(@RequestBody RequestDTO requestDTO){
+    public ReturnData<PageInfo<SysAdmin>> getAppUser(@RequestBody RequestDTO requestDTO){
        return iBusinessAdminService.getBusinessAdminPageByParam(requestDTO);
     }
 

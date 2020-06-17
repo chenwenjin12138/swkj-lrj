@@ -35,8 +35,8 @@ public class ReservationServiceImpl implements IReservationService {
     @Override
     public List<Reservation> getReservationPageByParam(RequestDTO requestDTO) {
         QueryWrapper<Reservation> queryWrapper = new QueryWrapper();
-        if (requestDTO.getObject() !=null ) {
-            Reservation reservation = objectMapper.convertValue(requestDTO.getObject(), Reservation.class);
+        if (requestDTO.getData() !=null ) {
+            Reservation reservation = objectMapper.convertValue(requestDTO.getData(), Reservation.class);
         }
         if (requestDTO.getStartLocalDateTime() !=null && requestDTO.getEndLocalDateTime() !=null) {
             queryWrapper.between(Reservation.COLUMN_CREATE_TIME1,requestDTO.getStartLocalDateTime(),requestDTO.getEndLocalDateTime());

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sun.org.apache.regexp.internal.RE;
 import dto.RequestDTO;
 import dto.ReturnData;
 import mapper.IBusinessAdminMapper;
@@ -38,25 +39,30 @@ public class BusinessAdminServiceImpl implements IBusinessAdminService {
     }
 
     @Override
-    public PageInfo<SysAdmin> getBusinessAdminPageByParam(RequestDTO requestDTO) {
+    public ReturnData<PageInfo<SysAdmin>> getBusinessAdminPageByParam(RequestDTO requestDTO) {
         QueryWrapper<SysAdmin> queryWrapper = new QueryWrapper();
-        SysAdmin businessAdmin = objectMapper.convertValue(requestDTO.getObject(), SysAdmin.class);
+        SysAdmin businessAdmin = null;
+        try {
+            businessAdmin = objectMapper.convertValue(requestDTO.getData(), SysAdmin.class);
+            if (businessAdmin != null && StringUtils.isNotEmpty(businessAdmin.getBusinessPhone())) {
+                queryWrapper.like(COLUMN_BUSINESS_PHONE, businessAdmin.getBusinessPhone());
+            }
 
-        if (businessAdmin != null && StringUtils.isNotEmpty(businessAdmin.getBusinessPhone())) {
-            queryWrapper.like(COLUMN_BUSINESS_PHONE, businessAdmin.getBusinessPhone());
-        }
+            if (businessAdmin != null && StringUtils.isNotEmpty(businessAdmin.getAdminName())) {
+                queryWrapper.like(COLUMN_BUSINESS_NAME, businessAdmin.getAdminName());
+            }
 
-        if (businessAdmin != null && StringUtils.isNotEmpty(businessAdmin.getAdminName())) {
-            queryWrapper.like(COLUMN_BUSINESS_NAME, businessAdmin.getAdminName());
+            if (businessAdmin != null && StringUtils.isNotEmpty(businessAdmin.getBusinessContactPerson())) {
+                queryWrapper.like(COLUMN_BUSINESS_CONTACT_PERSON, businessAdmin.getBusinessContactPerson());
+            }
+            queryWrapper.orderByDesc(COLUMN_CREATE_TIME);
+            PageHelper.startPage(requestDTO.getPage(),requestDTO.getSize());
+            List<SysAdmin> list = iBusinessAdminMapper.selectList(queryWrapper);
+            return new ReturnData<>(SUCCESS_CODE,"操作成功",new PageInfo<SysAdmin>(list));
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return new ReturnData(Fail_CODE,"操作失败",false);
         }
-
-        if (businessAdmin != null && StringUtils.isNotEmpty(businessAdmin.getBusinessContactPerson())) {
-            queryWrapper.like(COLUMN_BUSINESS_CONTACT_PERSON, businessAdmin.getBusinessContactPerson());
-        }
-        queryWrapper.orderByDesc(COLUMN_CREATE_TIME);
-        PageHelper.startPage(requestDTO.getPage(),requestDTO.getSize());
-        List<SysAdmin> list = iBusinessAdminMapper.selectList(queryWrapper);
-        return new PageInfo<SysAdmin>(list);
     }
 
     @Override

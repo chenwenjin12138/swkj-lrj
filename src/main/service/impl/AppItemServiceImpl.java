@@ -91,9 +91,9 @@ public class AppItemServiceImpl implements IAppItemService {
     public ReturnData<Boolean> addAppItem(AppItem item) {
         item.setIsShow(1).setActive(1).setCreateTime(DateUtils.formatDate(new Date()));
         if (itemMapper.insertSelective(item) > 0) {
-            return returnData.setCode(SUCCESS_CODE).setMessage("商品添加成功!").setObject(true);
+            return returnData.setCode(SUCCESS_CODE).setMessage("商品添加成功!").setData(true);
         }
-        return returnData.setCode(Fail_CODE).setMessage("商品添加失败!").setObject(false);
+        return returnData.setCode(Fail_CODE).setMessage("商品添加失败!").setData(false);
     }
 
     /**
@@ -106,9 +106,9 @@ public class AppItemServiceImpl implements IAppItemService {
     public ReturnData<Boolean> updateAppItem(AppItem item) {
         item.setUpdateTime(DateUtils.formatDate(new Date()));
         if (itemMapper.updateByPrimaryKeySelective(item) > 0) {
-            return returnData.setCode(SUCCESS_CODE).setMessage("商品修改成功!").setObject(true);
+            return returnData.setCode(SUCCESS_CODE).setMessage("商品修改成功!").setData(true);
         }
-        return returnData.setCode(Fail_CODE).setMessage("商品修改失败!").setObject(false);
+        return returnData.setCode(Fail_CODE).setMessage("商品修改失败!").setData(false);
     }
 
     /**
@@ -123,7 +123,7 @@ public class AppItemServiceImpl implements IAppItemService {
         for (Integer appItemId : appItemIds) {
             itemMapper.deleteByPrimaryKey(appItemId);
         }
-        return returnData.setCode(SUCCESS_CODE).setMessage("商品删除成功").setObject(null);
+        return returnData.setCode(SUCCESS_CODE).setMessage("商品删除成功").setData(null);
     }
 
     /**
@@ -136,9 +136,9 @@ public class AppItemServiceImpl implements IAppItemService {
     public ReturnData<Boolean> setExplosives(Integer appItemId) {
         AppItem appItem = itemMapper.selectByPrimaryKey(appItemId);
         if (itemMapper.updateByPrimaryKeySelective(appItem.setItemCategoryId(17)) > 0) {
-            return returnData.setCode(SUCCESS_CODE).setMessage("商品设置为爆品成功!").setObject(true);
+            return returnData.setCode(SUCCESS_CODE).setMessage("商品设置为爆品成功!").setData(true);
         }
-        return returnData.setCode(Fail_CODE).setMessage("商品设置为爆品失败!").setObject(false);
+        return returnData.setCode(Fail_CODE).setMessage("商品设置为爆品失败!").setData(false);
     }
 
     /**
@@ -155,7 +155,7 @@ public class AppItemServiceImpl implements IAppItemService {
         criteria.andEqualTo("appItemId",appItemId).andEqualTo("itemCategoryId",itemCategoryId);
         List<AppItem> appItems = itemMapper.selectByExample(example);
         for (AppItem appItem : appItems) {
-            return returnData.setCode(SUCCESS_CODE).setMessage("查询成功").setObject(appItem);
+            return returnData.setCode(SUCCESS_CODE).setMessage("查询成功").setData(appItem);
         }
         return null;
     }
@@ -170,17 +170,17 @@ public class AppItemServiceImpl implements IAppItemService {
     public ReturnData findImageById(Integer appItemId) {
         AppItem appItem = itemMapper.selectByPrimaryKey(appItemId);
         if (appItem == null) {
-            return new ReturnData().setCode(Fail_CODE).setObject(null);
+            return new ReturnData().setCode(Fail_CODE).setData(null);
         }
-        return new ReturnData().setCode(SUCCESS_CODE).setObject(appItem.getPicture());
+        return new ReturnData().setCode(SUCCESS_CODE).setData(appItem.getPicture());
     }
 
     @Override
     public List<AppItem> getAppItemListByParam(RequestDTO requestDTO){
         QueryWrapper<AppItem> queryWrapper = new QueryWrapper();
         queryWrapper.eq(AppItem.SHOW_COLUMN,1);
-        if (requestDTO.getObject() !=null ) {
-            AppItem appItem = objectMapper.convertValue(requestDTO.getObject(), AppItem.class);
+        if (requestDTO.getData() !=null ) {
+            AppItem appItem = objectMapper.convertValue(requestDTO.getData(), AppItem.class);
             if (appItem != null && appItem.getAppItemId()!= null) {
                 queryWrapper.eq(AppItem.ID_COLUMN,appItem.getAppItemId());
             }

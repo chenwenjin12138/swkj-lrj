@@ -84,7 +84,7 @@ public class TimeLimitSaleTask {
         RequestDTO param = new RequestDTO();
         AppItem paramItem = new AppItem();
         paramItem.setBargainType(AppItem.BargainType.TIME_LIMIT_SALE.toString());
-        param.setObject(paramItem);
+        param.setData(paramItem);
         List<AppItem> timeLimitList = appItemService.getAppItemListByParam(param);
         timeLimitList.forEach(appItem -> {
             appItem.setBargainType(AppItem.BargainType.NORMAL.toString());
@@ -98,7 +98,7 @@ public class TimeLimitSaleTask {
             }
             paramItem = new AppItem();
             paramItem.setAppItemId(data.getKey());
-            param.setObject(paramItem);
+            param.setData(paramItem);
             List<AppItem> list = appItemService.getAppItemListByParam(param);
             if (list != null && list.size() > 0) {
                 AppItem oldItem = list.get(0);

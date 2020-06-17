@@ -2,6 +2,7 @@ package controller;
 
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
+import dto.ReturnData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -31,7 +32,7 @@ public class OrderCustomHouseController {
      */
     @PostMapping("/orderCustomHouse")
     @ApiOperation(value = "分页查询所有定制家政月卡订单",notes = "查询条件：订单编号，订单创建时间")
-    public PageInfo<OrderCustomHouseVo> getPageByParam(@RequestBody RequestDTO<T> requestDTO){
+    public ReturnData<PageInfo<OrderCustomHouseVo>> getPageByParam(@RequestBody RequestDTO<T> requestDTO){
        return orderCustomHouseService.getPageByParam(requestDTO);
     }
 }

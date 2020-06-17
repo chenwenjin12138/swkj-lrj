@@ -22,6 +22,7 @@ import java.util.List;
  */
 public interface OrderMonthCardMapper extends BaseMapper<OrderMonthCard> , Mapper<OrderMonthCard>, MySqlMapper<OrderMonthCard> {
     @Select("<script>"+"SELECT\n" +
+            "\tc.id as 'id',\n" +
             "\to.order_number as 'orderNumber',\n" +
             "\to.user_id as 'userId',\n" +
             "\ttotal_price as 'totalPrice',\n" +

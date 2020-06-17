@@ -53,7 +53,7 @@ public class ActivityServiceImpl implements IActivityService {
         queryWrapper.orderByDesc(CREATE_TIME_COLUMN);
         queryWrapper.eq(Activity.DELETED_COLUMN, Constant.NOT_DELETED);
             try {
-                ActivityVo activityVo = objectMapper.convertValue(requestDTO.getObject(), ActivityVo.class);
+                ActivityVo activityVo = objectMapper.convertValue(requestDTO.getData(), ActivityVo.class);
                 if (activityVo != null && activityVo.getActivity()!=null) {
                     Activity activity = activityVo.getActivity();
                     if (StringUtils.isNotEmpty(activity.getName())) {

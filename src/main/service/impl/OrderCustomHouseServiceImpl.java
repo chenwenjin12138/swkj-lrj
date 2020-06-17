@@ -40,45 +40,49 @@ public class OrderCustomHouseServiceImpl implements IOrderCustomHouseService {
     }
 
     @Override
-    public PageInfo<OrderCustomHouseVo> getPageByParam(RequestDTO requestDTO) {
+    public ReturnData<PageInfo<OrderCustomHouseVo>> getPageByParam(RequestDTO requestDTO) {
         String orderNumber = null;
         String userPhone = null;
         LocalDateTime start = null;
         LocalDateTime end = null;
-        OrderCustomHouseVo orderCustomHouseVo = objectMapper.convertValue(requestDTO.getObject(),OrderCustomHouseVo.class);
-        if (orderCustomHouseVo !=null ) {
-            if (StringUtils.isNotEmpty(orderCustomHouseVo.getOrderNumber())) {
-                orderNumber = orderCustomHouseVo.getOrderNumber();
+        try {
+            OrderCustomHouseVo orderCustomHouseVo = objectMapper.convertValue(requestDTO.getData(), OrderCustomHouseVo.class);
+            if (orderCustomHouseVo != null) {
+                if (StringUtils.isNotEmpty(orderCustomHouseVo.getOrderNumber())) {
+                    orderNumber = orderCustomHouseVo.getOrderNumber();
+                }
+                if (StringUtils.isNotEmpty(orderCustomHouseVo.getUserPhone())) {
+                    userPhone = orderCustomHouseVo.getUserPhone();
+                }
             }
-            if (StringUtils.isNotEmpty(orderCustomHouseVo.getUserPhone())){
-                userPhone = orderCustomHouseVo.getUserPhone();
+            if (requestDTO.getStartLocalDateTime() != null && requestDTO.getEndLocalDateTime() != null) {
+                start = requestDTO.getStartLocalDateTime();
+                end = requestDTO.getEndLocalDateTime();
             }
+            PageHelper.startPage(requestDTO.getPage(), requestDTO.getSize());
+            List<OrderCustomHouseVo> list = orderCustomHouseMapper.getOrderPageByParam(orderNumber, userPhone, start, end);
+            return new ReturnData<>(SUCCESS_CODE,"操作成功",new PageInfo<OrderCustomHouseVo>(list));
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return new ReturnData<>(Fail_CODE,"操作失败",null);
         }
-
-        if (requestDTO.getStartLocalDateTime() !=null  && requestDTO.getEndLocalDateTime() !=null ) {
-            start = requestDTO.getStartLocalDateTime();
-            end = requestDTO.getEndLocalDateTime();
-        }
-        PageHelper.startPage(requestDTO.getPage(),requestDTO.getSize());
-        List<OrderCustomHouseVo> list = orderCustomHouseMapper.getOrderPageByParam(orderNumber,userPhone,start,end);
-        return new PageInfo<OrderCustomHouseVo>(list);
     }
 
     @Override
     public List<OrderCustomHouse> getCustomHouseListByParam(RequestDTO requestDTO) {
         QueryWrapper<OrderCustomHouse> queryWrapper = new QueryWrapper();
-        OrderCustomHouse orderCustomHouse = objectMapper.convertValue(requestDTO.getObject(),OrderCustomHouse.class);
+        OrderCustomHouse orderCustomHouse = objectMapper.convertValue(requestDTO.getData(), OrderCustomHouse.class);
 
         if (orderCustomHouse != null && StringUtils.isNotEmpty(orderCustomHouse.getActive().toString())) {
-            queryWrapper.like(OrderMonthCard.ACTIVE,orderCustomHouse.getActive());
+            queryWrapper.like(OrderMonthCard.ACTIVE, orderCustomHouse.getActive());
         }
-       return orderCustomHouseMapper.selectList(queryWrapper);
+        return orderCustomHouseMapper.selectList(queryWrapper);
     }
 
     @Override
     public ReturnData<Boolean> update(OrderCustomHouse orderCustomHouse) {
         UpdateWrapper<OrderCustomHouse> updateWrapper = new UpdateWrapper<OrderCustomHouse>();
-        updateWrapper.eq(UserCoupon.ID,orderCustomHouse.getId());
+        updateWrapper.eq(UserCoupon.ID, orderCustomHouse.getId());
         try {
             if (orderCustomHouseMapper.update(orderCustomHouse, updateWrapper) > 0) {
                 return new ReturnData(SUCCESS_CODE, "操作成功", true);

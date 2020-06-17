@@ -47,7 +47,7 @@ public class UserCouponServiceImpl implements IUserCouponService {
     @Override
     public List<UserCoupon> getListByParam(RequestDTO requestDTO) {
         QueryWrapper<UserCoupon> queryWrapper = new QueryWrapper();
-        UserCoupon userCoupon = objectMapper.convertValue(requestDTO.getObject(), UserCoupon.class);
+        UserCoupon userCoupon = objectMapper.convertValue(requestDTO.getData(), UserCoupon.class);
         if (userCoupon != null && userCoupon.getUserId() != null && StringUtils.isNotEmpty(userCoupon.getUserId().toString())) {
             queryWrapper.eq(UserCoupon.USER_ID_COLUMN,userCoupon.getUserId());
         }
@@ -69,7 +69,7 @@ public class UserCouponServiceImpl implements IUserCouponService {
                 RequestDTO requestDTO = new RequestDTO();
                 SysCoupon sysCouponParam = new SysCoupon();
                 sysCouponParam.setSysCouponId(userCoupon.getSysCouponId());
-                requestDTO.setObject(sysCouponParam);
+                requestDTO.setData(sysCouponParam);
                 List<SysCoupon> list =sysCouponService.getListByParam(requestDTO);
                 if (list == null || list.size()<1) {
                     return new ReturnData(Fail_CODE,"没有对应的红包类型,操作失败",false );

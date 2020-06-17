@@ -39,7 +39,7 @@ public class AppFeedbackServiceImpl implements IAppFeedbackService {
     public PageInfo<AppFeedback> getPageByParam(RequestDTO requestDTO) {
         QueryWrapper<AppFeedback> queryWrapper = new QueryWrapper();
         queryWrapper.orderByDesc(CREATE_TIME_COLUMN);
-        AppFeedback feedback = objectMapper.convertValue(requestDTO.getObject(), AppFeedback.class);
+        AppFeedback feedback = objectMapper.convertValue(requestDTO.getData(), AppFeedback.class);
         if (feedback != null && StringUtils.isNotEmpty(feedback.getContact())) {
             queryWrapper.like(CONTACT_COLUMN, feedback.getContact());
         }

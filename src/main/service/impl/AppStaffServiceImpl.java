@@ -34,7 +34,7 @@ public class AppStaffServiceImpl implements IAppStaffService {
     @Override
     public PageInfo<AppStaff> getAppUserPageByParam(RequestDTO requestDTO) {
         QueryWrapper<AppStaff> queryWrapper = new QueryWrapper();
-        AppStaff staff = objectMapper.convertValue(requestDTO.getObject(), AppStaff.class);
+        AppStaff staff = objectMapper.convertValue(requestDTO.getData(), AppStaff.class);
         queryWrapper.eq(COLUMN_IS_DELETED, NOT_DELETED);
         queryWrapper.eq(COLUMN_STAFF_USER,staff.getStaffUser());
         if (staff != null && StringUtils.isNotEmpty(staff.getTelephone())) {

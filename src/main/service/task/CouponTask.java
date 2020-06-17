@@ -55,7 +55,7 @@ public class CouponTask {
         RequestDTO requestDTO = new RequestDTO();
         AppUser appUser = new AppUser();
         appUser.setActive(1);
-        requestDTO.setObject(appUser);
+        requestDTO.setData(appUser);
         List<AppUser> appUserList = appUserService.getAppUserListByParam(requestDTO);
         for (AppUser appUser1 : appUserList) {
             appUser1.setAppUserId(47835);
@@ -64,14 +64,14 @@ public class CouponTask {
             userCouponParam.setActive(Constant.ACTIVE);
             userCouponParam.setUseStatus(CouponConstant.NOT_USED);
             userCouponParam.setUserId(appUser1.getAppUserId());
-            requestDTO.setObject(userCouponParam);
+            requestDTO.setData(userCouponParam);
             List<UserCoupon> couponList = userCouponService.getListByParam(requestDTO);
             if (couponList != null && couponList.size() > 0) {
                 continue;
             }
             Order order = new Order();
             order.setUserId(appUser1.getAppUserId());
-            requestDTO.setObject(order);
+            requestDTO.setData(order);
             List<Order> orderList = orderService.getAppOrderListByParam(requestDTO);
             if (orderList == null || orderList.size() == 0) {
                 UserCoupon userCoupon = new UserCoupon();
@@ -137,7 +137,7 @@ public class CouponTask {
         RequestDTO requestDTO = new RequestDTO();
         UserCoupon userCouponParam = new UserCoupon();
         userCouponParam.setActive(Constant.ACTIVE);
-        requestDTO.setObject(userCouponParam);
+        requestDTO.setData(userCouponParam);
         List<UserCoupon> couponList = userCouponService.getListByParam(requestDTO);
         couponList.forEach(coupon->{
             if (coupon.getLimitTime().isBefore(LocalDateTime.now())) {

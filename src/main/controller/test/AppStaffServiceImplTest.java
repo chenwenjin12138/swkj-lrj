@@ -34,7 +34,7 @@ public class AppStaffServiceImplTest {
         AppStaff appStaff = new AppStaff();
         appStaff.setTelephone("518435");
         appStaff.setRealName("李官留");
-        requestDTO.setObject(appStaff);
+        requestDTO.setData(appStaff);
         PageInfo pageInfo = iAppStaffService.getAppUserPageByParam(requestDTO);
     }
     @Test
@@ -46,7 +46,7 @@ public class AppStaffServiceImplTest {
         appStaff.setRegisterTime("2020-05-06 10:20:20");
         appStaff.setType(1);
         ReturnData<Boolean>returnData = iAppStaffService.addAppStaff(appStaff);
-        assertTrue(returnData.getObject());
+        assertTrue(returnData.getData());
 
     }
 
@@ -61,6 +61,6 @@ public class AppStaffServiceImplTest {
         appStaff.setType(1);
         appStaff.setIsDeleted(1);
         ReturnData<Boolean>returnData = iAppStaffService.updateAppStaff(appStaff);
-        assertTrue(returnData.getObject());
+        assertTrue(returnData.getData());
     }
 }

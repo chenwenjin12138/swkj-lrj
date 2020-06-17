@@ -28,21 +28,23 @@ public class AppUserServiceImpl implements IAppUserService {
     }
 
     @Override
-    public PageInfo<AppUser> getAppUserPageByParam(RequestDTO requestDTO) {
+    public ReturnData<PageInfo<AppUser>> getAppUserPageByParam(RequestDTO requestDTO) {
         QueryWrapper<AppUser> queryWrapper = new QueryWrapper();
         AppUser appUser = null;
         try {
-            appUser = objectMapper.convertValue(requestDTO.getObject(), AppUser.class);
+            appUser = objectMapper.convertValue(requestDTO.getData(), AppUser.class);
+            if (appUser != null && StringUtils.isNotEmpty(appUser.getUserPhone())) {
+                queryWrapper.like(COLUMN_USER_PHONE, appUser.getUserPhone());
+            }
+            queryWrapper.orderByDesc(COLUMN_CREATE_TIME);
+            PageHelper.startPage(requestDTO.getPage(),requestDTO.getSize());
+            List<AppUser> list = iAppUserMapper.selectList(queryWrapper);
+            return new ReturnData<>(ReturnData.SUCCESS_CODE,"操作成功", new PageInfo<AppUser>(list) );
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
+            return new ReturnData<>(ReturnData.Fail_CODE,"参数错误,操作失败", null);
         }
-        if (appUser != null && StringUtils.isNotEmpty(appUser.getUserPhone())) {
-            queryWrapper.like(COLUMN_USER_PHONE, appUser.getUserPhone());
-        }
-        queryWrapper.orderByDesc(COLUMN_CREATE_TIME);
-        PageHelper.startPage(requestDTO.getPage(),requestDTO.getSize());
-        List<AppUser> list = iAppUserMapper.selectList(queryWrapper);
-        return new PageInfo<AppUser>(list);
+
     }
 
     @Override
@@ -50,7 +52,7 @@ public class AppUserServiceImpl implements IAppUserService {
         QueryWrapper<AppUser> queryWrapper = new QueryWrapper();
         AppUser appUser = null;
         try {
-            appUser = objectMapper.convertValue(requestDTO.getObject(), AppUser.class);
+            appUser = objectMapper.convertValue(requestDTO.getData(), AppUser.class);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }

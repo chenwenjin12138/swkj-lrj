@@ -45,7 +45,7 @@ public class AppItemCatServiceImpl implements IAppItemCatService {
     @Override
     public ReturnData findAllItemCats() {
         List<AppItemCat> appItemCats = itemCatMapper.selectAll();
-        return returnData.setCode(SUCCESS_CODE).setMessage("获取成功").setObject(appItemCats);
+        return returnData.setCode(SUCCESS_CODE).setMessage("获取成功").setData(appItemCats);
     }
 
     /**
@@ -58,9 +58,9 @@ public class AppItemCatServiceImpl implements IAppItemCatService {
     @Override
     public ReturnData addAppItemCat(AppItemCat appItemCat) {
         if (itemCatMapper.insertSelective(appItemCat) > 0) {
-            return returnData.setCode(SUCCESS_CODE).setMessage("添加商品种类信息成功!").setObject(true);
+            return returnData.setCode(SUCCESS_CODE).setMessage("添加商品种类信息成功!").setData(true);
         }
-        return returnData.setCode(Fail_CODE).setMessage("添加商品种类信息失败!").setObject(false);
+        return returnData.setCode(Fail_CODE).setMessage("添加商品种类信息失败!").setData(false);
     }
 
     @Override

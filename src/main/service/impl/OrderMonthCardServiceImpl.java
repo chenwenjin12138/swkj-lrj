@@ -6,11 +6,13 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import common.Constant;
 import dto.RequestDTO;
 import dto.ReturnData;
 import mapper.OrderMonthCardMapper;
 import org.springframework.stereotype.Service;
 import pojo.UserCoupon;
+import pojo.activity.Activity;
 import pojo.order.OrderMonthCard;
 import pojo.order.OrderMonthCardVo;
 import service.IOrderMonthCardService;
@@ -40,46 +42,59 @@ public class OrderMonthCardServiceImpl implements IOrderMonthCardService {
     }
 
     @Override
-    public PageInfo<OrderMonthCardVo> getOrderPageByParam(RequestDTO requestDTO) {
+    public ReturnData<PageInfo<OrderMonthCardVo>> getOrderPageByParam(RequestDTO requestDTO) {
         String orderNumber = null;
         String userPhone = null;
         LocalDateTime start = null;
         LocalDateTime end = null;
         QueryWrapper<OrderMonthCardVo> queryWrapper = new QueryWrapper();
-        OrderMonthCardVo orderMonthCardVo = objectMapper.convertValue(requestDTO.getObject(),OrderMonthCardVo.class);
-        if (orderMonthCardVo !=null ) {
-            if (StringUtils.isNotEmpty(orderMonthCardVo.getOrderNumber())) {
-                orderNumber = orderMonthCardVo.getOrderNumber();
+        queryWrapper.eq(OrderMonthCard.DELETED_COLUMN, Constant.NOT_DELETED);
+        try {
+            OrderMonthCardVo orderMonthCardVo = objectMapper.convertValue(requestDTO.getData(), OrderMonthCardVo.class);
+            if (orderMonthCardVo !=null ) {
+                if (StringUtils.isNotEmpty(orderMonthCardVo.getOrderNumber())) {
+                    orderNumber = orderMonthCardVo.getOrderNumber();
+                }
+                if (StringUtils.isNotEmpty(orderMonthCardVo.getUserPhone())){
+                    userPhone = orderMonthCardVo.getUserPhone();
+                }
             }
-            if (StringUtils.isNotEmpty(orderMonthCardVo.getUserPhone())){
-                userPhone = orderMonthCardVo.getUserPhone();
-            }
-        }
 
-        if (requestDTO.getStartLocalDateTime() !=null  && requestDTO.getEndLocalDateTime() !=null ) {
-            start = requestDTO.getStartLocalDateTime();
-            end = requestDTO.getEndLocalDateTime();
+            if (requestDTO.getStartLocalDateTime() !=null  && requestDTO.getEndLocalDateTime() !=null ) {
+                start = requestDTO.getStartLocalDateTime();
+                end = requestDTO.getEndLocalDateTime();
+            }
+            PageHelper.startPage(requestDTO.getPage(),requestDTO.getSize());
+            List<OrderMonthCardVo> list = orderMonthCardMapper.getOrderPageByParam(orderNumber,userPhone,start,end);
+            return new ReturnData<>(SUCCESS_CODE,"操作成功",new PageInfo<OrderMonthCardVo>(list));
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return new ReturnData<>(Fail_CODE,"操作失败",null);
         }
-        PageHelper.startPage(requestDTO.getPage(),requestDTO.getSize());
-        List<OrderMonthCardVo> list = orderMonthCardMapper.getOrderPageByParam(orderNumber,userPhone,start,end);
-        return new PageInfo<OrderMonthCardVo>(list);
     }
 
 
     @Override
     public List<OrderMonthCard> getOrderListByParam(RequestDTO requestDTO) {
         QueryWrapper<OrderMonthCard> queryWrapper = new QueryWrapper();
-        OrderMonthCard orderMonthCard = objectMapper.convertValue(requestDTO.getObject(),OrderMonthCard.class);
-        if (orderMonthCard != null && StringUtils.isNotEmpty(orderMonthCard.getOrderNumber())) {
-            queryWrapper.like(ORDER_NUMBER_COLUMN,orderMonthCard.getOrderNumber());
-        }
+        queryWrapper.eq(OrderMonthCard.DELETED_COLUMN, Constant.NOT_DELETED);
+        OrderMonthCard orderMonthCard = null;
+        try {
+            orderMonthCard = objectMapper.convertValue(requestDTO.getData(), OrderMonthCard.class);
+            if (orderMonthCard != null && StringUtils.isNotEmpty(orderMonthCard.getOrderNumber())) {
+                queryWrapper.like(ORDER_NUMBER_COLUMN,orderMonthCard.getOrderNumber());
+            }
 
-        if (StringUtils.isNotEmpty(requestDTO.getBeginTime()) && StringUtils.isNotEmpty(requestDTO.getEndTime()) ) {
-            queryWrapper.between(CREATE_TIME_COLUMN,requestDTO.getBeginTime(),requestDTO.getEndTime());
-        }
+            if (StringUtils.isNotEmpty(requestDTO.getBeginTime()) && StringUtils.isNotEmpty(requestDTO.getEndTime()) ) {
+                queryWrapper.between(CREATE_TIME_COLUMN,requestDTO.getBeginTime(),requestDTO.getEndTime());
+            }
 
-        if (orderMonthCard != null && StringUtils.isNotEmpty(orderMonthCard.getActive().toString())) {
-            queryWrapper.like(OrderMonthCard.ACTIVE,orderMonthCard.getActive());
+            if (orderMonthCard != null && StringUtils.isNotEmpty(orderMonthCard.getActive().toString())) {
+                queryWrapper.like(OrderMonthCard.ACTIVE,orderMonthCard.getActive());
+            }
+
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
         }
 
         List<OrderMonthCard> list = orderMonthCardMapper.selectList(queryWrapper);

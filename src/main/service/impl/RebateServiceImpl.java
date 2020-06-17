@@ -35,7 +35,7 @@ public class RebateServiceImpl implements RebateService {
         QueryWrapper<Rebate> queryWrapper = new QueryWrapper();
         queryWrapper.orderByDesc(Rebate.COLUMN_CREATE_TIME1);
         try {
-            Rebate  rebate = objectMapper.convertValue(requestDTO.getObject(), Rebate.class);
+            Rebate  rebate = objectMapper.convertValue(requestDTO.getData(), Rebate.class);
             if (rebate != null && rebate.getUserId() != null) {
                 queryWrapper.eq(Rebate.COLUMN_USER_ID1, rebate.getUserId());
             }

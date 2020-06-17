@@ -1,8 +1,10 @@
 package pojo.order;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,6 +17,10 @@ import java.time.LocalDateTime;
 @Data
 @ApiModel("洗衣月卡订单")
 public class OrderMonthCardVo {
+
+    @ApiModelProperty("订单id")
+    private Integer id; //  订单号
+
     @ApiModelProperty("订单号")
     private String orderNumber; //  订单号
 
@@ -46,9 +52,12 @@ public class OrderMonthCardVo {
     private String monthCardId;
 
     @ApiModelProperty("创建时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     @ApiModelProperty("结束时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime endTime;
 
     @ApiModelProperty("用户月卡剩余使用次数")
@@ -65,4 +74,5 @@ public class OrderMonthCardVo {
 
     @ApiModelProperty("月卡状态 0 不能用 1 能用")
     private Integer active;
+
 }

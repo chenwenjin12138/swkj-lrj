@@ -21,7 +21,7 @@ public class RequestDTO<E> {
     /**
      *查询参数实体
      */
-    E object;
+    E data;
 
     /**
      * 查询页

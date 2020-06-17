@@ -32,7 +32,7 @@ public interface OrderCustomHouseMapper extends BaseMapper<OrderCustomHouse> {
             "\twork_time as workTime,\n" +
             "\thouse_area as houseArea,\n" +
             "\tc.open_time as openTime,\n" +
-            "\tc.end_time as endTime\n" +
+            "\tc.end_time as endTime,\n" +
             "\tc.individual_service_json as individualServiceJson\n" +
             "FROM\n" +
             "\t`order_custom_house_service` c\n" +

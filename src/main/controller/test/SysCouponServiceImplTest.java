@@ -41,12 +41,12 @@ public class SysCouponServiceImplTest {
         sysCoupon.setAging(3);
         sysCoupon.setDenomination(new BigDecimal("0.5"));
         sysCoupon.setInstructions("5角的红包");
-        assertTrue(sysCouponService.add(sysCoupon).getObject());
+        assertTrue(sysCouponService.add(sysCoupon).getData());
     }
 
     @Test
     public void update() {
         SysCoupon sysCoupon = new SysCoupon();
-        assertTrue(sysCouponService.update(sysCoupon).getObject());
+        assertTrue(sysCouponService.update(sysCoupon).getData());
     }
 }

@@ -51,7 +51,7 @@ public class PayOperationServiceImpl implements IPayOperationService {
     public PageInfo<PayOperation> getPageByParam(RequestDTO requestDTO) {
         QueryWrapper<PayOperation> queryWrapper = new QueryWrapper();
         try {
-            PayOperation  payOperation = objectMapper.convertValue(requestDTO.getObject(), PayOperation.class);
+            PayOperation  payOperation = objectMapper.convertValue(requestDTO.getData(), PayOperation.class);
             if (payOperation != null) {
                 if (StringUtils.isNotEmpty(payOperation.getTradeSource().toString())) {
                     queryWrapper.eq(TRADE_SOURCE_COLUMN, payOperation.getTradeSource());

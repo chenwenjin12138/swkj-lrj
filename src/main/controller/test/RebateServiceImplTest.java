@@ -30,7 +30,7 @@ public class RebateServiceImplTest {
         requestDTO.setEndLocalDateTime(LocalDateTime.now());
         Rebate rebate = new Rebate();
         rebate.setUserId(27);
-        requestDTO.setObject(rebate);
+        requestDTO.setData(rebate);
         List<Rebate> list = rebateService.getPageByParam(requestDTO).getList();
         System.out.println(rebateService.getPageByParam(requestDTO).getPages());
         for (Rebate rebate1:list) {

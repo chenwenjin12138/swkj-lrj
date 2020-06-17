@@ -72,9 +72,9 @@ public class BannerServiceImpl implements IBannerService {
     public ReturnData findBannerImgById(Integer appBannerId) {
         Banner banner = bannerMapper.selectByPrimaryKey(appBannerId);
         if (banner.getBannerImg()==null) {
-            return returnData.setCode(Fail_CODE).setMessage("该商品还未上传图片").setObject(null);
+            return returnData.setCode(Fail_CODE).setMessage("该商品还未上传图片").setData(null);
         }
-        return returnData.setCode(SUCCESS_CODE).setMessage("图片获取成功").setObject(banner.getBannerImg());
+        return returnData.setCode(SUCCESS_CODE).setMessage("图片获取成功").setData(banner.getBannerImg());
     }
 
     /**
@@ -87,9 +87,9 @@ public class BannerServiceImpl implements IBannerService {
     public ReturnData findBannerUrlById(Integer appBannerId) {
         Banner banner = bannerMapper.selectByPrimaryKey(appBannerId);
         if (banner.getUrl()==null) {
-            return returnData.setCode(Fail_CODE).setMessage("该商品还未上传url").setObject(null);
+            return returnData.setCode(Fail_CODE).setMessage("该商品还未上传url").setData(null);
         }
-        return returnData.setCode(SUCCESS_CODE).setMessage("url获取成功").setObject(banner.getUrl());
+        return returnData.setCode(SUCCESS_CODE).setMessage("url获取成功").setData(banner.getUrl());
     }
 
     /**
@@ -103,9 +103,9 @@ public class BannerServiceImpl implements IBannerService {
         if (banner!=null) {
             banner.setCreateTime(DateUtils.getNowDateTime());
             bannerMapper.insertSelective(banner);
-            return returnData.setCode(SUCCESS_CODE).setMessage("成功").setObject(null);
+            return returnData.setCode(SUCCESS_CODE).setMessage("成功").setData(null);
         }
-        return returnData.setCode(Fail_CODE).setMessage("失败").setObject(null);
+        return returnData.setCode(Fail_CODE).setMessage("失败").setData(null);
     }
 
     /**
@@ -120,9 +120,9 @@ public class BannerServiceImpl implements IBannerService {
             banner.setUpdateTime(DateUtils.getNowDateTime());
             int i1 = bannerMapper.updateByPrimaryKeySelective(banner);
             System.out.println(i1);
-            return returnData.setCode(SUCCESS_CODE).setMessage("成功").setObject(null);
+            return returnData.setCode(SUCCESS_CODE).setMessage("成功").setData(null);
         }
-        return returnData.setCode(Fail_CODE).setMessage("失败").setObject(null);
+        return returnData.setCode(Fail_CODE).setMessage("失败").setData(null);
     }
 
     /**
@@ -135,9 +135,9 @@ public class BannerServiceImpl implements IBannerService {
     public ReturnData deleteBanner(Integer[] appBannerIds) {
         for (Integer appBannerId : appBannerIds) {
             bannerMapper.deleteByPrimaryKey(appBannerId);
-            return returnData.setCode(SUCCESS_CODE).setMessage("成功").setObject(null);
+            return returnData.setCode(SUCCESS_CODE).setMessage("成功").setData(null);
         }
-        return returnData.setCode(Fail_CODE).setMessage("失败").setObject(null);
+        return returnData.setCode(Fail_CODE).setMessage("失败").setData(null);
     }
 
     /**
@@ -154,12 +154,12 @@ public class BannerServiceImpl implements IBannerService {
         criteria.andEqualTo("bannerName",bannerName).andEqualTo("bannerType",bannerType);
         List<Banner> banners = bannerMapper.selectByExample(example);
         if (banners==null||banners.size()==0) {
-            return returnData.setCode(Fail_CODE).setMessage("该Banner不存在").setObject(null);
+            return returnData.setCode(Fail_CODE).setMessage("该Banner不存在").setData(null);
         }
         for (Banner banner : banners) {
             BannerTypeName bannerTypeName = bannerTypeNameMapper.selectByPrimaryKey(bannerType);
             banner.setBannerTypeName(bannerTypeName.getBannerTypeName());
-            return returnData.setCode(SUCCESS_CODE).setMessage("成功").setObject(banner);
+            return returnData.setCode(SUCCESS_CODE).setMessage("成功").setData(banner);
         }
         return null;
     }

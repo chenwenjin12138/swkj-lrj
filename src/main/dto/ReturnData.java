@@ -31,7 +31,7 @@ public class ReturnData<T>{
     /**
      * 返回实体
      */
-    private T  Object;
+    private T  data;
 
 
 }

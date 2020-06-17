@@ -99,9 +99,9 @@ public class MerchantManagementServiceImpl implements MerchantManagementService 
         int i1 = merchantManagementMapper.insertUseGeneratedKeys(rebate);
         System.out.println(i1);
         if (i1!=1) {
-            return returnData.setMessage("新增失败").setCode(Fail_CODE).setObject(false);
+            return returnData.setMessage("新增失败").setCode(Fail_CODE).setData(false);
         }
-        return returnData.setMessage("新增成功").setCode(SUCCESS_CODE).setObject(true);
+        return returnData.setMessage("新增成功").setCode(SUCCESS_CODE).setData(true);
     }
 
     /**
@@ -114,9 +114,9 @@ public class MerchantManagementServiceImpl implements MerchantManagementService 
     public ReturnData updateMerchant(User user) {
         user.setUpdateTime(DateUtils.formatDate(new Date()));
         if (userMapper.updateByPrimaryKeySelective(user)>0) {
-            return returnData.setMessage("修改成功").setCode(SUCCESS_CODE).setObject(true);
+            return returnData.setMessage("修改成功").setCode(SUCCESS_CODE).setData(true);
         }
-        return returnData.setMessage("修改失败").setCode(Fail_CODE).setObject(false);
+        return returnData.setMessage("修改失败").setCode(Fail_CODE).setData(false);
     }
 
     /**
@@ -132,9 +132,9 @@ public class MerchantManagementServiceImpl implements MerchantManagementService 
             Example example = new Example(Rebate.class);
             example.createCriteria().andEqualTo(COLUMN_USER_ID,userId);
             if (merchantManagementMapper.deleteByExample(example)>0) {
-                return returnData.setMessage("删除成功").setCode(SUCCESS_CODE).setObject(true);
+                return returnData.setMessage("删除成功").setCode(SUCCESS_CODE).setData(true);
             }
         }
-        return returnData.setMessage("删除失败").setCode(Fail_CODE).setObject(false);
+        return returnData.setMessage("删除失败").setCode(Fail_CODE).setData(false);
     }
 }

@@ -58,7 +58,7 @@ public class AppPushServiceImplTest {
         AppPush push = new AppPush();
         push.setAppPushId(1);
         try {
-           assertTrue(appPushService.deletePush(push).getObject());
+           assertTrue(appPushService.deletePush(push).getData());
         } catch (Exception e) {
             e.printStackTrace();
         }

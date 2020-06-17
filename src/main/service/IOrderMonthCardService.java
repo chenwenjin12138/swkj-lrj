@@ -21,9 +21,10 @@ public interface IOrderMonthCardService {
      * @param requestDTO 查询条件
      * @return
      */
-    PageInfo<OrderMonthCardVo> getOrderPageByParam(RequestDTO requestDTO);
+    ReturnData<PageInfo<OrderMonthCardVo>> getOrderPageByParam(RequestDTO requestDTO);
 
     List<OrderMonthCard> getOrderListByParam(RequestDTO requestDTO);
+
 
     ReturnData<Boolean> update(OrderMonthCard orderMonthCard);
 }

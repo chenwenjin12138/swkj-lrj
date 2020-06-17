@@ -21,7 +21,7 @@ public interface IOrderCustomHouseService {
      * @param requestDTO 查询条件
      * @return
      */
-    PageInfo<OrderCustomHouseVo> getPageByParam(RequestDTO requestDTO);
+    ReturnData<PageInfo<OrderCustomHouseVo>> getPageByParam(RequestDTO requestDTO);
 
 
     List<OrderCustomHouse> getCustomHouseListByParam(RequestDTO requestDTO);

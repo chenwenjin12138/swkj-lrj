@@ -30,7 +30,7 @@ public class AppUserController {
      */
     @PostMapping("/appUserPageByParam")
     @ApiOperation(value = "分页查询app用户")
-    public PageInfo<AppUser> getAppUser(@RequestBody RequestDTO requestDTO){
+    public ReturnData<PageInfo<AppUser>> getAppUser(@RequestBody RequestDTO requestDTO){
        return iAppUserService.getAppUserPageByParam(requestDTO);
     }
 

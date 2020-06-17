@@ -19,7 +19,7 @@ public interface IAppUserService {
      * @param requestDTO 查询条件
      * @return
      */
-    PageInfo<AppUser> getAppUserPageByParam(RequestDTO requestDTO);
+    ReturnData<PageInfo<AppUser>> getAppUserPageByParam(RequestDTO requestDTO);
 
     List<AppUser> getAppUserListByParam(RequestDTO requestDTO);
 

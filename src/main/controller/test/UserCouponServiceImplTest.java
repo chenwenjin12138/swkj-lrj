@@ -38,7 +38,7 @@ public class UserCouponServiceImplTest {
         RequestDTO requestDTO = new RequestDTO();
         UserCoupon userCoupon = new UserCoupon();
         userCoupon.setUserId(2);
-        requestDTO.setObject(userCoupon);
+        requestDTO.setData(userCoupon);
         List list = userCouponService.getListByParam(requestDTO);
         assertEquals(list.size(),0);
     }

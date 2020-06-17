@@ -35,11 +35,11 @@ public class SysAdminServiceImplTest {
      /*   SysAdmin SysAdmin = new SysAdmin();
         SysAdmin.setBusinessPhone("18388204538");
         SysAdmin.setBusinessName("张三");
-        requestDTO.setObject(SysAdmin);*/
-        PageInfo pageInfo = iBusinessAdminService.getBusinessAdminPageByParam(requestDTO);
+        requestDTO.setData(SysAdmin);*/
+       /* PageInfo pageInfo = iBusinessAdminService.getBusinessAdminPageByParam(requestDTO);
         for (Object or:pageInfo.getList()) {
             System.out.println("数据:"+or.toString());
-        }
+        }*/
     }
 
     @Test
@@ -56,6 +56,6 @@ public class SysAdminServiceImplTest {
         sysAdmin.setAdminPassword("123456");
         sysAdmin.setBusinessDistributionRatio(new BigDecimal("0.06"));
         ReturnData<Boolean> returnData = iBusinessAdminService.addBusinessAdmin(sysAdmin);
-        assertTrue(returnData.getObject());
+        assertTrue(returnData.getData());
     }
 }

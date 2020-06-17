@@ -47,7 +47,7 @@ public class MonthCardTask {
         RequestDTO requestDTO = new RequestDTO();
         OrderMonthCard orderMonthCard = new OrderMonthCard();
         orderMonthCard.setActive(Constant.ACTIVE);
-        requestDTO.setObject(orderMonthCard);
+        requestDTO.setData(orderMonthCard);
         List<OrderMonthCard> orderList = orderMonthCardService.getOrderListByParam(requestDTO);
         orderList.forEach(order->{
             if (order.getEndTime().length()>19) {
@@ -75,7 +75,7 @@ public class MonthCardTask {
         RequestDTO requestDTO = new RequestDTO();
         OrderCustomHouse orderCustomHouse = new OrderCustomHouse();
         orderCustomHouse.setActive(Constant.ACTIVE);
-        requestDTO.setObject(orderCustomHouse);
+        requestDTO.setData(orderCustomHouse);
         List<OrderCustomHouse> orderList = orderCustomHouseService.getCustomHouseListByParam(requestDTO);
         orderList.forEach(order->{
             try {

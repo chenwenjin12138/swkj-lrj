@@ -93,7 +93,7 @@ public class MonthCardServiceImpl implements IMonthCardService {
     public ReturnData<Boolean> addMonthCard(MonthCard monthCard,Integer[] itemIds,Integer[] itemNum) {
         monthCard.setCreateTime(DateUtils.formatDate(new Date()));
         if (itemIds.length!=itemNum.length) {
-            return returnData.setCode(Fail_CODE).setMessage("月卡添加失败,参数不匹配").setObject(false);
+            return returnData.setCode(Fail_CODE).setMessage("月卡添加失败,参数不匹配").setData(false);
         }
         if (monthCardMapper.insertSelective(monthCard) > 0) {
             for (int i = 0; i < itemIds.length; i++) {
@@ -101,9 +101,9 @@ public class MonthCardServiceImpl implements IMonthCardService {
                 cardAndItemCat.setCardId(monthCard.getCardId()).setItemId(itemIds[i]).setItemNum(itemNum[i]);
                 cardAndItemCatMapper.insertSelective(cardAndItemCat);
             }
-            return returnData.setCode(SUCCESS_CODE).setMessage("月卡添加成功").setObject(true);
+            return returnData.setCode(SUCCESS_CODE).setMessage("月卡添加成功").setData(true);
         }
-        return returnData.setCode(Fail_CODE).setMessage("月卡添加失败").setObject(false);
+        return returnData.setCode(Fail_CODE).setMessage("月卡添加失败").setData(false);
     }
 
     /**
@@ -122,9 +122,9 @@ public class MonthCardServiceImpl implements IMonthCardService {
         }
         monthCard.setUpdateTime(DateUtils.formatDate(new Date()));
         if (monthCardMapper.updateByPrimaryKeySelective(monthCard) > 0) {
-            return returnData.setCode(SUCCESS_CODE).setMessage("月卡更新成功").setObject(true);
+            return returnData.setCode(SUCCESS_CODE).setMessage("月卡更新成功").setData(true);
         }
-        return returnData.setCode(Fail_CODE).setMessage("月卡更新失败").setObject(false);
+        return returnData.setCode(Fail_CODE).setMessage("月卡更新失败").setData(false);
     }
 
     /**
@@ -137,9 +137,9 @@ public class MonthCardServiceImpl implements IMonthCardService {
     public ReturnData<Boolean> setDisplay(MonthCard monthCard) {
         monthCard.setStatus(monthCard.getStatus());
         if (monthCardMapper.updateByPrimaryKeySelective(monthCard) > 0) {
-            return returnData.setCode(SUCCESS_CODE).setMessage("月卡月卡启用或禁用成功").setObject(true);
+            return returnData.setCode(SUCCESS_CODE).setMessage("月卡月卡启用或禁用成功").setData(true);
         }
-        return returnData.setCode(Fail_CODE).setMessage("月卡启用或禁用失败").setObject(false);
+        return returnData.setCode(Fail_CODE).setMessage("月卡启用或禁用失败").setData(false);
     }
 
     /**

@@ -39,7 +39,7 @@ public class AppFeedbackServiceImplTest {
         RequestDTO requestDTO = new RequestDTO();
       /*  AppFeedback appFeedback = new AppFeedback();
         appFeedback.setContact("489");
-        requestDTO.setObject(appFeedback);*/
+        requestDTO.setData(appFeedback);*/
         PageInfo<AppFeedback> page = appFeedbackService.getPageByParam(requestDTO);
         for (Object or : page.getList()) {
             System.out.println("数据:" + or.toString());
@@ -55,11 +55,11 @@ public class AppFeedbackServiceImplTest {
         appFeedback.setType("2");
         appFeedback.setUserId(23);
         appFeedback.setCreateTime(DateUtils.getNowDateTime());
-        assertTrue(appFeedbackService.add(appFeedback).getObject());
+        assertTrue(appFeedbackService.add(appFeedback).getData());
     }
 
     @Test
     public void delete() {
-        assertTrue(appFeedbackService.delete(3).getObject());
+        assertTrue(appFeedbackService.delete(3).getData());
     }
 }

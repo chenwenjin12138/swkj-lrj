@@ -17,7 +17,7 @@ public interface IBusinessAdminService {
      * @param RequestDTO 查询条件
      * @return
      */
-    PageInfo<SysAdmin> getBusinessAdminPageByParam(RequestDTO RequestDTO);
+    ReturnData<PageInfo<SysAdmin>> getBusinessAdminPageByParam(RequestDTO RequestDTO);
 
     /**
      * 修改商家信息
