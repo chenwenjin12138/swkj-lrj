@@ -17,7 +17,7 @@ public interface AreaManagementService {
      * @Author: LxH
      * @Date: 2020/5/27 15:33
      */
-    List<AreaManagement> findAreaByItemId(Integer itemId);
+    ReturnData<List<AreaManagement>> findAreaByItemId(Integer itemId);
 
     /**
      * @Description: 根据商品添加面积信息
@@ -45,5 +45,5 @@ public interface AreaManagementService {
      * @Author: LxH
      * @Date: 2020/5/28 10:13
      */
-    List<AreaManagement> findBasisArea();
+    ReturnData<List<AreaManagement>> findBasisArea();
 }

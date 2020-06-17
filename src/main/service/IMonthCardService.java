@@ -20,7 +20,7 @@ public interface IMonthCardService {
      * @Author: LxH
      * @Date: 2020/5/8 20:12
      */
-    Page<MonthCard> getMcPageByParam(MonthCard monthCard,RequestDTO requestDTO);
+    ReturnData<Page<MonthCard>> getMcPageByParam(MonthCard monthCard,RequestDTO requestDTO);
 
     /**
      * @Description: 新增月卡

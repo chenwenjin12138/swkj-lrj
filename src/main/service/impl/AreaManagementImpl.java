@@ -34,10 +34,10 @@ public class AreaManagementImpl implements AreaManagementService {
      * @Date: 2020/5/27 15:33
      */
     @Override
-    public List<AreaManagement> findAreaByItemId(Integer itemId) {
+    public ReturnData<List<AreaManagement>> findAreaByItemId(Integer itemId) {
         Example example = new Example(AreaManagement.class);
         example.createCriteria().andEqualTo("itemId", itemId);
-        return areaManagementMapper.selectByExample(example);
+        return new ReturnData<List<AreaManagement>>(SUCCESS_CODE,"查询成功",areaManagementMapper.selectByExample(example));
     }
 
     /**
@@ -88,10 +88,10 @@ public class AreaManagementImpl implements AreaManagementService {
      * @Date: 2020/5/28 10:13
      */
     @Override
-    public List<AreaManagement> findBasisArea() {
+    public ReturnData<List<AreaManagement>> findBasisArea() {
         Example example = new Example(AreaManagement.class);
         example.createCriteria().andEqualTo("itemId",388);
-        return areaManagementMapper.selectByExample(example);
+        return new ReturnData<>(SUCCESS_CODE,"查询成功",areaManagementMapper.selectByExample(example));
     }
 
 }

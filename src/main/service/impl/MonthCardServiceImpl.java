@@ -54,7 +54,7 @@ public class MonthCardServiceImpl implements IMonthCardService {
      * @Date: 2020/5/8 20:12
      */
     @Override
-    public Page<MonthCard> getMcPageByParam(MonthCard monthCard,RequestDTO requestDTO) {
+    public ReturnData<Page<MonthCard>> getMcPageByParam(MonthCard monthCard,RequestDTO requestDTO) {
 
         ArrayList<String> name = new ArrayList<String>();
         ArrayList<Integer> num = new ArrayList<Integer>();
@@ -80,7 +80,9 @@ public class MonthCardServiceImpl implements IMonthCardService {
                 }
                 card.setAppItemName(name).setItemNum(num);
             }
-        return new Page<MonthCard>(monthCards,monthCards.size());
+        ReturnData<Page<MonthCard>> returnData = new ReturnData<>();
+        returnData.setData(new Page<MonthCard>(monthCards,monthCards.size())).setCode(SUCCESS_CODE).setMessage("查询成功");
+        return returnData;
     }
 
     /**

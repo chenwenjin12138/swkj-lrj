@@ -34,7 +34,7 @@ public class AppItemController {
      */
     @ApiOperation(value = "商品分页查询")
     @RequestMapping("/findAppItemPageByParam")
-    public PageInfo<AppItem> getAppItem(RequestDTO requestDTO,AppItem appItem){
+    public ReturnData<PageInfo<AppItem>> getAppItem(RequestDTO requestDTO,AppItem appItem){
         return appItemService.getAppItemPageByParam(requestDTO,appItem);
     }
 

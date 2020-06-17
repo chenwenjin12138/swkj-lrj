@@ -34,7 +34,7 @@ public class AreaManagementController {
      */
     @RequestMapping("findAreaByItemId")
     @ApiOperation(value = "根据商品id查询面积信息")
-    public List<AreaManagement> findAreaByItemId(Integer itemId){
+    public ReturnData<List<AreaManagement>> findAreaByItemId(Integer itemId){
         return areaManagementService.findAreaByItemId(itemId);
     }
 
@@ -44,7 +44,7 @@ public class AreaManagementController {
      * @Date: 2020/5/28 10:12
      */
     @RequestMapping("findBasisArea")
-    public List<AreaManagement> findBasisArea(){
+    public ReturnData<List<AreaManagement>> findBasisArea(){
         return areaManagementService.findBasisArea();
     }
 
