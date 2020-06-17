@@ -11,6 +11,7 @@ import pojo.Rebate;
 import pojo.Reservation;
 import service.RebateService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -25,6 +26,12 @@ public class RebateServiceImpl implements RebateService {
 
     @Override
     public PageInfo<Rebate> getPageByParam(RequestDTO requestDTO) {
+        List<Rebate> list = this.getListByParam(requestDTO);
+        return new PageInfo<Rebate>(list);
+    }
+
+    @Override
+    public List<Rebate> getListByParam(RequestDTO requestDTO) {
         QueryWrapper<Rebate> queryWrapper = new QueryWrapper();
         queryWrapper.orderByDesc(Rebate.COLUMN_CREATE_TIME1);
         try {
@@ -39,8 +46,11 @@ public class RebateServiceImpl implements RebateService {
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
-        PageHelper.startPage(requestDTO.getPage(),requestDTO.getSize());
-        List<Rebate> list = rebateMapper.selectList(queryWrapper);
-        return new PageInfo<Rebate>(list);
+        return rebateMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public BigDecimal getTotalRebate(int userId) {
+        return rebateMapper.getTotalBackMoney(userId);
     }
 }

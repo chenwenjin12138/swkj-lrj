@@ -15,6 +15,8 @@ import pojo.user.AppStaff;
 import service.IAppStaffService;
 import service.IPayOperationService;
 
+import java.math.BigDecimal;
+
 
 /**
  * @author : fl
@@ -39,6 +41,7 @@ public class PayOperationController {
         return payOperationService.getPageByParam(requestDTO);
     }
 
+
     @PostMapping("/add")
     @ApiOperation("提现")
     public ReturnData<Boolean> add(@RequestBody PayOperation payOperation){
@@ -48,7 +51,14 @@ public class PayOperationController {
     @PostMapping("/update")
     @ApiOperation("提现退款记录处理")
     public ReturnData<Boolean> update(@RequestBody PayOperation payOperation){
-        return payOperationService.update(payOperation);
+        return payOperationService.withdraw(payOperation);
+    }
+
+
+    @PostMapping("/getTotalWithdraw")
+    @ApiOperation("提现总额查询")
+    public BigDecimal update(String userId){
+        return payOperationService.getTotalWithDraw(Integer.parseInt(userId));
     }
 
 }

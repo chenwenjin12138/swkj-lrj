@@ -52,6 +52,8 @@ public class PayOperationServiceImplTest {
         PayOperation payOperation = new PayOperation();
         payOperation.setCheckStatus(-1);
         payOperation.setId(2);
-        assertTrue(payOperationService.update(payOperation).getObject());
+        payOperation.setUserId(2);
+        payOperation.setTotalFee(new BigDecimal(20));
+        assertTrue(payOperationService.withdraw(payOperation).getObject());
     }
 }

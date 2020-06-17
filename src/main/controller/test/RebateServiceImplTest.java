@@ -10,6 +10,7 @@ import pojo.Rebate;
 import service.RebateService;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -23,13 +24,19 @@ public class RebateServiceImplTest {
     @Test
     public void getPageByParam() {
         RequestDTO requestDTO = new RequestDTO();
-        requestDTO.setPage(1);
+        requestDTO.setPage(2);
         requestDTO.setSize(2);
         requestDTO.setStartLocalDateTime(LocalDateTime.now().minusDays(20));
         requestDTO.setEndLocalDateTime(LocalDateTime.now());
         Rebate rebate = new Rebate();
         rebate.setUserId(27);
         requestDTO.setObject(rebate);
-        assertEquals(rebateService.getPageByParam(requestDTO).getList().size(),1);
+        List<Rebate> list = rebateService.getPageByParam(requestDTO).getList();
+        System.out.println(rebateService.getPageByParam(requestDTO).getPages());
+        for (Rebate rebate1:list) {
+            System.out.println("数据："+rebate1.toString());
+        }
+
+        assertEquals(rebateService.getPageByParam(requestDTO).getList().size(),2);
     }
 }

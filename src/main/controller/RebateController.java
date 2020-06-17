@@ -11,6 +11,8 @@ import pojo.Rebate;
 import service.IBalanceService;
 import service.RebateService;
 
+import java.math.BigDecimal;
+
 /**
  * @author : fl
  * @describe : app用户管理控制类
@@ -34,5 +36,10 @@ public class RebateController {
         return rebateService.getPageByParam(requestDTO);
     }
 
+    @PostMapping("/getTotalWithdraw")
+    @ApiOperation("返利总结查询")
+    public BigDecimal update(String userId){
+        return rebateService.getTotalRebate(Integer.parseInt(userId));
+    }
 
 }

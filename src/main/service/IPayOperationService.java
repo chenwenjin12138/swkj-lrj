@@ -7,6 +7,8 @@ import net.bytebuddy.asm.Advice;
 import pojo.PayOperation;
 import pojo.user.AppStaff;
 
+import java.math.BigDecimal;
+
 /**
  * @author : fl
  * @describe : 支付流水
@@ -31,5 +33,9 @@ public interface IPayOperationService {
      * 退款提现处理
      * @return
      */
-    ReturnData<Boolean> update(PayOperation payOperation);
+    ReturnData<Boolean> withdraw(PayOperation payOperation);
+
+    BigDecimal getTotalWithDraw(int userId);
+
+
 }
