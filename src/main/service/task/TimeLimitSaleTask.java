@@ -35,7 +35,7 @@ public class TimeLimitSaleTask {
     private TimeLimitSaleLogMapper timeLimitSaleLogMapper;
 
     /**
-     * 限时特价商品，9,18点小时更换，每次换5个
+     * 限时特价商品，每6个小时换一次，每次换3个
      */
     @Scheduled(cron = "0 00 09 ? * *")
     @Scheduled(cron = "0 00 18 ? * *")
@@ -72,7 +72,7 @@ public class TimeLimitSaleTask {
         List<Map.Entry<Integer, Integer>> list_Data = new ArrayList<Map.Entry<Integer, Integer>>(itemsMap.entrySet());
         Collections.sort(list_Data, new Comparator<Map.Entry<Integer, Integer>>() {
             public int compare(Map.Entry<Integer, Integer> o1, Map.Entry<Integer, Integer> o2) {
-                if (o2.getValue() != null && o1.getValue() != null && o2.getValue().compareTo(o1.getValue()) < 0) {
+                if (o2.getValue() != null && o1.getValue() != null && o2.getValue().compareTo(o1.getValue()) > 0) {
                     return 1;
                 } else {
                     return -1;
@@ -81,21 +81,22 @@ public class TimeLimitSaleTask {
             }
         });
         int itemCount = 0;
-        RequestDTO param = new RequestDTO();
-        AppItem paramItem = new AppItem();
-        paramItem.setBargainType(AppItem.BargainType.TIME_LIMIT_SALE.toString());
-        param.setObject(paramItem);
-        List<AppItem> timeLimitList = appItemService.getAppItemListByParam(param);
-        timeLimitList.forEach(appItem -> {
-            appItem.setBargainType(AppItem.BargainType.NORMAL.toString());
-            appItem.setPrice(appItem.getPromotionOriginalCost());
-            appItem.setPromotionOriginalCost(null);
-            appItemService.updateAppItem(appItem);
-        });
         for (Map.Entry<Integer, Integer> data : list_Data) {
-            if (itemCount > 5) {
+            if (itemCount > 3) {
                 break;
             }
+            RequestDTO param = new RequestDTO();
+            AppItem paramItem = new AppItem();
+            paramItem.setBargainType(AppItem.BargainType.TIME_LIMIT_SALE.toString());
+            param.setObject(paramItem);
+            List<AppItem> timeLimitList = appItemService.getAppItemListByParam(param);
+            timeLimitList.forEach(appItem -> {
+                appItem.setBargainType(AppItem.BargainType.NORMAL.toString());
+                appItem.setPrice(appItem.getPromotionOriginalCost());
+                appItem.setPromotionOriginalCost(null);
+                appItemService.updateAppItem(appItem);
+            });
+
             paramItem = new AppItem();
             paramItem.setAppItemId(data.getKey());
             param.setObject(paramItem);

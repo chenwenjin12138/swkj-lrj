@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Results;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 /**
  * @Description: 单项洗衣
@@ -27,8 +28,9 @@ public class OrderWashing {
     private String takeTime;
     private Integer takeConsigneeId;
     private Integer sendConsigneeId;
-    private Integer isUrgent;
+    private BigDecimal urgentPrice;
     private Integer isLock;
-    @Column(name = "shopping_JSON")
-    private String shoppingJSON;
+    private String shoppingJson;
+    private BigDecimal servicePrice;
+
 }

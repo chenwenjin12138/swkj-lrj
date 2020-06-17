@@ -1,5 +1,5 @@
 package pojo.user;
-
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -28,7 +28,7 @@ public class AppStaff {
      */
     private Integer active;
     /**
-     *1 懒人家员工 2 商家员工  3分拣人员 4 家政员工
+     *1 懒人家员工 2 商家员工  3分拣人员
      */
     private Integer type;
 

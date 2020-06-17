@@ -237,32 +237,13 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     /**
-     * @param: orderInfo
+     * @param orderInfo
      * @Description: 获取订单商品信息
      * @Author: LxH
      * @Date: 2020/5/29 11:25
      */
     @Override
     public ReturnData findOrderItem(OrderInfo orderInfo) {
-        ReturnData returnData = new ReturnData();
-        Integer type = orderInfo.getType();
-        if (type==1) {
-            Example example = new Example(OrderWashing.class);
-            example.createCriteria().andEqualTo("orderNumber",orderInfo.getOrderNumber());
-            List<OrderWashing> orderWashings = orderWashingMapper.selectByExample(example);
-            for (OrderWashing orderWashing : orderWashings) {
-                return returnData.setObject(orderWashing.getShoppingJSON());
-            }
-        }
-        if (type==2) {
-
-        }
-        if (type==3) {
-
-        }
-        if (type==4) {
-
-        }
         return null;
     }
 
@@ -285,12 +266,12 @@ public class OrderServiceImpl implements IOrderService {
         List<Reservation> reservations = reservationMapper.selectByExampleAndRowBounds(example, rowBounds);
         for (Reservation reservation : reservations) {
             OrderInfo info = new OrderInfo();
-            if (reservation.getIsShare()==1) {
-                info.setIsShare(reservation.getIsShare());
-                info.setShareName("已分享");
-            }else if (reservation.getIsShare()==0){
+            if (reservation.getIsShare()==null) {
                 info.setIsShare(reservation.getIsShare());
                 info.setShareName("未分享");
+            }else if (reservation.getIsShare()==1){
+                info.setIsShare(reservation.getIsShare());
+                info.setShareName("已分享");
             }
             /*if (reservation.getPayStatus()==1) {
                 info.setPayStatus(reservation.getPayStatus());
@@ -299,12 +280,12 @@ public class OrderServiceImpl implements IOrderService {
                 info.setPayStatus(reservation.getPayStatus());
                 info.setPayStatusName("未支付");
             }*/
-            if (reservation.getIsEnd()==1) {
-                info.setIsEnd(reservation.getIsEnd());
-                info.setIsEndName("订单已完成");
-            }else if (reservation.getIsEnd()==0){
+            if (reservation.getIsEnd()==null||reservation.getIsEnd()==0) {
                 info.setIsEnd(reservation.getIsEnd());
                 info.setIsEndName("订单未完成");
+            }else if (reservation.getIsEnd()==1){
+                info.setIsEnd(reservation.getIsEnd());
+                info.setIsEndName("订单已完成");
             }
             String number = reservation.getOrderNumber();
             Integer userId = reservation.getUserId();
@@ -317,20 +298,22 @@ public class OrderServiceImpl implements IOrderService {
                 }else {
                     info.setTakeOrderTime(reservation.getTakeOrderTime());
                 }
-                AppStaff appStaff = staffMapper.selectByPrimaryKey(reservation.getGrabOrderId());
-                info.setAppStaffId(appStaff.getAppStaffId()).setStaffUser(appStaff.getStaffUser()).setRealName(appStaff.getRealName())
-                        .setTelephone(appStaff.getTelephone()).setRegisterTime(appStaff.getRegisterTime());
+                if (reservation.getGrabOrderId()!=null) {
+                    AppStaff appStaff = staffMapper.selectByPrimaryKey(reservation.getGrabOrderId());
+                    info.setAppStaffId(appStaff.getAppStaffId()).setStaffUser(appStaff.getStaffUser()).setRealName(appStaff.getRealName())
+                            .setTelephone(appStaff.getTelephone()).setRegisterTime(appStaff.getRegisterTime());
+                }
                 TraceStatusName traceStatusName = traceStatusNameMapper.selectByPrimaryKey(reservation.getTrackingStatus());
                 info.setTraceStatusName(traceStatusName.getTraceStatusName());
-                if (reservation.getIsUrgent() == 1) {
-                    info.setUrgentFee(new BigDecimal("50.00"));
-                } else {
+                if (reservation.getIsUrgent() == null||reservation.getIsUrgent() == 0) {
                     info.setUrgentFee(new BigDecimal("0.00"));
+                } else if (reservation.getIsUrgent() == 1){
+                    info.setUrgentFee(new BigDecimal("50.00"));
                 }
-                if (reservation.getIsService() == 1) {
-                    info.setServiceCharge(new BigDecimal("8.00"));
-                }else {
+                if (reservation.getIsService() == null||reservation.getIsService() == 0) {
                     info.setServiceCharge(new BigDecimal("0.00"));
+                }else if (reservation.getIsService() == 1){
+                    info.setServiceCharge(new BigDecimal("8.00"));
                 }
                 if (reservation.getStatus()==1) {
                     info.setStatus(reservation.getStatus());
@@ -446,9 +429,13 @@ public class OrderServiceImpl implements IOrderService {
             info.setTakeUserName(takeConsignee.getConsigneeName()).setTakePhone(takeConsignee.getConsigneeMobile()).setTakeConsignee(takeConsignee.getName()+takeConsignee.getAddress());
             Consignee sendConsignee = consigneeMapper.selectByPrimaryKey(orderWashing.getSendConsigneeId());
             info.setSendUserName(sendConsignee.getConsigneeName()).setSendPhone(sendConsignee.getConsigneeMobile()).setSendConsignee(sendConsignee.getName()+sendConsignee.getAddress());
-            info.setListItems(JSON.parseArray(orderWashing.getShoppingJSON(), ItemJson.class));
+            info.setListItems(JSON.parseArray(orderWashing.getShoppingJson(), ItemJson.class));
             BalanceVo balanceVo = balanceVoMapper.selectByPrimaryKey(info.getUserId());
-            info.setUseBalance(balanceVo.getBalance());
+            if (balanceVo==null) {
+                info.setUseBalance(new BigDecimal("0.00"));
+            }else {
+                info.setUseBalance(balanceVo.getBalance());
+            }
         }
         return info;
     }

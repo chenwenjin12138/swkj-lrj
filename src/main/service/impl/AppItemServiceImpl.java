@@ -59,7 +59,7 @@ public class AppItemServiceImpl implements IAppItemService {
      * @Date: 2020/5/8 10:22
      */
     @Override
-    public PageInfo<AppItem> getAppItemPageByParam(RequestDTO requestDTO,AppItem appItem) {
+    public ReturnData<PageInfo<AppItem>> getAppItemPageByParam(RequestDTO requestDTO,AppItem appItem) {
         Example example = new Example(AppItem.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("isShow",1);
@@ -78,7 +78,9 @@ public class AppItemServiceImpl implements IAppItemService {
             AppItemCat appItemCat = itemCatMapper.selectByPrimaryKey(item.getItemCategoryId());
             item.setItemCategoryName(appItemCat.getCategoryName());
         }
-        return new PageInfo<AppItem>(appItems,count);
+        ReturnData<PageInfo<AppItem>> returnData = new ReturnData<>();
+        returnData.setObject(new PageInfo<AppItem>(appItems,count)).setCode(SUCCESS_CODE).setMessage("查询成功");
+        return returnData;
     }
 
     /**

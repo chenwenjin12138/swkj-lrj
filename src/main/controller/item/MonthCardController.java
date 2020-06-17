@@ -36,7 +36,7 @@ public class MonthCardController {
      */
     @ApiOperation(value = "月卡分页查询")
     @RequestMapping("/getMcPageByParam")
-    public Page<MonthCard> getMcPageByParam(MonthCard monthCard ,RequestDTO requestDTO) {
+    public ReturnData<Page<MonthCard>> getMcPageByParam(MonthCard monthCard ,RequestDTO requestDTO) {
         return monthCardService.getMcPageByParam(monthCard,requestDTO);
     }
 
