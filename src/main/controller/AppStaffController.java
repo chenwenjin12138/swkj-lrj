@@ -34,7 +34,7 @@ public class AppStaffController {
      */
     @ApiOperation(value = "分页查询app员工")
     @PostMapping("/appStaffPageByParam")
-    public PageInfo<AppStaff> getAppUser(@RequestBody RequestDTO requestDTO){
+    public ReturnData<PageInfo<AppStaff>> getAppUser(@RequestBody RequestDTO requestDTO){
         return iAppStaffService.getAppUserPageByParam(requestDTO);
     }
 

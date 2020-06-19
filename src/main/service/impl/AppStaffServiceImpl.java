@@ -32,23 +32,29 @@ public class AppStaffServiceImpl implements IAppStaffService {
     }
 
     @Override
-    public PageInfo<AppStaff> getAppUserPageByParam(RequestDTO requestDTO) {
+    public  ReturnData<PageInfo<AppStaff>> getAppUserPageByParam(RequestDTO requestDTO) {
         QueryWrapper<AppStaff> queryWrapper = new QueryWrapper();
-        AppStaff staff = objectMapper.convertValue(requestDTO.getData(), AppStaff.class);
-        queryWrapper.eq(COLUMN_IS_DELETED, NOT_DELETED);
-        queryWrapper.eq(COLUMN_STAFF_USER,staff.getStaffUser());
-        if (staff != null && StringUtils.isNotEmpty(staff.getTelephone())) {
-            queryWrapper.like(COLUMN_TELEPHONE, staff.getTelephone());
+        try {
+            AppStaff  staff = objectMapper.convertValue(requestDTO.getData(), AppStaff.class);
+            queryWrapper.eq(COLUMN_IS_DELETED, NOT_DELETED);
+            queryWrapper.eq(COLUMN_STAFF_USER,staff.getStaffUser());
+            if (staff != null && StringUtils.isNotEmpty(staff.getTelephone())) {
+                queryWrapper.like(COLUMN_TELEPHONE, staff.getTelephone());
+            }
+            if (staff != null && StringUtils.isNotEmpty(staff.getTelephone())) {
+                queryWrapper.like(COLUMN_REAL_NAME, staff.getRealName());
+            }
+            if (staff != null && StringUtils.isNotEmpty(staff.getStaffUser())) {
+                queryWrapper.like(COLUMN_STAFF_USER, staff.getStaffUser());
+            }
+            PageHelper.startPage(requestDTO.getPage(),requestDTO.getSize());
+            List<AppStaff> list = iAppStaffMapper.selectList(queryWrapper);
+            return new ReturnData(SUCCESS_CODE,"操作成功", new PageInfo<AppStaff>(list));
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return new ReturnData(Fail_CODE,"操作失败",false);
         }
-        if (staff != null && StringUtils.isNotEmpty(staff.getTelephone())) {
-            queryWrapper.like(COLUMN_REAL_NAME, staff.getRealName());
-        }
-        if (staff != null && StringUtils.isNotEmpty(staff.getStaffUser())) {
-            queryWrapper.like(COLUMN_STAFF_USER, staff.getStaffUser());
-        }
-        PageHelper.startPage(requestDTO.getPage(),requestDTO.getSize());
-        List<AppStaff> list = iAppStaffMapper.selectList(queryWrapper);
-        return new PageInfo<AppStaff>(list);
+
     }
 
 

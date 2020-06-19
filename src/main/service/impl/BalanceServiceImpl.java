@@ -26,8 +26,8 @@ public class BalanceServiceImpl implements IBalanceService {
     }
 
     @Override
-    public Balance findByUserId(String userId) {
-       return iBalanceMapper.selectById(userId);
+    public  ReturnData<Balance> findByUserId(String userId) {
+        return new ReturnData(SUCCESS_CODE,"操作成功",iBalanceMapper.selectById(userId));
     }
 
     @Transactional(rollbackFor = Exception.class,isolation = Isolation.SERIALIZABLE)
@@ -37,7 +37,7 @@ public class BalanceServiceImpl implements IBalanceService {
         if (balance == null || StringUtils.isEmpty(balance.getUserId().toString())) {
             return new ReturnData<Boolean>(Fail_CODE,"操作失败,用户id不能为空",false);
         }
-        Balance balanceOld = this.findByUserId(balance.getUserId().toString());
+        Balance balanceOld = this.findByUserId(balance.getUserId().toString()).getData();
         //用戶第一次充值
         if (balanceOld == null) {
             balance.setCreateTime(DateUtils.getNowDateTime());

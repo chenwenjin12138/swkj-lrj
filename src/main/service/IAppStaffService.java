@@ -17,7 +17,7 @@ public interface IAppStaffService {
      * @param RequestDTO 查询条件
      * @return
      */
-    PageInfo<AppStaff> getAppUserPageByParam(RequestDTO RequestDTO);
+    ReturnData<PageInfo<AppStaff>> getAppUserPageByParam(RequestDTO RequestDTO);
 
     /**
      * 修改App用户对象

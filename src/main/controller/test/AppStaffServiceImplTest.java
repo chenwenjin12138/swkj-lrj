@@ -35,7 +35,7 @@ public class AppStaffServiceImplTest {
         appStaff.setTelephone("518435");
         appStaff.setRealName("李官留");
         requestDTO.setData(appStaff);
-        PageInfo pageInfo = iAppStaffService.getAppUserPageByParam(requestDTO);
+        iAppStaffService.getAppUserPageByParam(requestDTO);
     }
     @Test
     public void addAppStaff() {

@@ -31,7 +31,7 @@ public class BalanceController {
      */
     @GetMapping("/balance")
     @ApiOperation(value = "查询用户余额")
-    public Balance findByUserId(@RequestParam String userId) {
+    public ReturnData<Balance> findByUserId(@RequestParam String userId) {
         return iBalanceService.findByUserId(userId);
     }
 

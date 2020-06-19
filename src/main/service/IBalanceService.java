@@ -19,7 +19,7 @@ public interface IBalanceService {
      * @param userId
      * @return
      */
-    Balance findByUserId(String userId);
+    ReturnData<Balance> findByUserId(String userId);
 
     /**
      * 修改余额信息
