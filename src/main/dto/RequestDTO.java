@@ -18,6 +18,7 @@ import java.util.Date;
  */
 @Getter
 @Setter
+@Data
 @Accessors(chain = true)
 @ApiModel("查询参数")
 public class RequestDTO<E> {

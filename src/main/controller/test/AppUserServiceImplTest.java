@@ -2,6 +2,7 @@ package controller.test;
 
 import com.github.pagehelper.PageInfo;
 import dto.RequestDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pojo.user.AppUser;
 import service.IAppUserService;
+
+import javax.validation.constraints.Size;
 
 import static org.junit.Assert.*;
 
