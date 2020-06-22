@@ -178,18 +178,24 @@ public class AppItemServiceImpl implements IAppItemService {
     }
 
     @Override
-    public List<AppItem> getAppItemListByParam(RequestDTO requestDTO){
+    public ReturnData<List<AppItem>> getAppItemListByParam(RequestDTO requestDTO){
         QueryWrapper<AppItem> queryWrapper = new QueryWrapper();
         queryWrapper.eq(AppItem.SHOW_COLUMN,1);
         if (requestDTO.getData() !=null ) {
-            AppItem appItem = objectMapper.convertValue(requestDTO.getData(), AppItem.class);
-            if (appItem != null && appItem.getAppItemId()!= null) {
-                queryWrapper.eq(AppItem.ID_COLUMN,appItem.getAppItemId());
-            }
-            if (appItem != null && StringUtils.isNotEmpty(appItem.getBargainType())) {
-                queryWrapper.eq(AppItem.BARGAIN_TYPE_COLUMN,appItem.getBargainType());
+            try {
+                AppItem  appItem = objectMapper.convertValue(requestDTO.getData(), AppItem.class);
+                if (appItem != null && appItem.getAppItemId()!= null) {
+                    queryWrapper.eq(AppItem.ID_COLUMN,appItem.getAppItemId());
+                }
+                if (appItem != null && StringUtils.isNotEmpty(appItem.getBargainType())) {
+                    queryWrapper.eq(AppItem.BARGAIN_TYPE_COLUMN,appItem.getBargainType());
+                }
+                return new ReturnData<>(SUCCESS_CODE,"操作成功",itemMapper.selectList(queryWrapper));
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+                return new ReturnData<>(Fail_CODE, "操作失败", null);
             }
         }
-        return itemMapper.selectList(queryWrapper);
+        return new ReturnData<>(SUCCESS_CODE,"操作成功",itemMapper.selectList(queryWrapper));
     }
 }

@@ -44,6 +44,5 @@ public class AppUserServiceImplTest {
         appUser.setActive(1);
         boolean r = iAppUserService.updateAppUser(appUser).getData();
         assertTrue(r);
-
     }
 }

@@ -85,7 +85,7 @@ public class TimeLimitSaleTask {
         AppItem paramItem = new AppItem();
         paramItem.setBargainType(AppItem.BargainType.TIME_LIMIT_SALE.toString());
         param.setData(paramItem);
-        List<AppItem> timeLimitList = appItemService.getAppItemListByParam(param);
+        List<AppItem> timeLimitList = appItemService.getAppItemListByParam(param).getData();
         timeLimitList.forEach(appItem -> {
             appItem.setBargainType(AppItem.BargainType.NORMAL.toString());
             appItem.setPrice(appItem.getPromotionOriginalCost());
@@ -99,7 +99,7 @@ public class TimeLimitSaleTask {
             paramItem = new AppItem();
             paramItem.setAppItemId(data.getKey());
             param.setData(paramItem);
-            List<AppItem> list = appItemService.getAppItemListByParam(param);
+            List<AppItem> list = appItemService.getAppItemListByParam(param).getData();
             if (list != null && list.size() > 0) {
                 AppItem oldItem = list.get(0);
                 oldItem.setPromotionOriginalCost(oldItem.getPrice());

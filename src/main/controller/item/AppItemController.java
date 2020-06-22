@@ -6,12 +6,15 @@ import dto.ReturnData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pojo.AppItem;
 import service.IAppItemService;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Description: 后台管理系统商品模块
@@ -102,5 +105,11 @@ public class AppItemController {
     @RequestMapping("/findImageById")
     public ReturnData findImageById(Integer appItemId){
         return appItemService.findImageById(appItemId);
+    }
+
+    @ApiOperation(value = "商品列表查询")
+    @PostMapping("/findAppItemListByParam")
+    public ReturnData<List<AppItem>> getAppItem(@RequestBody RequestDTO requestDTO){
+        return appItemService.getAppItemListByParam(requestDTO);
     }
 }

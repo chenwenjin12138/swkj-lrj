@@ -68,7 +68,7 @@ public interface IAppItemService {
      * @Author: LxH
      * @Date: 2020/5/8 9:58
      */
-    List<AppItem> getAppItemListByParam(RequestDTO requestDTO);
+    ReturnData<List<AppItem>> getAppItemListByParam(RequestDTO requestDTO);
 
 
 }

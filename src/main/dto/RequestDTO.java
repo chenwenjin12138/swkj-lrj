@@ -32,7 +32,7 @@ public class RequestDTO<E> {
      * 查询页
      */
     @ApiModelProperty(value = "页数",required = true)
-    Integer page=0;
+    Integer page=1;
 
     /**
      * 条数
