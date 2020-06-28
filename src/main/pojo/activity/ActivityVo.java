@@ -13,9 +13,9 @@ import java.util.List;
  */
 @Data
 public class ActivityVo {
-    private Activity activity;
-    private List<ActivityTime> activityTimeList;
-    private List<ActivityItemVO> activityItemList;
+    private pojo.activity.Activity activity;
+    private List<pojo.activity.ActivityTime> activityTimeList;
+    private List<pojo.activity.ActivityItemVO> activityItemList;
     private List<AppItemCat> itemCatsList;
     private List<AppItem> itemList;
 }

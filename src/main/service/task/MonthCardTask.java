@@ -1,26 +1,15 @@
-package service.task;
+package src.main.service.task;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import common.Constant;
-import common.CouponConstant;
 import dto.RequestDTO;
-import dto.ReturnData;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import pojo.UserCoupon;
-import pojo.order.Order;
 import pojo.order.OrderCustomHouse;
 import pojo.order.OrderMonthCard;
-import pojo.user.AppUser;
-import service.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author fl
@@ -30,11 +19,11 @@ import java.util.Random;
 @Component
 @EnableScheduling
 public class MonthCardTask {
-    private IOrderMonthCardService orderMonthCardService;
-    private IOrderCustomHouseService orderCustomHouseService;
+    private service.IOrderMonthCardService orderMonthCardService;
+    private service.IOrderCustomHouseService orderCustomHouseService;
 
 
-    public MonthCardTask(IOrderMonthCardService orderMonthCardService, IOrderCustomHouseService orderCustomHouseService) {
+    public MonthCardTask(service.IOrderMonthCardService orderMonthCardService, service.IOrderCustomHouseService orderCustomHouseService) {
         this.orderMonthCardService = orderMonthCardService;
         this.orderCustomHouseService = orderCustomHouseService;
     }

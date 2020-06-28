@@ -12,6 +12,6 @@ import java.util.List;
  */
 @Data
 public class ActivityItemVO {
-    private ActivityItem activityItem;
+    private pojo.activity.ActivityItem activityItem;
     private List<AppItemCat> appItemCatList;
 }
