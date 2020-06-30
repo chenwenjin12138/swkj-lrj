@@ -5,12 +5,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import pojo.MonthCard;
-import service.IOrderCommentService;
-import service.IOrderMonthCardService;
-import service.task.MonthCardTask;
 
-import static org.junit.Assert.*;
+
+
 
 /**
  * @author fl
@@ -21,7 +18,7 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class MonthCardTaskTest {
     @Autowired
-    private MonthCardTask monthCardTask;
+    private src.main.service.task.MonthCardTask monthCardTask;
     @Test
     public void updateUserCoupon() {
       //  monthCardTask.updateOrderMonthCard();

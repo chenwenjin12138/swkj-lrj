@@ -52,7 +52,7 @@ public interface IOrderService {
      * @Author: LxH
      * @Date: 2020/5/15 21:37
      */
-    Page<OrderInfo> getAppOrderInfoPageByParam(OrderInfo orderInfo, RequestDTO requestDTO);
+    ReturnData<Page<OrderInfo>> getAppOrderInfoPageByParam(OrderInfo orderInfo, RequestDTO requestDTO);
 
     /**
      * @Description: 短信群发功能

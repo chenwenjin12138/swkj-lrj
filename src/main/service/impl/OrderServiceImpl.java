@@ -42,6 +42,7 @@ import static dto.ReturnData.Fail_CODE;
 import static dto.ReturnData.SUCCESS_CODE;
 
 import static pojo.CardAndItemCat.COLUMN_CARD_ID;
+import static pojo.PayOperation.OUT_TRADE_NO;
 import static pojo.Reservation.*;
 import static pojo.order.Order.*;
 import static pojo.order.OrderMonthCard.COLUMN_ORDER_NUMBER;
@@ -105,6 +106,9 @@ public class OrderServiceImpl implements IOrderService {
     @Resource
     private CustomHouseServiceMapper customHouseServiceMapper;
 
+    @Resource
+    private PayOperationMapper payOperationMapper;
+
     private ObjectMapper objectMapper = new ObjectMapper();
 
     public OrderServiceImpl(IOrderMapper iOrderMapper) {
@@ -163,7 +167,7 @@ public class OrderServiceImpl implements IOrderService {
      * @Date: 2020/5/15 21:37
      */
     @Override
-    public Page<OrderInfo> getAppOrderInfoPageByParam(OrderInfo orderInfo, RequestDTO requestDTO) {
+    public ReturnData<Page<OrderInfo>> getAppOrderInfoPageByParam(OrderInfo orderInfo, RequestDTO requestDTO) {
 
         String startTime = null;
         String endTime = null;
@@ -247,7 +251,7 @@ public class OrderServiceImpl implements IOrderService {
         return null;
     }
 
-    private Page<OrderInfo> getAppOrderInfo(RequestDTO requestDTO, OrderInfo orderInfo){
+    private ReturnData<Page<OrderInfo>> getAppOrderInfo(RequestDTO requestDTO, OrderInfo orderInfo){
         ArrayList<OrderInfo> list = new ArrayList<OrderInfo>();
         Example example = new Example(Reservation.class);
         example.orderBy(Reservation.COLUMN_CREATE_TIME);
@@ -292,12 +296,19 @@ public class OrderServiceImpl implements IOrderService {
             User user = userMapper.selectByPrimaryKey(userId);
             info.setOrderNumber(number).setUserId(userId).setUnderOrderTime(reservation.getCreateTime()).setUserPhone(user.getUserPhone())
                     .setNickname(user.getNickName()).setTotalPrice(reservation.getTotalPrice()).setType(reservation.getOrderType());
+            Example example1 = new Example(PayOperation.class);
+            example1.createCriteria().andEqualTo(OUT_TRADE_NO,number);
+            List<PayOperation> payOperations = payOperationMapper.selectByExample(example1);
+            for (PayOperation payOperation : payOperations) {
+
+            }
             if (reservation.getOrderType().equals(TYPE_LAUNDRY) || reservation.getOrderType().equals(TYPE_HOUSEKEEPING)) {
                 if (reservation.getTakeOrderTime()==null) {
                     info.setTakeOrderTime("未抢单");
                 }else {
                     info.setTakeOrderTime(reservation.getTakeOrderTime());
                 }
+
                 if (reservation.getGrabOrderId()!=null) {
                     AppStaff appStaff = staffMapper.selectByPrimaryKey(reservation.getGrabOrderId());
                     info.setAppStaffId(appStaff.getAppStaffId()).setStaffUser(appStaff.getStaffUser()).setRealName(appStaff.getRealName())
@@ -360,14 +371,14 @@ public class OrderServiceImpl implements IOrderService {
             list.add(info);
         }
         if (orderInfo.getInquire()==null) {
-            return new Page<OrderInfo>(list,list.size());
+            return new ReturnData<Page<OrderInfo>>(SUCCESS_CODE,"查询成功",new Page<OrderInfo>(list,list.size()));
         }else if (orderInfo.getInquire()==1){
             return conditionalQuery(list,orderInfo);
         }
         return null;
     }
 
-    private Page<OrderInfo> conditionalQuery(ArrayList<OrderInfo> list, OrderInfo orderInfo) {
+    private ReturnData<Page<OrderInfo>> conditionalQuery(ArrayList<OrderInfo> list, OrderInfo orderInfo) {
         return null;
     }
 

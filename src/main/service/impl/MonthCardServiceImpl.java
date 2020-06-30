@@ -56,8 +56,7 @@ public class MonthCardServiceImpl implements IMonthCardService {
     @Override
     public ReturnData<Page<MonthCard>> getMcPageByParam(MonthCard monthCard,RequestDTO requestDTO) {
 
-        ArrayList<String> name = new ArrayList<String>();
-        ArrayList<Integer> num = new ArrayList<Integer>();
+
         Example example = new Example(MonthCard.class);
         example.orderBy("createTime");
         Example.Criteria criteria = example.createCriteria();
@@ -72,14 +71,18 @@ public class MonthCardServiceImpl implements IMonthCardService {
             Example example1 = new Example(CardAndItemCat.class);
             example1.createCriteria().andEqualTo("cardId", card.getCardId());
             List<CardAndItemCat> cardAndItemCats = cardAndItemCatMapper.selectByExample(example1);
-                for (CardAndItemCat cardAndItemCat : cardAndItemCats) {
+            ArrayList<String> name = new ArrayList<String>();
+            ArrayList<Integer> num = new ArrayList<Integer>();
+            for (CardAndItemCat cardAndItemCat : cardAndItemCats) {
+                if (cardAndItemCat!=null) {
                     Integer itemNum = cardAndItemCat.getItemNum();
                     AppItem appItem = itemMapper.selectByPrimaryKey(cardAndItemCat.getItemId());
                     name.add(appItem.getItemName());
                     num.add(itemNum);
                 }
-                card.setAppItemName(name).setItemNum(num);
             }
+            card.setAppItemName(name).setItemNum(num);
+        }
         ReturnData<Page<MonthCard>> returnData = new ReturnData<>();
         returnData.setData(new Page<MonthCard>(monthCards,monthCards.size())).setCode(SUCCESS_CODE).setMessage("查询成功");
         return returnData;

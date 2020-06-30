@@ -15,7 +15,7 @@ import java.util.Date;
  * @date 2020/5/6 0006上午 10:57
  */
 @Data
-@ApiModel("商家用户信息")
+//@ApiModel("商家用户信息")
 public class SysAdmin {
     private Integer sysAdminId;
     /**

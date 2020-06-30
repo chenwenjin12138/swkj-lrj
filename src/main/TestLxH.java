@@ -18,6 +18,7 @@ import vo.OrderInfo;
 
 import javax.annotation.Resource;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -67,13 +68,15 @@ public class TestLxH {
     private CustomHouseServiceMapper customHouseServiceMapper;
     @Resource
     private PayOperationMapper payOperationMapper;
+    @Resource
+    private MerchantMapper merchantMapper;
     @Test
     public void test(){
-
-        List<PayOperation> payOperations = payOperationMapper.selectAll();
-        for (PayOperation payOperation : payOperations) {
-            System.out.println(payOperation.toString());
+        List<Merchant> merchants = merchantMapper.selectAll();
+        for (Merchant merchant : merchants) {
+            System.out.println(merchant.toString());
         }
+        BigDecimal bigDecimal = new BigDecimal("2.3");
 
        /* Example e = new Example(CardAndItemCat.class);
         e.createCriteria().andNotEqualTo("cardId",1);

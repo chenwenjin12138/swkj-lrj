@@ -36,7 +36,7 @@ public class OrderController {
      */
     @ApiOperation(value = "Order信息分页查询")
     @RequestMapping("getAppOrderInfoPageByParam")
-    public Page<OrderInfo> getAppOrderInfoPageByParam(OrderInfo orderInfo, RequestDTO requestDTO){
+    public ReturnData<Page<OrderInfo>> getAppOrderInfoPageByParam(OrderInfo orderInfo, RequestDTO requestDTO){
         return orderService.getAppOrderInfoPageByParam(orderInfo, requestDTO);
     }
 

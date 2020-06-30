@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
     /**
      * 后台 控制台
-     * @return
+     * @return :
      */
     @RequestMapping("/main")
     public String toIndex(){

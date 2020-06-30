@@ -83,4 +83,5 @@ public class PayOperation {
     public static final String TRADE_TYPE_COLUMN = "trade_type";
     public static final String CHECK_STATUS_COLUMN = "check_status";
     public static final String USER_PHONE_COLUMN = "user_phone";
+    public static final String OUT_TRADE_NO = "outTradeNo";
 }

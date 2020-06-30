@@ -1,5 +1,6 @@
 package vo;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -101,4 +102,14 @@ public class OrderInfo implements Serializable {
     /**定制家政*/
     private CustomHouseService customHouseService;
 
+    /******************* 流水信息 ******************/
+    /**
+     * 支付渠道 1.余额2.微信3.支付宝
+     */
+    private Integer tradeSource;
+    /**
+     *流水号
+     */
+    private String transactionId;
+    private String payTime;
 }

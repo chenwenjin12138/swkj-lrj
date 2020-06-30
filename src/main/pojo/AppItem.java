@@ -77,6 +77,7 @@ public class AppItem extends Base{
     private Integer quantity;
 
     @ApiModelProperty("商品特价类型 TIME_LIMIT_SALE 显示特价 NORMAL普通")
+    @Transient
     private String bargainType;
 
     public enum BargainType{

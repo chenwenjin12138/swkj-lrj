@@ -26,8 +26,9 @@ public class ClassMapUtil {
         Field[] fields = obj.getClass().getDeclaredFields();
         for(Field field : fields){
             String fieldName =  field.getName();
-            if(getValueByFieldName(fieldName,obj)!=null)
+            if(getValueByFieldName(fieldName,obj)!=null) {
                 map.put(fieldName,  getValueByFieldName(fieldName,obj));
+            }
         }
 
         return map;
