@@ -1,6 +1,5 @@
 package service.impl;
 
-import com.github.pagehelper.PageInfo;
 import dto.PageResult;
 import dto.RequestDTO;
 import dto.ReturnData;
@@ -11,14 +10,19 @@ import org.springframework.stereotype.Service;
 import pojo.Merchant;
 import service.MerchantService;
 import tk.mybatis.mapper.entity.Example;
+import util.DateUtils;
+import util.QRCodeUtil;
 
 import javax.annotation.Resource;
 
 
-import java.util.List;
+import java.util.*;
 
 import static dto.PageResult.SUCCESS_CODE;
+import static dto.ReturnData.Fail_CODE;
 import static pojo.Merchant.*;
+import static vo.QRCodeAPI.PATH;
+import static vo.QRCodeAPI.URL;
 
 /**
  * @Description:
@@ -68,7 +72,31 @@ public class MerchantServiceImpl implements MerchantService {
      */
     @Override
     public ReturnData<Boolean> addMerchant(Merchant merchant) {
+        merchant.setCreateTime(DateUtils.formatDate(new Date()));
+        merchantMapper.insertSelective(merchant);
+        if (merchant.getType() == 1) {
+            String fileName = UUID.randomUUID().toString();
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("merchantId", merchant.getMerchantId());
+            String qrCode = QRCodeUtil.createQrCode(URL, map, PATH, fileName);
+            merchant.setQrCode(qrCode);
+            merchantMapper.updateByPrimaryKeySelective(merchant);
+        }
+        return new ReturnData<>(SUCCESS_CODE, "添加成功", null);
+    }
 
-        return null;
+    /**
+     * @param: merchant
+     * @Description: 修改商户
+     * @Author: LxH
+     * @Date: 2020/7/2 10:02
+     */
+    @Override
+    public ReturnData<Boolean> updateMerchant(Merchant merchant) {
+        merchant.setUpdateTime(DateUtils.formatDate(new Date()));
+        if (merchantMapper.updateByPrimaryKeySelective(merchant)>0) {
+            return new ReturnData<>(SUCCESS_CODE,"更新成功",null);
+        }
+        return new ReturnData<>(Fail_CODE,"更新失败",null);
     }
 }

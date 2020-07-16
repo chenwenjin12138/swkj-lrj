@@ -8,12 +8,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.apache.poi.ss.formula.functions.T;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pojo.Merchant;
 import service.MerchantService;
 
 import javax.annotation.Resource;
+
+import static dto.ReturnData.SUCCESS_CODE;
 
 /**
  * @Description:
@@ -48,5 +52,16 @@ public class MerchantController {
     @ApiOperation(value = "添加商户")
     public ReturnData<Boolean> addMerchant(Merchant merchant){
         return merchantService.addMerchant(merchant);
+    }
+
+    /**
+     * @Description: 修改商户
+     * @Author: LxH
+     * @Date: 2020/7/2 10:02
+     */
+    @PostMapping("updateMerchant")
+    @ApiOperation(value = "修改商户")
+    public ReturnData<Boolean> updateMerchant(Merchant merchant){
+        return merchantService.updateMerchant(merchant);
     }
 }

@@ -91,7 +91,6 @@ public class AreaManagementImpl implements AreaManagementService {
     public ReturnData<List<AreaManagement>> findBasisArea() {
         Example example = new Example(AreaManagement.class);
         example.createCriteria().andEqualTo("itemId",388);
-        return new ReturnData<>(SUCCESS_CODE,"查询成功",areaManagementMapper.selectByExample(example));
+        return new ReturnData<>(SUCCESS_CODE,"查询成功",areaManagementMapper.selectAll());
     }
-
 }

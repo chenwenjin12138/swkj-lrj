@@ -72,11 +72,10 @@ public class TestLxH {
     private MerchantMapper merchantMapper;
     @Test
     public void test(){
-        List<Merchant> merchants = merchantMapper.selectAll();
-        for (Merchant merchant : merchants) {
-            System.out.println(merchant.toString());
-        }
-        BigDecimal bigDecimal = new BigDecimal("2.3");
+        Merchant merchant = new Merchant();
+        merchant.setName("大鸡蛋");
+        merchantMapper.insertSelective(merchant);
+        System.out.println(merchant.getMerchantId());
 
        /* Example e = new Example(CardAndItemCat.class);
         e.createCriteria().andNotEqualTo("cardId",1);

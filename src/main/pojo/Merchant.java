@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
@@ -24,6 +26,7 @@ import java.math.BigDecimal;
 public class Merchant extends Base {
     private static final long serialVersionUID = 2607786623630077533L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer merchantId;
     private String name;
     private Byte type;

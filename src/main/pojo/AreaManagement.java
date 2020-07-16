@@ -24,6 +24,6 @@ public class AreaManagement {
     @Id
     private Integer areaManagementId;
     private Integer itemId;
-    private Byte type;
+    private String type;
     private BigDecimal price;
 }

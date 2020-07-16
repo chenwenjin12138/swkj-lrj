@@ -27,4 +27,11 @@ public interface MerchantService {
      * @Date: 2020/6/29 18:00
      */
     ReturnData<Boolean> addMerchant(Merchant merchant);
+
+    /**
+     * @Description: 修改商户
+     * @Author: LxH
+     * @Date: 2020/7/2 10:02
+     */
+    ReturnData<Boolean> updateMerchant(Merchant merchant);
 }
